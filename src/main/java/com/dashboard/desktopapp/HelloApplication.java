@@ -14,7 +14,6 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 800);
         stage.setTitle("Viana Circular");
-        //stage.getIcons().add(new Image("src/main/resources/com/dashboard/desktopapp/images/APP_LOGO.png"));
         stage.setScene(scene);
         stage.show();
     }
