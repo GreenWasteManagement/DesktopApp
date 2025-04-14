@@ -1,4 +1,23 @@
-.root {
-    -fx-font-family: "Quicksand";
-    -fx-background-color: red;
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+* {
+    -fx-font-family: "Quicksand", sans-serif;
+    -fx-font-style: normal;
+}
+
+.text-field {
+    -fx-font-size: 20;
+}
+
+.button {
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+}
+
+.check-box {
+    -fx-font-size: 16;
+}
+
+.menu-item:hover {
+    -fx-cursor: pointer;
 }
