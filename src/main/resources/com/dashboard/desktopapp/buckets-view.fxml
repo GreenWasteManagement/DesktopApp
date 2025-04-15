@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="787.5" prefWidth="1400.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <HBox alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+            <children>
+                <ImageView fitHeight="110.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/LOGO.png" />
+                    </image>
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                </ImageView>
+                <Label text="Painel de gestão" textFill="#057222">
+                    <font>
+                        <Font name="System Bold" size="48.0" />
+                    </font>
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                </Label>
+                <Region HBox.hgrow="ALWAYS" />
+                <HBox alignment="CENTER_RIGHT" spacing="32.0">
+                    <children>
+                        <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Menu" textAlignment="CENTER">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Button>
+                        <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Terminar sessão" textAlignment="CENTER" textFill="#c03d3d">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+            </padding>
+            <styleClass>
+                <String fx:value="hbox-shadow" />
+                <String fx:value="background-color" />
+            </styleClass>
+        </HBox>
+
+    </top>
+    <center>
+        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER">
+                    <children>
+                        <Label text="Baldes">
+                            <font>
+                                <Font name="System Bold" size="32.0" />
+                            </font>
+                        </Label>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: #057222; -fx-border-radius: 15; -fx-background-radius: 15; -fx-min-width: 100%;" text="Criar" textAlignment="CENTER" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                            <padding>
+                                <Insets bottom="10.0" left="48.0" right="48.0" top="10.0" />
+                            </padding>
+                        </Button>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="152.0" right="152.0" top="32.0" />
+                    </VBox.margin>
+                </HBox>
+                <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn editable="false" prefWidth="75.0" text="ID" />
+                        <TableColumn editable="false" prefWidth="75.0" text="Capacidade" />
+                        <TableColumn editable="false" prefWidth="75.0" text="Associado?" />
+                        <TableColumn editable="false" prefWidth="75.0" text="Munícipe" />
+                  <TableColumn editable="false" prefWidth="75.0" sortable="false" text="Ações" />
+                    </columns>
+                    <VBox.margin>
+                        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+                    </VBox.margin>
+                </TableView>
+            </children></VBox>
+    </center>
+</BorderPane>

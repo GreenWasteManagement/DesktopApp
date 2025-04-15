@@ -80,20 +80,20 @@
                   <Insets left="152.0" right="152.0" top="32.0" />
                </VBox.margin>
             </HBox>
-            <TabPane tabClosingPolicy="UNAVAILABLE">
+            <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
               <tabs>
                 <Tab closable="false" text="Munícipes">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0">
                            <children>
-                              <TableView AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="16.0">
+                              <TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="16.0">
                                 <columns>
                                   <TableColumn editable="false" prefWidth="75.0" resizable="false" text="ID" />
                                   <TableColumn editable="false" prefWidth="75.0" resizable="false" text="Nome utilizador" />
                                     <TableColumn editable="false" prefWidth="75.0" resizable="false" text="Nome" />
                                     <TableColumn editable="false" prefWidth="75.0" resizable="false" text="NIF" />
                                     <TableColumn editable="false" prefWidth="75.0" resizable="false" text="Telefone" />
-                                    <TableColumn editable="false" prefWidth="75.0" resizable="false" text="Ações" />
+                                    <TableColumn editable="false" prefWidth="75.0" resizable="false" sortable="false" text="Ações" />
                                 </columns>
                               </TableView>
                            </children></AnchorPane>
@@ -106,7 +106,7 @@
                 </Tab>
               </tabs>
                <VBox.margin>
-                  <Insets left="32.0" right="32.0" top="32.0" />
+                  <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
                </VBox.margin>
             </TabPane>
          </children></VBox>
