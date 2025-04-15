@@ -34,3 +34,54 @@
 .background-color {
     -fx-background-color: #E2E2E2;
 }
+
+.tab-pane {
+    -fx-background-color: transparent;
+    -fx-tab-min-width: 200;
+    -fx-tab-min-height: 48;
+    -fx-font-size: 16px;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.tab-pane:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.tab-header-area .tab-header-background {
+    -fx-border-color: #057222;
+    -fx-border-width: 7 0 0 0;
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+}
+
+.tab {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 10 20 10 20;
+    -fx-background-radius: 0 0 15 15;
+    -fx-border-radius: 0 0 15 15;
+}
+
+.tab .tab-label {
+    -fx-text-fill: #057222;
+    -fx-font-weight: bold;
+    -fx-effect: none;
+}
+
+.tab:selected {
+    -fx-background-color: #057222;
+    -fx-border: none;
+}
+
+.tab:selected .tab-label {
+    -fx-text-fill: #FFFFFF;
+}
+
+.tab .tab-label:focused {
+    -fx-effect: none;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}

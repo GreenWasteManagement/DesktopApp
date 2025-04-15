@@ -12,7 +12,7 @@ public class StartApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("homenav-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("users-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         // Add CSS stylesheet
