@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="856.0" prefWidth="1449.0" styleClass="background-color" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dashboard.desktopapp.HomeNavController">
    <top>
-      <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER_LEFT">
          <children>
             <ImageView fitHeight="110.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -20,18 +21,34 @@
             </ImageView>
             <Label text="Painel de gestão" textFill="#057222">
                <font>
-                  <Font name="System Bold" size="64.0" />
+                  <Font name="System Bold" size="48.0" />
                </font>
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin></Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <HBox alignment="CENTER_RIGHT" spacing="32.0">
+               <children>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Menu" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Terminar sessão" textAlignment="CENTER" textFill="#c03d3d">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font></Button>
+               </children></HBox>
          </children>
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
          <padding>
             <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
-         </padding></HBox>
+         </padding>
+         <styleClass>
+            <String fx:value="hbox-shadow" />
+            <String fx:value="background-color" />
+         </styleClass></HBox>
    </top>
    <center>
       <GridPane alignment="CENTER" hgap="32.0" vgap="32.0" BorderPane.alignment="CENTER">
@@ -48,7 +65,7 @@
             <Insets bottom="64.0" left="152.0" right="152.0" top="48.0" />
          </BorderPane.margin>
          <children>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #057222; -fx-border-radius: 50; -fx-background-radius: 50;">
+            <VBox alignment="CENTER" onMousePressed="#Test" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #057222; -fx-border-radius: 50; -fx-background-radius: 50;">
                <children>
                   <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                      <image>

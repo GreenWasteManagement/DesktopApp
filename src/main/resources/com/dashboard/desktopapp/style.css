@@ -14,10 +14,23 @@
     -fx-font-weight: bold;
 }
 
+.button:hover {
+    -fx-cursor: pointer;
+}
+
 .check-box {
     -fx-font-size: 16;
 }
 
 .menu-item:hover {
     -fx-cursor: pointer;
+}
+
+.hbox-shadow {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+    -fx-background-insets: 0;
+}
+
+.background-color {
+    -fx-background-color: #E2E2E2;
 }
