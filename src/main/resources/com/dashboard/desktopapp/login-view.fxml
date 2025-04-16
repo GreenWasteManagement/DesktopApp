@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="787.5" prefWidth="1400.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dashboard.desktopapp.StartController">
    <top>
-      <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER_LEFT" stylesheets="@style.css" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -98,7 +98,7 @@
                         </PasswordField>
                         <VBox alignment="CENTER">
                            <children>
-                              <Button alignment="CENTER" contentDisplay="CENTER" defaultButton="true" mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -fx-border-radius: 15; -fx-background-radius: 15; -fx-min-width: 100%;" text="Aceder" textAlignment="CENTER" textFill="#004713">
+                              <Button fx:id="accessBtn" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#onAccessBtnClick" style="-fx-background-color: #FFFFFF; -fx-border-radius: 15; -fx-background-radius: 15; -fx-min-width: 100%;" text="Aceder" textAlignment="CENTER" textFill="#004713">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>

@@ -1,14 +1,46 @@
 package com.dashboard.desktopapp;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import java.io.IOException;
 
 public class StartController {
-    @FXML
-    private Label welcomeText;
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    private BorderPane content;
+
+    @FXML
+    protected void onAccessBtnClick() {
+        try {
+            // Load the FXML file
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homenav-view.fxml"));
+            Parent root = fxmlLoader.load();
+
+            // Get the screen's width and height
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            double screenWidth = screenBounds.getWidth();
+            double screenHeight = screenBounds.getHeight();
+
+            // Get the current stage
+            Stage stage = (Stage) content.getScene().getWindow();
+
+            // Create a new scene with the loaded content (root)
+            Scene newScene = new Scene(root, screenWidth, screenHeight);
+
+            // Set the new scene to the stage and maximize it
+            stage.setScene(newScene);
+            stage.setMaximized(true);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
