@@ -10,7 +10,7 @@
     <children>
         <HBox fillHeight="false" VBox.vgrow="NEVER">
             <children>
-                <Label text="Visualizar administrador">
+                <Label text="Visualizar balde">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
@@ -30,29 +30,11 @@
                 </Button>
             </children>
         </HBox>
-        <Label text="Nome:">
-            <VBox.margin>
-                <Insets top="32.0" />
-            </VBox.margin>
-            <font>
-                <Font size="16.0" />
-            </font>
-        </Label>
-        <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
-            <font>
-                <Font size="20.0" />
-            </font>
-            <VBox.margin>
-                <Insets top="8.0" />
-            </VBox.margin>
-            <padding>
-                <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
-            </padding></TextField>
         <HBox fillHeight="false" spacing="24.0" VBox.vgrow="NEVER">
             <children>
                 <VBox HBox.hgrow="ALWAYS">
                     <children>
-                        <Label text="Nome de utilizador:">
+                        <Label text="Identificador:">
                             <font>
                                 <Font size="16.0" />
                             </font>
@@ -69,7 +51,7 @@
                 </VBox>
                 <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label text="Email:">
+                        <Label text="Capacidade:">
                             <font>
                                 <Font size="16.0" />
                             </font>
@@ -93,7 +75,7 @@
             <children>
                 <VBox HBox.hgrow="ALWAYS">
                     <children>
-                        <Label text="Telefone:">
+                        <Label text="Está associado?:">
                             <font>
                                 <Font size="16.0" />
                             </font>
@@ -110,7 +92,7 @@
                 </VBox>
                 <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label text="Nº cartão de cidadão:">
+                        <Label text="Estado:">
                             <font>
                                 <Font size="16.0" />
                             </font>
@@ -134,36 +116,36 @@
             <children>
                 <VBox HBox.hgrow="ALWAYS">
                     <children>
-                        <Label text="NIF:">
+                        <Label text="Munícipe associado:">
                             <font>
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                        <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
-                            <font>
-                                <Font size="20.0" />
-                            </font>
-                            <padding>
-                                <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
-                            </padding>
-                        </TextField>
+                  <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                     </padding>
+                  </TextField>
                     </children>
                 </VBox>
                 <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label text="Tipo utilizador:">
+                        <Label text="NIF munícipe:">
                             <font>
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                        <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
-                            <font>
-                                <Font size="20.0" />
-                            </font>
-                            <padding>
-                                <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
-                            </padding>
-                        </TextField>
+                  <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                     </padding>
+                  </TextField>
                     </children>
                 </VBox>
             </children>
@@ -171,22 +153,6 @@
                 <Insets top="24.0" />
             </VBox.margin>
         </HBox>
-        <Label layoutX="42.0" layoutY="122.0" text="Morada:">
-            <font>
-                <Font size="16.0" />
-            </font>
-            <VBox.margin>
-                <Insets top="24.0" />
-            </VBox.margin>
-        </Label>
-        <TextField editable="false" layoutX="42.0" layoutY="155.0" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
-            <font>
-                <Font size="20.0" />
-            </font>
-            <padding>
-                <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
-            </padding>
-        </TextField>
     </children>
     <padding>
         <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />

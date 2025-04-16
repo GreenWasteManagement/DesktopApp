@@ -11,7 +11,7 @@
    <top>
       <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER_LEFT">
          <children>
-            <ImageView fitHeight="110.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/LOGO.png" />
                </image>

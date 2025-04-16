@@ -56,45 +56,41 @@
     <center>
         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
-                <HBox alignment="CENTER">
+                <HBox alignment="CENTER_LEFT">
                     <children>
-                        <Label text="Baldes">
+                        <Label text="Histórico">
                             <font>
                                 <Font name="System Bold" size="32.0" />
                             </font>
                         </Label>
-                        <Region HBox.hgrow="ALWAYS" />
-                        <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: #057222; -fx-border-radius: 15; -fx-background-radius: 15; -fx-min-width: 100%;" text="Criar" textAlignment="CENTER" textFill="WHITE">
-                            <font>
-                                <Font name="System Bold" size="24.0" />
-                            </font>
-                            <VBox.margin>
-                                <Insets />
-                            </VBox.margin>
-                            <padding>
-                                <Insets bottom="10.0" left="48.0" right="48.0" top="10.0" />
-                            </padding>
-                        </Button>
                     </children>
                     <VBox.margin>
                         <Insets left="152.0" right="152.0" top="32.0" />
                     </VBox.margin>
                 </HBox>
-            <Region prefHeight="8.0" style="-fx-background-color: #057222; -fx-background-radius: 15; -fx-border-radius: 15;">
-               <VBox.margin>
-                  <Insets left="32.0" right="32.0" top="24.0" />
-               </VBox.margin>
-            </Region>
+                <Region minHeight="8.0" prefHeight="8.0" style="-fx-background-color: #057222; -fx-background-radius: 15; -fx-border-radius: 15;" VBox.vgrow="NEVER">
+                    <VBox.margin>
+                        <Insets left="32.0" right="32.0" top="24.0" />
+                    </VBox.margin>
+                </Region>
+                <Label text="Contentores:" textAlignment="CENTER">
+                    <VBox.margin>
+                        <Insets left="32.0" top="24.0" />
+                    </VBox.margin>
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
                 <TableView style="-fx-background-color: #D9D9D9; -fx-background-radius: 0 0 15 15; -fx-border-radius: 0 0 15 15;" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn editable="false" prefWidth="75.0" text="ID" />
-                        <TableColumn editable="false" prefWidth="75.0" text="Capacidade" />
-                        <TableColumn editable="false" prefWidth="75.0" text="Associado?" />
-                        <TableColumn editable="false" prefWidth="75.0" text="Munícipe" />
-                  <TableColumn editable="false" prefWidth="75.0" sortable="false" text="Ações" />
+                        <TableColumn editable="false" prefWidth="120.0" text="ID contentor" />
+                        <TableColumn editable="false" minWidth="0.0" prefWidth="233.0" text="Localização" />
+                        <TableColumn editable="false" prefWidth="174.0" text="Capacidade" />
+                        <TableColumn editable="false" prefWidth="190.0" text="Nº descargas" />
+                        <TableColumn editable="false" prefWidth="219.0" text="Toneladas descarregadas" />
                     </columns>
                     <VBox.margin>
-                        <Insets bottom="32.0" left="32.0" right="32.0" top="24.0" />
+                        <Insets bottom="32.0" left="32.0" right="32.0" top="8.0" />
                     </VBox.margin>
                 </TableView>
             </children></VBox>

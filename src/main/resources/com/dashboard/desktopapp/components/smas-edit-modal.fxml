@@ -10,7 +10,7 @@
     <children>
         <HBox fillHeight="false" VBox.vgrow="NEVER">
             <children>
-                <Label text="Editar utilizador">
+                <Label text="Editar colaborador">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
@@ -302,9 +302,9 @@
                 <Insets top="24.0" />
             </VBox.margin>
         </HBox>
-        <HBox prefHeight="100.0" prefWidth="200.0" spacing="24.0" VBox.vgrow="ALWAYS">
+        <HBox spacing="24.0" VBox.vgrow="NEVER">
             <children>
-                <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                <VBox HBox.hgrow="ALWAYS">
                     <children>
                         <Label text="Código colaborador:">
                             <font>
@@ -321,7 +321,7 @@
                   </TextField>
                     </children>
                 </VBox>
-                <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
                     <children>
                         <Label text="Posição">
                             <font>
@@ -355,6 +355,9 @@
                     </padding>
                 </Button>
             </children>
+         <VBox.margin>
+            <Insets top="24.0" />
+         </VBox.margin>
         </HBox>
     </children>
     <padding>

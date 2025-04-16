@@ -10,7 +10,7 @@
     <children>
         <HBox fillHeight="false" VBox.vgrow="NEVER">
             <children>
-                <Label text="Visualizar utilizador">
+                <Label text="Visualizar colaborador">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="787.5" prefWidth="1400.0" styleClass="background-color" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <HBox alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+            <children>
+                <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/LOGO.png" />
+                    </image>
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                </ImageView>
+                <Label text="Painel de gestão" textFill="#057222">
+                    <font>
+                        <Font name="System Bold" size="48.0" />
+                    </font>
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                </Label>
+                <Region HBox.hgrow="ALWAYS" />
+                <HBox alignment="CENTER_RIGHT" spacing="32.0">
+                    <children>
+                        <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Menu" textAlignment="CENTER">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Button>
+                        <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Terminar sessão" textAlignment="CENTER" textFill="#c03d3d">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+            </padding>
+            <styleClass>
+                <String fx:value="hbox-shadow" />
+                <String fx:value="background-color" />
+            </styleClass>
+        </HBox>
+
+    </top>
+    <center>
+        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER">
+                    <children>
+                        <Label text="Perfil">
+                            <font>
+                                <Font name="System Bold" size="32.0" />
+                            </font>
+                        </Label>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: #057222; -fx-border-radius: 15; -fx-background-radius: 15; -fx-min-width: 100%;" text="Editar perfil" textAlignment="CENTER" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                            <padding>
+                                <Insets bottom="10.0" left="48.0" right="48.0" top="10.0" />
+                            </padding>
+                        </Button>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="152.0" right="152.0" top="32.0" />
+                    </VBox.margin>
+                </HBox>
+                <Region prefHeight="8.0" style="-fx-background-color: #057222; -fx-background-radius: 15; -fx-border-radius: 15;">
+                    <VBox.margin>
+                        <Insets left="32.0" right="32.0" top="24.0" />
+                    </VBox.margin>
+                </Region>
+            <VBox>
+               <VBox.margin>
+                  <Insets bottom="32.0" left="152.0" right="152.0" top="24.0" />
+               </VBox.margin>
+               <children>
+                  <HBox VBox.vgrow="ALWAYS">
+                      <VBox HBox.hgrow="ALWAYS">
+                          <children>
+                              <Label text="Nome:">
+                                  <font>
+                                      <Font size="16.0" />
+                                  </font>
+                              </Label>
+                              <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
+                                  <font>
+                                      <Font size="20.0" />
+                                  </font>
+                                  <padding>
+                                      <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                                  </padding>
+                              </TextField>
+                          </children>
+                      </VBox>
+                  </HBox>
+                   <HBox fillHeight="false" spacing="24.0" VBox.vgrow="NEVER">
+                       <children>
+                           <VBox HBox.hgrow="ALWAYS">
+                               <children>
+                                   <Label text="Nome de utilizador:">
+                                       <font>
+                                           <Font size="16.0" />
+                                       </font>
+                                   </Label>
+                                   <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
+                                       <font>
+                                           <Font size="20.0" />
+                                       </font>
+                                       <padding>
+                                           <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                                       </padding>
+                                   </TextField>
+                               </children>
+                           </VBox>
+                           <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
+                               <children>
+                                   <Label text="Email:">
+                                       <font>
+                                           <Font size="16.0" />
+                                       </font>
+                                   </Label>
+                                   <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
+                                       <font>
+                                           <Font size="20.0" />
+                                       </font>
+                                       <padding>
+                                           <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                                       </padding>
+                                   </TextField>
+                               </children>
+                           </VBox>
+                       </children>
+                       <VBox.margin>
+                           <Insets top="24.0" />
+                       </VBox.margin>
+                   </HBox>
+                  <HBox fillHeight="false" layoutX="10.0" layoutY="101.0" spacing="24.0">
+                     <children>
+                        <VBox HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Telefone:">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                                 </padding>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Nº cartão de cidadão:">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                                 </padding>
+                              </TextField>
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="24.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox fillHeight="false" layoutX="10.0" layoutY="192.0" spacing="24.0">
+                     <children>
+                        <VBox HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="NIF:">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                                 </padding>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Tipo utilizador:">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                                 </padding>
+                              </TextField>
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="24.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0">
+                     <children>
+                        <VBox HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Morada:">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                                 </padding>
+                              </TextField>
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="24.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+            </children></VBox>
+    </center>
+</BorderPane>

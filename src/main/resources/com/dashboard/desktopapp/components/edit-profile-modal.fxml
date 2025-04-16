@@ -10,7 +10,7 @@
     <children>
         <HBox fillHeight="false" VBox.vgrow="NEVER">
             <children>
-                <Label text="Editar administrador">
+                <Label text="Editar perfil">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
@@ -302,6 +302,47 @@
                 <Insets top="24.0" />
             </VBox.margin>
         </HBox>
+      <HBox fillHeight="false" layoutX="42.0" layoutY="221.0" spacing="24.0">
+         <children>
+            <VBox HBox.hgrow="ALWAYS">
+               <children>
+                  <Label text="Nova palavra-passe:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                     </padding>
+                  </TextField>
+               </children>
+            </VBox>
+            <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label text="Palavra-passe atual:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                     </padding>
+                  </TextField>
+               </children>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets top="24.0" />
+         </VBox.margin>
+      </HBox>
         <HBox alignment="CENTER_RIGHT" spacing="24.0" VBox.vgrow="ALWAYS">
             <children>
                 <Button mnemonicParsing="false" style="-fx-background-color: #C03D3D; -fx-background-radius: 15; -fx-border-radius: 15;" text="Cancelar" textAlignment="CENTER" textFill="WHITE">
@@ -321,9 +362,9 @@
                     </padding>
                 </Button>
             </children>
-         <VBox.margin>
-            <Insets top="24.0" />
-         </VBox.margin>
+            <VBox.margin>
+                <Insets top="24.0" />
+            </VBox.margin>
         </HBox>
     </children>
     <padding>
