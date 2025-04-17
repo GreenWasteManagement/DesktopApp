@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="787.5" prefWidth="1400.0" styleClass="background-color" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="787.5" prefWidth="1400.0" styleClass="background-color" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dashboard.desktopapp.ContainersListController">
     <top>
         <HBox alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
             <children>
@@ -30,12 +30,12 @@
                 <Region HBox.hgrow="ALWAYS" />
                 <HBox alignment="CENTER_RIGHT" spacing="32.0">
                     <children>
-                        <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Menu" textAlignment="CENTER">
+                        <Button mnemonicParsing="false" onAction="#onMenuBtnClick" style="-fx-background-color: transparent;" text="Menu" textAlignment="CENTER">
                             <font>
                                 <Font name="System Bold" size="24.0" />
                             </font>
                         </Button>
-                        <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="Terminar sessão" textAlignment="CENTER" textFill="#c03d3d">
+                        <Button mnemonicParsing="false" onAction="#onLogoutBtnClick" style="-fx-background-color: transparent;" text="Terminar sessão" textAlignment="CENTER" textFill="#c03d3d">
                             <font>
                                 <Font name="System Bold" size="24.0" />
                             </font>

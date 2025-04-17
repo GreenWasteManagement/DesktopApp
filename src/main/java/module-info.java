@@ -13,4 +13,6 @@ module com.dashboard.desktopapp {
 
     opens com.dashboard.desktopapp to javafx.fxml;
     exports com.dashboard.desktopapp;
+    opens com.dashboard.desktopapp.components to javafx.fxml;
+    exports com.dashboard.desktopapp.components to javafx.fxml;
 }
