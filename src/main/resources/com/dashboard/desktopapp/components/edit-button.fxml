@@ -5,9 +5,9 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="16.0" style="-fx-background-color: transparent;" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="buttons" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="16.0" style="-fx-background-color: transparent;" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dashboard.desktopapp.components.EditButtonsController">
    <children>
-      <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="48.0" maxWidth="48.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #FFFFFF; -fx-border-radius: 15; -fx-background-radius: 15;">
+      <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="48.0" maxWidth="48.0" mnemonicParsing="false" onAction="#onViewBtnClick" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #E2E2E2; -fx-border-radius: 15; -fx-background-radius: 15;">
          <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -22,7 +22,7 @@
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </padding>
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="48.0" maxWidth="48.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #057222; -fx-border-radius: 15; -fx-background-radius: 15;">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="48.0" maxWidth="48.0" mnemonicParsing="false" onAction="#onEditBtnClick" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #057222; -fx-border-radius: 15; -fx-background-radius: 15;">
          <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -37,7 +37,7 @@
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </padding>
       </Button>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="192.0" layoutY="10.0" maxHeight="48.0" maxWidth="48.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #C03D3D; -fx-border-radius: 15; -fx-background-radius: 15;">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="192.0" layoutY="10.0" maxHeight="48.0" maxWidth="48.0" mnemonicParsing="false" onAction="#onDeleteBtnClick" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #C03D3D; -fx-border-radius: 15; -fx-background-radius: 15;">
          <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                <image>

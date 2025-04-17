@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -30,10 +29,6 @@ public class SMASModalController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/dashboard/desktopapp/components/confirmation-modal.fxml"));
         Parent modalRoot = fxmlLoader.load();
 
-        // Pass the message to the function for confirmation modal
-        ConfirmationModalController controller = fxmlLoader.getController();
-        controller.setConfirmationText(201); // Pass the request status code to set the text
-
         // Create a new stage for the modal
         Stage modalStage = new Stage();
         modalStage.setTitle("");
@@ -43,6 +38,9 @@ public class SMASModalController {
         modalStage.initOwner(modal.getScene().getWindow());
         modalStage.setResizable(false);
         modalStage.initModality(javafx.stage.Modality.WINDOW_MODAL);
+        // Pass the message to the function for confirmation modal
+        ConfirmationModalController controller = fxmlLoader.getController();
+        controller.setConfirmationText(201); // Pass the request status code to set the text
         modalStage.showAndWait();
     }
 

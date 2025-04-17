@@ -19,7 +19,6 @@ public class ConfirmationModalController {
     }
 
     public void setConfirmationText(float statusCode) {
-
         if (statusCode == 200 || statusCode == 201) {
             confirmationText.setText("Operação realizada com sucesso!");
         }else{
