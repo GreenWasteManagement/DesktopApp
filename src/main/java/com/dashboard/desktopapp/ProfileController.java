@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -66,6 +67,30 @@ public class ProfileController {
             stage.setScene(newScene);
             stage.setMaximized(true);
             stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void onCreateBtnClick() {
+        try {
+            // Load the modal's FXML
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("components/smas-create-modal.fxml"));
+            Parent modalRoot = fxmlLoader.load();
+
+            // Create a new stage for the modal
+            Stage modalStage = new Stage();
+            modalStage.setTitle("");
+            Image image = new Image(this.getClass().getResourceAsStream("images/APP_LOGO.png"));
+            modalStage.getIcons().add(image);
+            modalStage.setScene(new Scene(modalRoot));
+            modalStage.initOwner(content.getScene().getWindow());
+            modalStage.setResizable(false);
+            modalStage.initModality(javafx.stage.Modality.WINDOW_MODAL);
+
+            modalStage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();

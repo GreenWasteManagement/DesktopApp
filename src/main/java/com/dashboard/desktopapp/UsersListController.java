@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsersListController {
-
     @FXML
     private BorderPane content;
 
@@ -156,7 +155,6 @@ public class UsersListController {
 
         smasTable.getItems().addAll(createMockUsers());
     }
-
 
     private List<User> createMockUsers() {
         List<User> users = new ArrayList<>();

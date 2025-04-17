@@ -1,20 +1,126 @@
 package com.dashboard.desktopapp;
 
+import com.dashboard.desktopapp.components.EditButtonsController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContainersListController {
 
     @FXML
     private BorderPane content;
+
+    @FXML
+    private TableView<ContainersListController.Container> containersTable;
+    @FXML
+    private TableColumn<ContainersListController.Container, Integer> idColumn;
+    @FXML
+    private TableColumn<ContainersListController.Container, Float> capacityColumn;
+    @FXML
+    private TableColumn<ContainersListController.Container, String> locationColumn;
+    @FXML
+    private TableColumn<ContainersListController.Container, Void> actionsColumn;
+
+
+    private EditButtonsController controller;
+
+    @FXML
+    public void initialize() {
+        int columnCount = 4;
+
+        // === USERS TABLE SETUP ===
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        capacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
+        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+        // Edit button column
+        actionsColumn.setCellFactory(param -> new TableCell<>() {
+            private Parent buttonComponent;
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || getIndex() >= getTableView().getItems().size()) {
+                    setGraphic(null);
+                    return;
+                }
+
+                if (buttonComponent == null) {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("components/edit-button.fxml"));
+                        buttonComponent = loader.load();
+                        controller = loader.getController();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                ContainersListController.Container container = getTableView().getItems().get(getIndex());
+                controller.setContainer(container);
+                controller.setModalType("container");
+
+                HBox hbox = new HBox(buttonComponent);
+                hbox.setAlignment(Pos.CENTER);
+                hbox.setPrefWidth(Double.MAX_VALUE);
+                setGraphic(hbox);
+            }
+        });
+
+
+        // Responsive column widths for usersTable
+        containersTable.getColumns().forEach(column -> {
+            column.prefWidthProperty().bind(containersTable.widthProperty().divide(columnCount));
+        });
+
+        // Populate with data
+        containersTable.getItems().addAll(createMockContainers());
+    }
+
+
+    private List<ContainersListController.Container> createMockContainers() {
+        List<Container> containers = new ArrayList<>();
+        containers.add(new Container(1, 120.0f, "38.7169, -9.1399"));   // Lisbon
+        containers.add(new Container(2, 90.0f, "41.1579, -8.6291"));    // Porto
+        containers.add(new Container(3, 100.0f, "40.6405, -8.6538"));   // Aveiro
+        containers.add(new Container(4, 110.0f, "39.7444, -8.8076"));   // Fátima
+        containers.add(new Container(5, 95.0f, "37.0194, -7.9304"));    // Faro
+        containers.add(new Container(6, 130.0f, "38.5244, -8.8926"));   // Setúbal
+        return containers;
+    }
+
+    // Simple POJO for mock users
+    public static class Container {
+        private final Integer id;
+        private final Float capacity;
+        private final String location;
+
+        public Container(Integer id, Float capacity, String location) {
+            this.id = id;
+            this.capacity = capacity;
+            this.location = location;
+        }
+
+        public Integer getId() { return id; }
+        public Float getCapacity() { return capacity; }
+        public String getLocation() { return location; }
+    }
 
     @FXML
     protected void onMenuBtnClick() {
@@ -66,6 +172,30 @@ public class ContainersListController {
             stage.setScene(newScene);
             stage.setMaximized(true);
             stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void onCreateBtnClick() {
+        try {
+            // Load the modal's FXML
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("components/container-create-modal.fxml"));
+            Parent modalRoot = fxmlLoader.load();
+
+            // Create a new stage for the modal
+            Stage modalStage = new Stage();
+            modalStage.setTitle("");
+            Image image = new Image(this.getClass().getResourceAsStream("images/APP_LOGO.png"));
+            modalStage.getIcons().add(image);
+            modalStage.setScene(new Scene(modalRoot));
+            modalStage.initOwner(content.getScene().getWindow());
+            modalStage.setResizable(false);
+            modalStage.initModality(javafx.stage.Modality.WINDOW_MODAL);
+
+            modalStage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,5 +1,7 @@
 package com.dashboard.desktopapp.components;
 
+import com.dashboard.desktopapp.BucketsListController;
+import com.dashboard.desktopapp.ContainersListController;
 import com.dashboard.desktopapp.UsersListController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,12 +16,20 @@ import java.io.IOException;
 public class EditButtonsController {
 
     private UsersListController.User user;
+    private BucketsListController.Bucket bucket;
+    private ContainersListController.Container container;
     private String modalType;
     @FXML
     private HBox buttons;
 
     public void setUser(UsersListController.User user) {
         this.user = user;
+    }
+    public void setBucket(BucketsListController.Bucket bucket) {
+        this.bucket = bucket;
+    }
+    public void setContainer(ContainersListController.Container container) {
+        this.container = container;
     }
     public void setModalType(String modalType) {
         this.modalType = modalType;
@@ -28,7 +38,11 @@ public class EditButtonsController {
     @FXML
     public void onViewBtnClick() {
         if (user != null) {
-            System.out.println("Viewing user ID: " + user.getId());
+            System.out.println("Editing user ID: " + user.getId());
+        } else if (bucket != null) {
+            System.out.println("Editing bucket ID: " + bucket.getId());
+        } else if (container != null) {
+            System.out.println("Editing container ID: " + container.getId());
         }
         try {
             // Load the modal's FXML
@@ -57,6 +71,10 @@ public class EditButtonsController {
     public void onEditBtnClick() {
         if (user != null) {
             System.out.println("Editing user ID: " + user.getId());
+        } else if (bucket != null) {
+            System.out.println("Editing bucket ID: " + bucket.getId());
+        } else if (container != null) {
+            System.out.println("Editing container ID: " + container.getId());
         }
         try {
             // Load the modal's FXML
@@ -84,7 +102,11 @@ public class EditButtonsController {
     @FXML
     public void onDeleteBtnClick() {
         if (user != null) {
-            System.out.println("Deleting user ID: " + user.getId());
+            System.out.println("Editing user ID: " + user.getId());
+        } else if (bucket != null) {
+            System.out.println("Editing bucket ID: " + bucket.getId());
+        } else if (container != null) {
+            System.out.println("Editing container ID: " + container.getId());
         }
         try {
             // Load the modal's FXML

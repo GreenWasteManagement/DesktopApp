@@ -32,7 +32,7 @@
       </Label>
         <HBox alignment="CENTER_RIGHT" spacing="24.0" VBox.vgrow="ALWAYS">
             <children>
-                <Button mnemonicParsing="false" onAction="#onCancelBtnClick" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15; -fx-border-radius: 15;" text="Cancelar" textAlignment="CENTER">
+                <Button mnemonicParsing="false" onAction="#onCancelBtnClick" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15; -fx-border-radius: 15;" styleClass="hover" text="Cancelar" textAlignment="CENTER">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
@@ -40,7 +40,7 @@
                         <Insets bottom="4.0" left="32.0" right="32.0" top="4.0" />
                     </padding>
                 </Button>
-                <Button mnemonicParsing="false" onAction="#onConfirmBtnClick" style="-fx-background-color: #C03D3D; -fx-background-radius: 15; -fx-border-radius: 15;" text="Confirmar" textAlignment="CENTER" textFill="WHITE">
+                <Button mnemonicParsing="false" onAction="#onConfirmBtnClick" style="-fx-background-color: #C03D3D; -fx-background-radius: 15; -fx-border-radius: 15;" styleClass="hover" text="Confirmar" textAlignment="CENTER" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
