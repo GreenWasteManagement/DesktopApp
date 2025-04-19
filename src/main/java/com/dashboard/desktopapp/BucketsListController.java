@@ -1,5 +1,6 @@
 package com.dashboard.desktopapp;
 
+import com.dashboard.desktopapp.models.Bucket;
 import com.dashboard.desktopapp.components.EditButtonsController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,17 +28,17 @@ public class BucketsListController {
     private BorderPane content;
 
     @FXML
-    private TableView<BucketsListController.Bucket> bucketsTable;
+    private TableView<Bucket> bucketsTable;
     @FXML
-    private TableColumn<BucketsListController.Bucket, Integer> idColumn;
+    private TableColumn<Bucket, Integer> idColumn;
     @FXML
-    private TableColumn<BucketsListController.Bucket, Integer> capacityColumn;
+    private TableColumn<Bucket, Integer> capacityColumn;
     @FXML
-    private TableColumn<BucketsListController.Bucket, Integer> associatedColumn;
+    private TableColumn<Bucket, Integer> associatedColumn;
     @FXML
-    private TableColumn<BucketsListController.Bucket, Integer> municipalityColumn;
+    private TableColumn<Bucket, Integer> municipalityColumn;
     @FXML
-    private TableColumn<BucketsListController.Bucket, Void> actionsColumn;
+    private TableColumn<Bucket, Void> actionsColumn;
 
 
     private EditButtonsController controller;
@@ -75,7 +76,7 @@ public class BucketsListController {
                     }
                 }
 
-                BucketsListController.Bucket bucket = getTableView().getItems().get(getIndex());
+                Bucket bucket = getTableView().getItems().get(getIndex());
                 controller.setBucket(bucket);
                 controller.setModalType("bucket");
 
@@ -96,36 +97,15 @@ public class BucketsListController {
         bucketsTable.getItems().addAll(createMockBuckets());
     }
 
-
-    private List<BucketsListController.Bucket> createMockBuckets() {
-        List<BucketsListController.Bucket> buckets = new ArrayList<>();
-        buckets.add(new Bucket(1, 50.0f, true, "Tio quim"));
-        buckets.add(new Bucket(2, 75.5f, false, "Tio quim"));
-        buckets.add(new Bucket(3, 100.0f, true, "Tio quim"));
-        buckets.add(new Bucket(4, 25.0f, false, "Tio quim"));
-        buckets.add(new Bucket(5, 60.0f, true, "Tio quim"));
-        buckets.add(new Bucket(6, 80.0f, false, "Tio quim"));
+    private List<Bucket> createMockBuckets() {
+        List<Bucket> buckets = new ArrayList<>();
+        buckets.add(new Bucket(1, 50.0f, true, "Em uso", "Tio quim"));
+        buckets.add(new Bucket(2, 75.5f, false, "Em uso", "Tio quim"));
+        buckets.add(new Bucket(3, 100.0f, true, "Em uso", "Tio quim"));
+        buckets.add(new Bucket(4, 25.0f, false, "Em uso", "Tio quim"));
+        buckets.add(new Bucket(5, 60.0f, true, "Em uso", "Tio quim"));
+        buckets.add(new Bucket(6, 80.0f, false, "Em uso", "Tio quim"));
         return buckets;
-    }
-
-    // Simple POJO for mock users
-    public static class Bucket {
-        private final Integer id;
-        private final Float capacity;
-        private final Boolean associated;
-        private final String municipality;
-
-        public Bucket(Integer id, Float capacity, Boolean associated, String municipality) {
-            this.id = id;
-            this.capacity = capacity;
-            this.associated = associated;
-            this.municipality = municipality;
-        }
-
-        public Integer getId() { return id; }
-        public Float getCapacity() { return capacity; }
-        public Boolean getAssociated() { return associated; }
-        public String getMunicipality() { return municipality; }
     }
 
     @FXML

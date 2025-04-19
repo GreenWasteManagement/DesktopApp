@@ -12,7 +12,9 @@ module com.dashboard.desktopapp {
     requires com.almasb.fxgl.all;
 
     opens com.dashboard.desktopapp to javafx.fxml;
-    exports com.dashboard.desktopapp;
     opens com.dashboard.desktopapp.components to javafx.fxml;
+    opens com.dashboard.desktopapp.models to javafx.base;
+    exports com.dashboard.desktopapp;
     exports com.dashboard.desktopapp.components to javafx.fxml;
+    exports com.dashboard.desktopapp.models to javafx.base;
 }

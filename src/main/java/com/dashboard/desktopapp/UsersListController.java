@@ -1,5 +1,8 @@
 package com.dashboard.desktopapp;
 
+import com.dashboard.desktopapp.models.Bucket;
+import com.dashboard.desktopapp.models.Municipality;
+import com.dashboard.desktopapp.models.SMAS;
 import com.dashboard.desktopapp.components.EditButtonsController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,34 +29,34 @@ public class UsersListController {
     private BorderPane content;
 
     @FXML
-    private TableView<User> usersTable;
+    private TableView<Municipality> usersTable;
     @FXML
-    private TableColumn<User, Integer> idColumn;
+    private TableColumn<Municipality, Integer> idColumn;
     @FXML
-    private TableColumn<User, String> usernameColumn;
+    private TableColumn<Municipality, String> usernameColumn;
     @FXML
-    private TableColumn<User, String> nameColumn;
+    private TableColumn<Municipality, String> nameColumn;
     @FXML
-    private TableColumn<User, String> ssnColumn;
+    private TableColumn<Municipality, String> ccColumn;
     @FXML
-    private TableColumn<User, String> phoneColumn;
+    private TableColumn<Municipality, String> phoneColumn;
     @FXML
-    private TableColumn<User, Void> actionsColumn;
+    private TableColumn<Municipality, Void> actionsColumn;
 
     @FXML
-    private TableView<User> smasTable;
+    private TableView<SMAS> smasTable;
     @FXML
-    private TableColumn<User, Integer> smasidColumn;
+    private TableColumn<SMAS, Integer> smasidColumn;
     @FXML
-    private TableColumn<User, String> smasusernameColumn;
+    private TableColumn<SMAS, String> smasusernameColumn;
     @FXML
-    private TableColumn<User, String> smasnameColumn;
+    private TableColumn<SMAS, String> smasnameColumn;
     @FXML
-    private TableColumn<User, String> smasssnColumn;
+    private TableColumn<SMAS, String> smasccColumn;
     @FXML
-    private TableColumn<User, String> smasphoneColumn;
+    private TableColumn<SMAS, String> smasphoneColumn;
     @FXML
-    private TableColumn<User, Void> smasactionsColumn;
+    private TableColumn<SMAS, Void> smasactionsColumn;
 
     private EditButtonsController controller;
 
@@ -65,12 +68,12 @@ public class UsersListController {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        ssnColumn.setCellValueFactory(new PropertyValueFactory<>("ssn"));
+        ccColumn.setCellValueFactory(new PropertyValueFactory<>("cc"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
         smasidColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         smasusernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
         smasnameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        smasssnColumn.setCellValueFactory(new PropertyValueFactory<>("ssn"));
+        smasccColumn.setCellValueFactory(new PropertyValueFactory<>("cc"));
         smasphoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
         // Edit button column
@@ -96,10 +99,9 @@ public class UsersListController {
                     }
                 }
 
-                User user = getTableView().getItems().get(getIndex());
-                controller.setUser(user);
+                Municipality user = getTableView().getItems().get(getIndex());
+                controller.setMunicipality(user);
                 controller.setModalType("municipality");
-
                 HBox hbox = new HBox(buttonComponent);
                 hbox.setAlignment(Pos.CENTER);
                 hbox.setPrefWidth(Double.MAX_VALUE);
@@ -129,8 +131,8 @@ public class UsersListController {
                     }
                 }
 
-                User user = getTableView().getItems().get(getIndex());
-                controller.setUser(user);
+                SMAS user = getTableView().getItems().get(getIndex());
+                controller.setSMAS(user);
                 controller.setModalType("smas");
 
                 HBox hbox = new HBox(buttonComponent);
@@ -153,60 +155,50 @@ public class UsersListController {
             column.prefWidthProperty().bind(smasTable.widthProperty().divide(columnCount));
         });
 
-        smasTable.getItems().addAll(createMockUsers());
+        smasTable.getItems().addAll(createMockSmas());
     }
 
-    private List<User> createMockUsers() {
-        List<User> users = new ArrayList<>();
-        users.add(new User(1, "jdoe", "John Doe", "123-45-6789", "+351912345678"));
-        users.add(new User(2, "asmith", "Alice Smith", "987-65-4321", "+351987654321"));
-        users.add(new User(1, "jdoe", "John Doe", "123-45-6789", "+351912345678"));
-        users.add(new User(2, "asmith", "Alice Smith", "987-65-4321", "+351987654321"));
-        users.add(new User(1, "jdoe", "John Doe", "123-45-6789", "+351912345678"));
-        users.add(new User(2, "asmith", "Alice Smith", "987-65-4321", "+351987654321"));
-        users.add(new User(1, "jdoe", "John Doe", "123-45-6789", "+351912345678"));
-        users.add(new User(2, "asmith", "Alice Smith", "987-65-4321", "+351987654321"));
-        users.add(new User(1, "jdoe", "John Doe", "123-45-6789", "+351912345678"));
-        users.add(new User(2, "asmith", "Alice Smith", "987-65-4321", "+351987654321"));
-        users.add(new User(1, "jdoe", "John Doe", "123-45-6789", "+351912345678"));
-        users.add(new User(2, "asmith", "Alice Smith", "987-65-4321", "+351987654321"));
-        users.add(new User(1, "jdoe", "John Doe", "123-45-6789", "+351912345678"));
-        users.add(new User(2, "asmith", "Alice Smith", "987-65-4321", "+351987654321"));
-        users.add(new User(1, "jdoe", "John Doe", "123-45-6789", "+351912345678"));
-        users.add(new User(2, "asmith", "Alice Smith", "987-65-4321", "+351987654321"));
-        users.add(new User(1, "jdoe", "John Doe", "123-45-6789", "+351912345678"));
-        users.add(new User(2, "asmith", "Alice Smith", "987-65-4321", "+351987654321"));
-        users.add(new User(1, "jdoe", "John Doe", "123-45-6789", "+351912345678"));
-        users.add(new User(2, "asmith", "Alice Smith", "987-65-4321", "+351987654321"));
-        users.add(new User(1, "jdoe", "John Doe", "123-45-6789", "+351912345678"));
-        users.add(new User(2, "asmith", "Alice Smith", "987-65-4321", "+351987654321"));
-        users.add(new User(1, "jdoe", "John Doe", "123-45-6789", "+351912345678"));
-        users.add(new User(2, "asmith", "Alice Smith", "987-65-4321", "+351987654321"));
-        users.add(new User(1, "jdoe", "John Doe", "123-45-6789", "+351912345678"));
+    private List<Municipality> createMockUsers() {
+        Bucket bucket1 = new Bucket(1, 50.0f, true, "Em uso","Lisbon");
+        Bucket bucket2 = new Bucket(2, 75.5f, false, "Inutilizado", "Porto");
+
+        List<Bucket> bucketList = new ArrayList<>();
+        bucketList.add(bucket1);
+        bucketList.add(bucket2);
+        List<Municipality> users = new ArrayList<>();
+        users.add(new Municipality(
+                1,
+                "Jane Doe",
+                "jdoe",
+                "jane@example.com",
+                "912345678",
+                12345678.0,
+                987654321.0,
+                "municipality",
+                "456 Municipal Avenue",
+                bucketList
+        ));
+
         return users;
     }
 
-    // Simple POJO for mock users
-    public static class User {
-        private final Integer id;
-        private final String username;
-        private final String name;
-        private final String ssn;
-        private final String phone;
+    private List<SMAS> createMockSmas() {
+        List<SMAS> users = new ArrayList<>();
+        users.add(new SMAS(
+                1,
+                "Jane Doe",
+                "jdoe",
+                "jane@example.com",
+                "912345678",
+                12345678.0,
+                987654321.0,
+                "municipality",
+                "456 Municipal Avenue",
+                "123345",
+                "Garbage collector"
+        ));
 
-        public User(Integer id, String username, String name, String ssn, String phone) {
-            this.id = id;
-            this.username = username;
-            this.name = name;
-            this.ssn = ssn;
-            this.phone = phone;
-        }
-
-        public Integer getId() { return id; }
-        public String getUsername() { return username; }
-        public String getName() { return name; }
-        public String getSsn() { return ssn; }
-        public String getPhone() { return phone; }
+        return users;
     }
 
     @FXML

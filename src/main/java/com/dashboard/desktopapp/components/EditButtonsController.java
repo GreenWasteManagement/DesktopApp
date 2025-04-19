@@ -1,8 +1,10 @@
 package com.dashboard.desktopapp.components;
 
-import com.dashboard.desktopapp.BucketsListController;
-import com.dashboard.desktopapp.ContainersListController;
-import com.dashboard.desktopapp.UsersListController;
+import com.dashboard.desktopapp.models.Municipality;
+import com.dashboard.desktopapp.models.SMAS;
+import com.dashboard.desktopapp.models.Bucket;
+import com.dashboard.desktopapp.models.Container;
+import com.dashboard.desktopapp.components.MunicipalityModalController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,20 +17,25 @@ import java.io.IOException;
 
 public class EditButtonsController {
 
-    private UsersListController.User user;
-    private BucketsListController.Bucket bucket;
-    private ContainersListController.Container container;
+    private Municipality municipality;
+    private SMAS smas;
+    private Bucket bucket;
+    private Container container;
     private String modalType;
+    private MunicipalityModalController municipalityController;
     @FXML
     private HBox buttons;
 
-    public void setUser(UsersListController.User user) {
-        this.user = user;
+    public void setMunicipality(Municipality municipality) {
+        this.municipality = municipality;
     }
-    public void setBucket(BucketsListController.Bucket bucket) {
+    public void setSMAS(SMAS smas) {
+        this.smas = smas;
+    }
+    public void setBucket(Bucket bucket) {
         this.bucket = bucket;
     }
-    public void setContainer(ContainersListController.Container container) {
+    public void setContainer(Container container) {
         this.container = container;
     }
     public void setModalType(String modalType) {
@@ -37,8 +44,10 @@ public class EditButtonsController {
 
     @FXML
     public void onViewBtnClick() {
-        if (user != null) {
-            System.out.println("Editing user ID: " + user.getId());
+        if (municipality != null) {
+            System.out.println("Editing user ID: " + municipality.getId());
+        } else if (smas != null) {
+            System.out.println("Editing smas ID: " + smas.getId());
         } else if (bucket != null) {
             System.out.println("Editing bucket ID: " + bucket.getId());
         } else if (container != null) {
@@ -49,6 +58,8 @@ public class EditButtonsController {
             String fxmlPath = String.format("/com/dashboard/desktopapp/components/%s-view-modal.fxml", modalType);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent modalRoot = fxmlLoader.load();
+            municipalityController = fxmlLoader.getController();
+            municipalityController.setUserInfo(municipality);
 
             // Create a new stage for the modal
             Stage modalStage = new Stage();
@@ -59,7 +70,6 @@ public class EditButtonsController {
             modalStage.initOwner(buttons.getScene().getWindow());
             modalStage.setResizable(false);
             modalStage.initModality(javafx.stage.Modality.WINDOW_MODAL);
-
             modalStage.showAndWait();
 
         } catch (IOException e) {
@@ -69,8 +79,10 @@ public class EditButtonsController {
 
     @FXML
     public void onEditBtnClick() {
-        if (user != null) {
-            System.out.println("Editing user ID: " + user.getId());
+        if (municipality != null) {
+            System.out.println("Editing user ID: " + municipality.getId());
+        } else if (smas != null) {
+            System.out.println("Editing smas ID: " + smas.getId());
         } else if (bucket != null) {
             System.out.println("Editing bucket ID: " + bucket.getId());
         } else if (container != null) {
@@ -101,8 +113,10 @@ public class EditButtonsController {
 
     @FXML
     public void onDeleteBtnClick() {
-        if (user != null) {
-            System.out.println("Editing user ID: " + user.getId());
+        if (municipality != null) {
+            System.out.println("Editing user ID: " + municipality.getId());
+        } else if (smas != null) {
+            System.out.println("Editing smas ID: " + smas.getId());
         } else if (bucket != null) {
             System.out.println("Editing bucket ID: " + bucket.getId());
         } else if (container != null) {

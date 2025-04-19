@@ -91,7 +91,7 @@
                                   <TableColumn fx:id="idColumn" editable="false" prefWidth="75.0" resizable="false" text="ID" />
                                   <TableColumn fx:id="usernameColumn" editable="false" prefWidth="75.0" resizable="false" text="Nome utilizador" />
                                     <TableColumn fx:id="nameColumn" editable="false" prefWidth="75.0" resizable="false" text="Nome" />
-                                    <TableColumn fx:id="ssnColumn" editable="false" prefWidth="75.0" resizable="false" text="NIF" />
+                                    <TableColumn fx:id="ccColumn" editable="false" prefWidth="75.0" resizable="false" text="NIF" />
                                     <TableColumn fx:id="phoneColumn" editable="false" prefWidth="75.0" resizable="false" text="Telefone" />
                                     <TableColumn fx:id="actionsColumn" editable="false" prefWidth="75.0" resizable="false" sortable="false" text="Ações" />
                                 </columns>
@@ -108,7 +108,7 @@
                                     <TableColumn fx:id="smasidColumn" editable="false" prefWidth="75.0" resizable="false" text="ID" />
                                     <TableColumn fx:id="smasusernameColumn" editable="false" prefWidth="75.0" resizable="false" text="Nome utilizador" />
                                     <TableColumn fx:id="smasnameColumn" editable="false" prefWidth="75.0" resizable="false" text="Nome" />
-                                    <TableColumn fx:id="smasssnColumn" editable="false" prefWidth="75.0" resizable="false" text="NIF" />
+                                    <TableColumn fx:id="smasccColumn" editable="false" prefWidth="75.0" resizable="false" text="NIF" />
                                     <TableColumn fx:id="smasphoneColumn" editable="false" prefWidth="75.0" resizable="false" text="Telefone" />
                                     <TableColumn fx:id="smasactionsColumn" editable="false" prefWidth="75.0" resizable="false" sortable="false" text="Ações" />
                                  </columns>

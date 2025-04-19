@@ -1,5 +1,6 @@
 package com.dashboard.desktopapp;
 
+import com.dashboard.desktopapp.models.Container;
 import com.dashboard.desktopapp.components.EditButtonsController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,15 +28,15 @@ public class ContainersListController {
     private BorderPane content;
 
     @FXML
-    private TableView<ContainersListController.Container> containersTable;
+    private TableView<Container> containersTable;
     @FXML
-    private TableColumn<ContainersListController.Container, Integer> idColumn;
+    private TableColumn<Container, Integer> idColumn;
     @FXML
-    private TableColumn<ContainersListController.Container, Float> capacityColumn;
+    private TableColumn<Container, Float> capacityColumn;
     @FXML
-    private TableColumn<ContainersListController.Container, String> locationColumn;
+    private TableColumn<Container, String> locationColumn;
     @FXML
-    private TableColumn<ContainersListController.Container, Void> actionsColumn;
+    private TableColumn<Container, Void> actionsColumn;
 
 
     private EditButtonsController controller;
@@ -72,7 +73,7 @@ public class ContainersListController {
                     }
                 }
 
-                ContainersListController.Container container = getTableView().getItems().get(getIndex());
+                Container container = getTableView().getItems().get(getIndex());
                 controller.setContainer(container);
                 controller.setModalType("container");
 
@@ -94,7 +95,7 @@ public class ContainersListController {
     }
 
 
-    private List<ContainersListController.Container> createMockContainers() {
+    private List<Container> createMockContainers() {
         List<Container> containers = new ArrayList<>();
         containers.add(new Container(1, 120.0f, "38.7169, -9.1399"));   // Lisbon
         containers.add(new Container(2, 90.0f, "41.1579, -8.6291"));    // Porto
@@ -103,23 +104,6 @@ public class ContainersListController {
         containers.add(new Container(5, 95.0f, "37.0194, -7.9304"));    // Faro
         containers.add(new Container(6, 130.0f, "38.5244, -8.8926"));   // Setúbal
         return containers;
-    }
-
-    // Simple POJO for mock users
-    public static class Container {
-        private final Integer id;
-        private final Float capacity;
-        private final String location;
-
-        public Container(Integer id, Float capacity, String location) {
-            this.id = id;
-            this.capacity = capacity;
-            this.location = location;
-        }
-
-        public Integer getId() { return id; }
-        public Float getCapacity() { return capacity; }
-        public String getLocation() { return location; }
     }
 
     @FXML
