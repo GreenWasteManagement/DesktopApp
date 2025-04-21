@@ -172,10 +172,16 @@ public class UsersListController {
                 "jdoe",
                 "jane@example.com",
                 "912345678",
-                12345678.0,
-                987654321.0,
+                12345678,
+                987654321,
                 "municipality",
-                "456 Municipal Avenue",
+                "Esq.",
+                2,
+                349,
+                "Rua de Viana",
+                "4900-555",
+                "Viana do castelo",
+                "Viana do castelo",
                 bucketList
         ));
 
@@ -185,17 +191,23 @@ public class UsersListController {
     private List<SMAS> createMockSmas() {
         List<SMAS> users = new ArrayList<>();
         users.add(new SMAS(
-                1,
+                2,
                 "Jane Doe",
                 "jdoe",
                 "jane@example.com",
                 "912345678",
-                12345678.0,
-                987654321.0,
+                12345678,
+                987654321,
                 "municipality",
-                "456 Municipal Avenue",
-                "123345",
-                "Garbage collector"
+                "Esq.",
+                2,
+                349,
+                "Rua de Viana",
+                "4900-555",
+                "Viana do castelo",
+                "Viana do castelo",
+                "18444",
+                "Garbage Collector"
         ));
 
         return users;

@@ -1,6 +1,5 @@
 package com.dashboard.desktopapp.components;
 
-import com.dashboard.desktopapp.models.Bucket;
 import com.dashboard.desktopapp.models.Municipality;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,9 +40,30 @@ public class MunicipalityModalController {
     @FXML
     private TextField address;
     @FXML
+    private TextField floorDetails;
+    @FXML
+    private TextField floorNumber;
+    @FXML
+    private TextField doorNumber;
+    @FXML
+    private TextField street;
+    @FXML
+    private TextField postalCode;
+    @FXML
+    private TextField county;
+    @FXML
+    private TextField district;
+
+    @FXML
     private ListView<com.dashboard.desktopapp.models.Bucket> buckets;
 
-    public void setUserInfo(Municipality municipality) {
+    public String setAddress(Municipality municipality) {
+        String address = String.format("%s, %d, %d, %s, %s, %s, %s",
+                municipality.getStreet(), municipality.getDoorNumber(), municipality.getFloorNumber(), municipality.getFloorDetails(), municipality.getPostalCode(), municipality.getCounty(), municipality.getDistrict());
+        return address;
+    }
+
+    public void setViewUserInfo(Municipality municipality) {
         this.id.setText(municipality.getId().toString());
         this.name.setText(municipality.getName());
         this.username.setText(municipality.getUsername());
@@ -52,7 +72,44 @@ public class MunicipalityModalController {
         this.cc.setText(municipality.getCc().toString());
         this.nif.setText(municipality.getNif().toString());
         this.userType.setText(municipality.getUserType());
-        this.address.setText(municipality.getAddress());
+        this.address.setText(setAddress(municipality));
+        ObservableList<com.dashboard.desktopapp.models.Bucket> items = FXCollections.observableArrayList(municipality.getBucketList());
+        buckets.setItems(items);
+        buckets.setCellFactory(list -> new ListCell<>() {
+            @Override
+            protected void updateItem(com.dashboard.desktopapp.models.Bucket bucket, boolean empty) {
+                super.updateItem(bucket, empty);
+                if (empty || bucket == null) {
+                    setText(null);
+                } else {
+                    setText(String.format(
+                            "ID: %d | Capacidade: %.2f | Estado: %s",
+                            bucket.getId(),
+                            bucket.getCapacity(),
+                            bucket.getState()
+                    ));
+                }
+            }
+        });
+
+    }
+
+    public void setEditUserInfo(Municipality municipality) {
+        this.id.setText(municipality.getId().toString());
+        this.name.setText(municipality.getName());
+        this.username.setText(municipality.getUsername());
+        this.email.setText(municipality.getEmail());
+        this.phone.setText(municipality.getPhone());
+        this.cc.setText(municipality.getCc().toString());
+        this.nif.setText(municipality.getNif().toString());
+        this.userType.setText(municipality.getUserType());
+        this.floorDetails.setText(municipality.getFloorDetails());
+        this.floorNumber.setText(municipality.getFloorNumber().toString());
+        this.doorNumber.setText(municipality.getDoorNumber().toString());
+        this.street.setText(municipality.getStreet());
+        this.postalCode.setText(municipality.getPostalCode());
+        this.county.setText(municipality.getCounty());
+        this.district.setText(municipality.getDistrict());
         ObservableList<com.dashboard.desktopapp.models.Bucket> items = FXCollections.observableArrayList(municipality.getBucketList());
         buckets.setItems(items);
         buckets.setCellFactory(list -> new ListCell<>() {
@@ -106,24 +163,5 @@ public class MunicipalityModalController {
     public void closeModal() {
         Stage stage = (Stage) (modal.getScene().getWindow());
         stage.close();
-    }
-
-    public static class Bucket {
-        private final Integer id;
-        private final Float capacity;
-        private final Boolean associated;
-        private final String municipality;
-
-        public Bucket(Integer id, Float capacity, Boolean associated, String municipality) {
-            this.id = id;
-            this.capacity = capacity;
-            this.associated = associated;
-            this.municipality = municipality;
-        }
-
-        public Integer getId() { return id; }
-        public Float getCapacity() { return capacity; }
-        public Boolean getAssociated() { return associated; }
-        public String getMunicipality() { return municipality; }
     }
 }

@@ -23,6 +23,10 @@ public class EditButtonsController {
     private Container container;
     private String modalType;
     private MunicipalityModalController municipalityController;
+    private SMASModalController smasController;
+    private BucketsModalController bucketController;
+    private ContainersModalController containerController;
+
     @FXML
     private HBox buttons;
 
@@ -44,22 +48,26 @@ public class EditButtonsController {
 
     @FXML
     public void onViewBtnClick() {
-        if (municipality != null) {
-            System.out.println("Editing user ID: " + municipality.getId());
-        } else if (smas != null) {
-            System.out.println("Editing smas ID: " + smas.getId());
-        } else if (bucket != null) {
-            System.out.println("Editing bucket ID: " + bucket.getId());
-        } else if (container != null) {
-            System.out.println("Editing container ID: " + container.getId());
-        }
         try {
             // Load the modal's FXML
             String fxmlPath = String.format("/com/dashboard/desktopapp/components/%s-view-modal.fxml", modalType);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent modalRoot = fxmlLoader.load();
-            municipalityController = fxmlLoader.getController();
-            municipalityController.setUserInfo(municipality);
+            if (municipality != null) {
+                System.out.println("Editing user ID: " + municipality.getId());
+                municipalityController = fxmlLoader.getController();
+                municipalityController.setViewUserInfo(municipality);
+            } else if (smas != null) {
+                System.out.println("Editing smas ID: " + smas.getId());
+                smasController = fxmlLoader.getController();
+                smasController.setViewUserInfo(smas);
+            } else if (bucket != null) {
+                System.out.println("Editing bucket ID: " + bucket.getId());
+                bucketController = fxmlLoader.getController();
+            } else if (container != null) {
+                System.out.println("Editing container ID: " + container.getId());
+                containerController = fxmlLoader.getController();
+            }
 
             // Create a new stage for the modal
             Stage modalStage = new Stage();
@@ -79,20 +87,13 @@ public class EditButtonsController {
 
     @FXML
     public void onEditBtnClick() {
-        if (municipality != null) {
-            System.out.println("Editing user ID: " + municipality.getId());
-        } else if (smas != null) {
-            System.out.println("Editing smas ID: " + smas.getId());
-        } else if (bucket != null) {
-            System.out.println("Editing bucket ID: " + bucket.getId());
-        } else if (container != null) {
-            System.out.println("Editing container ID: " + container.getId());
-        }
         try {
             // Load the modal's FXML
             String fxmlPath = String.format("/com/dashboard/desktopapp/components/%s-edit-modal.fxml", modalType);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent modalRoot = fxmlLoader.load();
+            municipalityController = fxmlLoader.getController();
+            municipalityController.setEditUserInfo(municipality);
 
             // Create a new stage for the modal
             Stage modalStage = new Stage();
@@ -113,15 +114,6 @@ public class EditButtonsController {
 
     @FXML
     public void onDeleteBtnClick() {
-        if (municipality != null) {
-            System.out.println("Editing user ID: " + municipality.getId());
-        } else if (smas != null) {
-            System.out.println("Editing smas ID: " + smas.getId());
-        } else if (bucket != null) {
-            System.out.println("Editing bucket ID: " + bucket.getId());
-        } else if (container != null) {
-            System.out.println("Editing container ID: " + container.getId());
-        }
         try {
             // Load the modal's FXML
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/dashboard/desktopapp/components/confirm-delete-modal.fxml"));

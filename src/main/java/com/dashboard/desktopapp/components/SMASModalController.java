@@ -1,9 +1,15 @@
 package com.dashboard.desktopapp.components;
 
+import com.dashboard.desktopapp.models.Municipality;
+import com.dashboard.desktopapp.models.SMAS;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -14,6 +20,82 @@ public class SMASModalController {
 
     @FXML
     private VBox modal;
+    @FXML
+    private TextField id;
+    @FXML
+    private TextField name;
+    @FXML
+    private TextField username;
+    @FXML
+    private TextField email;
+    @FXML
+    private TextField phone;
+    @FXML
+    private TextField cc;
+    @FXML
+    private TextField nif;
+    @FXML
+    private TextField userType;
+    @FXML
+    private TextField address;
+    @FXML
+    private TextField floorDetails;
+    @FXML
+    private TextField floorNumber;
+    @FXML
+    private TextField doorNumber;
+    @FXML
+    private TextField street;
+    @FXML
+    private TextField postalCode;
+    @FXML
+    private TextField county;
+    @FXML
+    private TextField district;
+    @FXML
+    private TextField workerId;
+    @FXML
+    private TextField position;
+
+    public String setAddress(SMAS smas) {
+        String address = String.format("%s, %d, %d, %s, %s, %s, %s",
+                smas.getStreet(), smas.getDoorNumber(), smas.getFloorNumber(), smas.getFloorDetails(), smas.getPostalCode(), smas.getCounty(), smas.getDistrict());
+        return address;
+    }
+
+    public void setViewUserInfo(SMAS smas) {
+        this.id.setText(smas.getId().toString());
+        this.name.setText(smas.getName());
+        this.username.setText(smas.getUsername());
+        this.email.setText(smas.getEmail());
+        this.phone.setText(smas.getPhone());
+        this.cc.setText(smas.getCc().toString());
+        this.nif.setText(smas.getNif().toString());
+        this.userType.setText(smas.getUserType());
+        this.address.setText(setAddress(smas));
+        this.workerId.setText(smas.getWorkerId());
+        this.position.setText(smas.getPosition());
+    }
+
+    public void setEditUserInfo(SMAS smas) {
+        this.id.setText(smas.getId().toString());
+        this.name.setText(smas.getName());
+        this.username.setText(smas.getUsername());
+        this.email.setText(smas.getEmail());
+        this.phone.setText(smas.getPhone());
+        this.cc.setText(smas.getCc().toString());
+        this.nif.setText(smas.getNif().toString());
+        this.userType.setText(smas.getUserType());
+        this.floorDetails.setText(smas.getFloorDetails());
+        this.floorNumber.setText(smas.getFloorNumber().toString());
+        this.doorNumber.setText(smas.getDoorNumber().toString());
+        this.street.setText(smas.getStreet());
+        this.postalCode.setText(smas.getPostalCode());
+        this.county.setText(smas.getCounty());
+        this.district.setText(smas.getDistrict());
+        this.workerId.setText(smas.getWorkerId());
+        this.position.setText(smas.getPosition());
+    }
 
     @FXML
     public void onCancelBtnClick() {
