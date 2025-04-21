@@ -216,33 +216,38 @@
                   </TextField>
                </children>
             </VBox>
-            <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
+            <VBox layoutX="10.0" layoutY="10.0">
                <children>
                   <Label text="Andar:" VBox.vgrow="ALWAYS">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <HBox spacing="16.0">
-                     <children>
-                        <TextField fx:id="floorNumber" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css" HBox.hgrow="ALWAYS">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
-                           </padding>
-                        </TextField>
-                        <TextField fx:id="floorDetails" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css" HBox.hgrow="ALWAYS">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
-                           </padding>
-                        </TextField>
-                     </children>
-                  </HBox>
+                  <TextField fx:id="floorNumber" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                     </padding>
+                  </TextField>
+               </children>
+            </VBox>
+            <VBox layoutX="264.0" layoutY="10.0">
+               <children>
+                  <Label VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="floorDetails" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                     </padding>
+                  </TextField>
                </children>
             </VBox>
             <VBox HBox.hgrow="ALWAYS">

@@ -1,9 +1,13 @@
 package com.dashboard.desktopapp.components;
 
+import com.dashboard.desktopapp.models.Bucket;
+import com.dashboard.desktopapp.models.Container;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -14,6 +18,29 @@ public class ContainersModalController {
 
     @FXML
     private VBox modal;
+
+    @FXML
+    private TextField id;
+    @FXML
+    private TextField capacity;
+    @FXML
+    private TextField location;
+    @FXML
+    private TextField currentVolume;
+
+    public void setViewContainerInfo(Container container) {
+        this.id.setText(container.getId().toString());
+        this.capacity.setText(container.getCapacity().toString());
+        this.location.setText(container.getLocation());
+        this.currentVolume.setText(container.getCurrentVolume().toString());
+    }
+
+    public void setEditContainerInfo(Container container) {
+        this.id.setText(container.getId().toString());
+        this.capacity.setText(container.getCapacity().toString());
+        this.location.setText(container.getLocation());
+        this.currentVolume.setText(container.getCurrentVolume().toString());
+    }
 
     @FXML
     public void onCancelBtnClick() {

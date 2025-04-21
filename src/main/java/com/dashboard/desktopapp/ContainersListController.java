@@ -97,12 +97,12 @@ public class ContainersListController {
 
     private List<Container> createMockContainers() {
         List<Container> containers = new ArrayList<>();
-        containers.add(new Container(1, 120.0f, "38.7169, -9.1399"));   // Lisbon
-        containers.add(new Container(2, 90.0f, "41.1579, -8.6291"));    // Porto
-        containers.add(new Container(3, 100.0f, "40.6405, -8.6538"));   // Aveiro
-        containers.add(new Container(4, 110.0f, "39.7444, -8.8076"));   // Fátima
-        containers.add(new Container(5, 95.0f, "37.0194, -7.9304"));    // Faro
-        containers.add(new Container(6, 130.0f, "38.5244, -8.8926"));   // Setúbal
+        containers.add(new Container(1, 120.0f, "38.7169, -9.1399" ,35.0f));
+        containers.add(new Container(2, 90.0f, "41.1579, -8.6291", 44.5f));
+        containers.add(new Container(3, 100.0f, "40.6405, -8.6538", 15.7f));
+        containers.add(new Container(4, 110.0f, "39.7444, -8.8076", 8.9f));
+        containers.add(new Container(5, 95.0f, "37.0194, -7.9304", 96.4f));
+        containers.add(new Container(6, 130.0f, "38.5244, -8.8926", 55.0f));
         return containers;
     }
 

@@ -64,9 +64,11 @@ public class EditButtonsController {
             } else if (bucket != null) {
                 System.out.println("Editing bucket ID: " + bucket.getId());
                 bucketController = fxmlLoader.getController();
+                bucketController.setViewBucketInfo(bucket);
             } else if (container != null) {
                 System.out.println("Editing container ID: " + container.getId());
                 containerController = fxmlLoader.getController();
+                containerController.setViewContainerInfo(container);
             }
 
             // Create a new stage for the modal
@@ -92,8 +94,23 @@ public class EditButtonsController {
             String fxmlPath = String.format("/com/dashboard/desktopapp/components/%s-edit-modal.fxml", modalType);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent modalRoot = fxmlLoader.load();
-            municipalityController = fxmlLoader.getController();
-            municipalityController.setEditUserInfo(municipality);
+            if (municipality != null) {
+                System.out.println("Editing user ID: " + municipality.getId());
+                municipalityController = fxmlLoader.getController();
+                municipalityController.setEditUserInfo(municipality);
+            } else if (smas != null) {
+                System.out.println("Editing smas ID: " + smas.getId());
+                smasController = fxmlLoader.getController();
+                smasController.setEditUserInfo(smas);
+            } else if (bucket != null) {
+                System.out.println("Editing bucket ID: " + bucket.getId());
+                bucketController = fxmlLoader.getController();
+                bucketController.setEditBucketInfo(bucket);
+            } else if (container != null) {
+                System.out.println("Editing container ID: " + container.getId());
+                containerController = fxmlLoader.getController();
+                containerController.setEditContainerInfo(container);
+            }
 
             // Create a new stage for the modal
             Stage modalStage = new Stage();
