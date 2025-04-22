@@ -38,7 +38,6 @@ public class ContainersListController {
     @FXML
     private TableColumn<Container, Void> actionsColumn;
 
-
     private EditButtonsController controller;
 
     @FXML
@@ -93,7 +92,6 @@ public class ContainersListController {
         // Populate with data
         containersTable.getItems().addAll(createMockContainers());
     }
-
 
     private List<Container> createMockContainers() {
         List<Container> containers = new ArrayList<>();

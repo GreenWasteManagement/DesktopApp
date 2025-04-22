@@ -9,7 +9,7 @@
     <children>
         <HBox fillHeight="false" VBox.vgrow="NEVER">
             <children>
-                <Label text="Editar perfil">
+                <Label text="Editar utilizador">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
@@ -17,24 +17,30 @@
                 <Region maxHeight="0.0" prefHeight="0.0" HBox.hgrow="ALWAYS" />
             </children>
         </HBox>
-        <Label text="Nome:">
+        <HBox fillHeight="false" layoutX="42.0" layoutY="201.0" spacing="24.0">
+            <children>
+                <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label text="Nome:">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="name" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                            <padding>
+                                <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                            </padding>
+                        </TextField>
+                    </children>
+                </VBox>
+            </children>
             <VBox.margin>
-                <Insets top="32.0" />
+                <Insets top="24.0" />
             </VBox.margin>
-            <font>
-                <Font size="16.0" />
-            </font>
-        </Label>
-        <TextField style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
-            <font>
-                <Font size="20.0" />
-            </font>
-            <VBox.margin>
-                <Insets top="8.0" />
-            </VBox.margin>
-            <padding>
-                <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
-            </padding></TextField>
+        </HBox>
         <HBox fillHeight="false" spacing="24.0" VBox.vgrow="NEVER">
             <children>
                 <VBox HBox.hgrow="ALWAYS">
@@ -44,7 +50,7 @@
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                        <TextField style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                        <TextField fx:id="username" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
                             <font>
                                 <Font size="20.0" />
                             </font>
@@ -61,7 +67,7 @@
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                        <TextField style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                        <TextField fx:id="email" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
                             <font>
                                 <Font size="20.0" />
                             </font>
@@ -85,7 +91,7 @@
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                        <TextField style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                        <TextField fx:id="phone" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
                             <font>
                                 <Font size="20.0" />
                             </font>
@@ -102,7 +108,7 @@
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                        <TextField style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                        <TextField fx:id="cc" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
                             <font>
                                 <Font size="20.0" />
                             </font>
@@ -126,7 +132,7 @@
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                        <TextField style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                        <TextField fx:id="nif" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
                             <font>
                                 <Font size="20.0" />
                             </font>
@@ -143,7 +149,7 @@
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                        <TextField style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                        <TextField fx:id="userType" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
                             <font>
                                 <Font size="20.0" />
                             </font>
@@ -166,7 +172,7 @@
                 <Insets top="24.0" />
             </VBox.margin>
         </Label>
-        <TextField layoutX="42.0" layoutY="155.0" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+        <TextField fx:id="street" layoutX="42.0" layoutY="155.0" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
             <font>
                 <Font size="20.0" />
             </font>
@@ -178,12 +184,87 @@
             <children>
                 <VBox HBox.hgrow="ALWAYS">
                     <children>
-                        <Label text="Nº porta:">
+                        <Label text="Nº porta:" VBox.vgrow="ALWAYS">
                             <font>
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                        <TextField style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                        <TextField fx:id="doorNumber" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css" VBox.vgrow="ALWAYS">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                            <padding>
+                                <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                            </padding>
+                        </TextField>
+                    </children>
+                </VBox>
+                <VBox layoutX="10.0" layoutY="10.0">
+                    <children>
+                        <Label text="Andar:" VBox.vgrow="ALWAYS">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="floorNumber" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                            <padding>
+                                <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                            </padding>
+                        </TextField>
+                    </children>
+                </VBox>
+                <VBox layoutX="264.0" layoutY="10.0">
+                    <children>
+                        <Label VBox.vgrow="ALWAYS">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="floorDetails" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                            <padding>
+                                <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                            </padding>
+                        </TextField>
+                    </children>
+                </VBox>
+                <VBox HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label text="Código postal:">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="postalCode" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                            <padding>
+                                <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                            </padding>
+                        </TextField>
+                    </children>
+                </VBox>
+            </children>
+            <VBox.margin>
+                <Insets top="24.0" />
+            </VBox.margin>
+        </HBox>
+        <HBox fillHeight="false" layoutX="42.0" layoutY="361.0" spacing="24.0">
+            <children>
+                <VBox HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label text="Concelho:">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="county" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
                             <font>
                                 <Font size="20.0" />
                             </font>
@@ -195,29 +276,12 @@
                 </VBox>
                 <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label text="Andar:">
+                        <Label text="Distrito:">
                             <font>
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                        <TextField style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
-                            <font>
-                                <Font size="20.0" />
-                            </font>
-                            <padding>
-                                <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
-                            </padding>
-                        </TextField>
-                    </children>
-                </VBox>
-                <VBox layoutX="390.0" layoutY="10.0">
-                    <children>
-                        <Label>
-                            <font>
-                                <Font size="16.0" />
-                            </font>
-                        </Label>
-                        <TextField style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                        <TextField fx:id="district" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
                             <font>
                                 <Font size="20.0" />
                             </font>
@@ -232,64 +296,7 @@
                 <Insets top="24.0" />
             </VBox.margin>
         </HBox>
-        <HBox fillHeight="false" layoutX="42.0" layoutY="585.0" spacing="24.0">
-            <children>
-                <VBox HBox.hgrow="ALWAYS">
-                    <children>
-                        <Label text="Código postal:">
-                            <font>
-                                <Font size="16.0" />
-                            </font>
-                        </Label>
-                        <HBox>
-                            <children>
-                                <TextField style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                    <padding>
-                                        <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
-                                    </padding>
-                                </TextField>
-                                <Label alignment="CENTER" contentDisplay="CENTER" text="-" textAlignment="CENTER" HBox.hgrow="NEVER">
-                                    <font>
-                                        <Font size="24.0" />
-                                    </font>
-                                </Label>
-                                <TextField layoutX="10.0" layoutY="10.0" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                    <padding>
-                                        <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
-                                    </padding>
-                                </TextField>
-                            </children>
-                        </HBox>
-                    </children>
-                </VBox>
-                <VBox layoutX="10.0" layoutY="10.0">
-                    <children>
-                        <HBox>
-                            <children>
-                                <TextField editable="false" style="-fx-border-radius: 15; -fx-background-color: transparent; -fx-background-radius: 15;" stylesheets="@../style.css">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                    <padding>
-                                        <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
-                                    </padding>
-                                </TextField>
-                            </children>
-                        </HBox>
-                    </children>
-                </VBox>
-            </children>
-            <VBox.margin>
-                <Insets top="24.0" />
-            </VBox.margin>
-        </HBox>
-      <HBox fillHeight="false" layoutX="42.0" layoutY="221.0" spacing="24.0">
+      <HBox fillHeight="false" layoutX="42.0" layoutY="619.0" spacing="24.0">
          <children>
             <VBox HBox.hgrow="ALWAYS">
                <children>
@@ -298,7 +305,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <TextField style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                  <TextField fx:id="newPassword" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -310,12 +317,12 @@
             </VBox>
             <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Label text="Palavra-passe atual:">
+                  <Label text="Confirmar palavra-passe:">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <TextField style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                  <TextField fx:id="currPassword" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -326,9 +333,9 @@
                </children>
             </VBox>
          </children>
-         <VBox.margin>
+         <padding>
             <Insets top="24.0" />
-         </VBox.margin>
+         </padding>
       </HBox>
         <HBox alignment="CENTER_RIGHT" spacing="24.0" VBox.vgrow="ALWAYS">
             <children>

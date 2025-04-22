@@ -1,8 +1,6 @@
 package com.dashboard.desktopapp.components;
 
-import com.dashboard.desktopapp.models.Bucket;
 import com.dashboard.desktopapp.models.Container;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,21 +22,21 @@ public class ContainersModalController {
     @FXML
     private TextField capacity;
     @FXML
-    private TextField location;
+    private TextField containerLocation;
     @FXML
     private TextField currentVolume;
 
     public void setViewContainerInfo(Container container) {
         this.id.setText(container.getId().toString());
         this.capacity.setText(container.getCapacity().toString());
-        this.location.setText(container.getLocation());
+        this.containerLocation.setText(container.getLocation());
         this.currentVolume.setText(container.getCurrentVolume().toString());
     }
 
     public void setEditContainerInfo(Container container) {
         this.id.setText(container.getId().toString());
         this.capacity.setText(container.getCapacity().toString());
-        this.location.setText(container.getLocation());
+        this.containerLocation.setText(container.getLocation());
         this.currentVolume.setText(container.getCurrentVolume().toString());
     }
 

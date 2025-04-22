@@ -1,10 +1,13 @@
 package com.dashboard.desktopapp;
 
+import com.dashboard.desktopapp.components.AdminModalController;
+import com.dashboard.desktopapp.models.Admin;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
@@ -14,8 +17,70 @@ import java.io.IOException;
 
 public class ProfileController {
 
+    private AdminModalController adminController;
+
     @FXML
     private BorderPane content;
+
+    @FXML
+    private TextField name;
+    @FXML
+    private TextField username;
+    @FXML
+    private TextField email;
+    @FXML
+    private TextField phone;
+    @FXML
+    private TextField cc;
+    @FXML
+    private TextField nif;
+    @FXML
+    private TextField userType;
+    @FXML
+    private TextField address;
+
+    public String setAddress(Admin admin) {
+        String address = String.format("%s, %d, %d, %s, %s, %s, %s",
+                admin.getStreet(), admin.getDoorNumber(), admin.getFloorNumber(), admin.getFloorDetails(), admin.getPostalCode(), admin.getCounty(), admin.getDistrict());
+        return address;
+    }
+
+    @FXML
+    public void initialize() {
+        Admin mockUser = createMockUser();
+        setViewUserInfo(mockUser);
+    }
+
+    public void setViewUserInfo(Admin admin) {
+        this.name.setText(admin.getName());
+        this.username.setText(admin.getUsername());
+        this.email.setText(admin.getEmail());
+        this.phone.setText(admin.getPhone());
+        this.cc.setText(admin.getCc().toString());
+        this.nif.setText(admin.getNif().toString());
+        this.userType.setText(admin.getUserType());
+        this.address.setText(setAddress(admin));
+    }
+
+    private Admin createMockUser() {
+        return new Admin(
+                1,
+                "Test User",
+                "testuser",
+                "test@example.com",
+                "910000000",
+                12345678,
+                999999999,
+                "admin",
+                "Frente",
+                1,
+                101,
+                "Rua Central",
+                "1000-000",
+                "Lisboa",
+                "Lisboa"
+        );
+    }
 
     @FXML
     protected void onMenuBtnClick() {
@@ -74,11 +139,13 @@ public class ProfileController {
     }
 
     @FXML
-    public void onCreateBtnClick() {
+    public void onEditBtnClick() {
         try {
             // Load the modal's FXML
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("components/smas-create-modal.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("components/edit-profile-modal.fxml"));
             Parent modalRoot = fxmlLoader.load();
+            adminController = fxmlLoader.getController();
+            adminController.setEditUserInfo(createMockUser());
 
             // Create a new stage for the modal
             Stage modalStage = new Stage();

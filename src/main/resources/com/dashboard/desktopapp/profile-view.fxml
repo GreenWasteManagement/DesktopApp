@@ -64,7 +64,7 @@
                             </font>
                         </Label>
                         <Region HBox.hgrow="ALWAYS" />
-                        <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onCreateBtnClick" style="-fx-background-color: #057222; -fx-border-radius: 15; -fx-background-radius: 15; -fx-min-width: 100%;" styleClass="hover" text="Editar perfil" textAlignment="CENTER" textFill="WHITE">
+                        <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditBtnClick" style="-fx-background-color: #057222; -fx-border-radius: 15; -fx-background-radius: 15; -fx-min-width: 100%;" styleClass="hover" text="Editar perfil" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="24.0" />
                             </font>
@@ -98,7 +98,7 @@
                                       <Font size="16.0" />
                                   </font>
                               </Label>
-                              <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
+                              <TextField fx:id="name" editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
                                   <font>
                                       <Font size="20.0" />
                                   </font>
@@ -118,7 +118,7 @@
                                            <Font size="16.0" />
                                        </font>
                                    </Label>
-                                   <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
+                                   <TextField fx:id="username" editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
                                        <font>
                                            <Font size="20.0" />
                                        </font>
@@ -135,7 +135,7 @@
                                            <Font size="16.0" />
                                        </font>
                                    </Label>
-                                   <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
+                                   <TextField fx:id="email" editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
                                        <font>
                                            <Font size="20.0" />
                                        </font>
@@ -159,7 +159,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
+                              <TextField fx:id="phone" editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -176,7 +176,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
+                              <TextField fx:id="cc" editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -200,7 +200,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
+                              <TextField fx:id="nif" editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -217,7 +217,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
+                              <TextField fx:id="userType" editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -241,7 +241,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <TextField editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
+                              <TextField fx:id="address" editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
