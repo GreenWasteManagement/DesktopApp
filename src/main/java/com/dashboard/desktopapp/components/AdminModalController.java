@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
@@ -49,6 +50,8 @@ public class AdminModalController {
     private TextField newPassword;
     @FXML
     private TextField currPassword;
+    @FXML
+    private Label errorLabel;
 
     public void setEditUserInfo(Admin admin) {
         this.name.setText(admin.getName());

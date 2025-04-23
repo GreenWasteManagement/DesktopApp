@@ -1,17 +1,19 @@
 package com.dashboard.desktopapp.components;
 
+import com.dashboard.desktopapp.dtos.bucket.response.GetAllBucketsResponseDTO;
+import com.dashboard.desktopapp.dtos.container.response.GetAllContainersResponseDTO;
+import com.dashboard.desktopapp.interfaces.PageRefresh;
 import com.dashboard.desktopapp.models.Municipality;
 import com.dashboard.desktopapp.models.SMAS;
-import com.dashboard.desktopapp.models.Bucket;
-import com.dashboard.desktopapp.models.Container;
-import com.dashboard.desktopapp.components.MunicipalityModalController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableCell;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import lombok.Setter;
 
 import java.io.IOException;
 
@@ -19,8 +21,10 @@ public class EditButtonsController {
 
     private Municipality municipality;
     private SMAS smas;
-    private Bucket bucket;
-    private Container container;
+    @Setter
+    private GetAllBucketsResponseDTO.Bucket bucket;
+    @Setter
+    private GetAllContainersResponseDTO.Container container;
     private String modalType;
     private MunicipalityModalController municipalityController;
     private SMASModalController smasController;
@@ -30,18 +34,20 @@ public class EditButtonsController {
     @FXML
     private HBox buttons;
 
+    private PageRefresh reloadController;
+
+    public void setReloadController(PageRefresh controller) {
+        this.reloadController = controller;
+    }
+
+
     public void setMunicipality(Municipality municipality) {
         this.municipality = municipality;
     }
     public void setSMAS(SMAS smas) {
         this.smas = smas;
     }
-    public void setBucket(Bucket bucket) {
-        this.bucket = bucket;
-    }
-    public void setContainer(Container container) {
-        this.container = container;
-    }
+
     public void setModalType(String modalType) {
         this.modalType = modalType;
     }
@@ -64,7 +70,7 @@ public class EditButtonsController {
             } else if (bucket != null) {
                 System.out.println("Editing bucket ID: " + bucket.getId());
                 bucketController = fxmlLoader.getController();
-                bucketController.setViewBucketInfo(bucket);
+                //bucketController.setViewBucketInfo(bucket);
             } else if (container != null) {
                 System.out.println("Editing container ID: " + container.getId());
                 containerController = fxmlLoader.getController();
@@ -105,11 +111,12 @@ public class EditButtonsController {
             } else if (bucket != null) {
                 System.out.println("Editing bucket ID: " + bucket.getId());
                 bucketController = fxmlLoader.getController();
-                bucketController.setEditBucketInfo(bucket);
+                //bucketController.setEditBucketInfo(bucket);
             } else if (container != null) {
                 System.out.println("Editing container ID: " + container.getId());
                 containerController = fxmlLoader.getController();
                 containerController.setEditContainerInfo(container);
+                containerController.setReloadController(reloadController);
             }
 
             // Create a new stage for the modal
@@ -135,6 +142,21 @@ public class EditButtonsController {
             // Load the modal's FXML
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/dashboard/desktopapp/components/confirm-delete-modal.fxml"));
             Parent modalRoot = fxmlLoader.load();
+            DeleteModalController deleteController = fxmlLoader.getController();
+            deleteController.setReloadController(reloadController);
+            if (municipality != null) {
+                System.out.println("Editing user ID: " + municipality.getId());
+                //deleteController.setDeleteInfo("users/delete/user", municipality.getId());
+            } else if (smas != null) {
+                System.out.println("Editing smas ID: " + smas.getId());
+                //deleteController.setDeleteInfo("users/delete/user", smas.getId());
+            } else if (bucket != null) {
+                System.out.println("Editing bucket ID: " + bucket.getId());
+                //deleteController.setDeleteInfo("buckets/delete", bucket.getId());
+            } else if (container != null) {
+                System.out.println("Editing container ID: " + container.getId());
+                deleteController.setDeleteInfo("containers/delete", container.getId());
+            }
 
             // Create a new stage for the modal
             Stage modalStage = new Stage();

@@ -337,6 +337,14 @@
             <Insets top="24.0" />
          </padding>
       </HBox>
+        <Label fx:id="errorLabel" text="Por favor preencha todos os campos." textFill="#c03d3d" visible="false">
+            <font>
+                <Font size="16.0" />
+            </font>
+            <VBox.margin>
+                <Insets top="4.0" />
+            </VBox.margin>
+        </Label>
         <HBox alignment="CENTER_RIGHT" spacing="24.0" VBox.vgrow="ALWAYS">
             <children>
                 <Button mnemonicParsing="false" onAction="#onCancelBtnClick" style="-fx-background-color: #C03D3D; -fx-background-radius: 15; -fx-border-radius: 15;" styleClass="hover" text="Cancelar" textAlignment="CENTER" textFill="WHITE">

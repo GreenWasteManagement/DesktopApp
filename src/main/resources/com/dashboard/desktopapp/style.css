@@ -112,6 +112,11 @@
     -fx-text-fill: black;
 }
 
+.table-view .table-cell {
+    -fx-font-size: 20px;
+    -fx-alignment: center;
+}
+
 .hover:hover {
     -fx-scale-y: 1.05;
     -fx-scale-x: 1.05;

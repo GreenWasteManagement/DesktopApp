@@ -1,7 +1,9 @@
 package com.dashboard.desktopapp;
 
+import com.dashboard.desktopapp.dtos.bucket.response.GetAllBucketsResponseDTO;
 import com.dashboard.desktopapp.models.Bucket;
 import com.dashboard.desktopapp.components.EditButtonsController;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -18,7 +20,11 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,30 +34,27 @@ public class BucketsListController {
     private BorderPane content;
 
     @FXML
-    private TableView<Bucket> bucketsTable;
+    private TableView<GetAllBucketsResponseDTO.Bucket> bucketsTable;
     @FXML
-    private TableColumn<Bucket, Integer> idColumn;
+    private TableColumn<GetAllBucketsResponseDTO.Bucket, Integer> idColumn;
     @FXML
-    private TableColumn<Bucket, Integer> capacityColumn;
+    private TableColumn<GetAllBucketsResponseDTO.Bucket, Integer> capacityColumn;
     @FXML
-    private TableColumn<Bucket, Integer> associatedColumn;
+    private TableColumn<GetAllBucketsResponseDTO.Bucket, Integer> associatedColumn;
     @FXML
-    private TableColumn<Bucket, Integer> municipalityColumn;
-    @FXML
-    private TableColumn<Bucket, Void> actionsColumn;
+    private TableColumn<GetAllBucketsResponseDTO.Bucket, Void> actionsColumn;
 
 
     private EditButtonsController controller;
 
     @FXML
     public void initialize() {
-        int columnCount = 5;
+        int columnCount = 4;
 
         // === USERS TABLE SETUP ===
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         capacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
         associatedColumn.setCellValueFactory(new PropertyValueFactory<>("associated"));
-        municipalityColumn.setCellValueFactory(new PropertyValueFactory<>("municipality"));
 
         // Edit button column
         actionsColumn.setCellFactory(param -> new TableCell<>() {
@@ -76,7 +79,7 @@ public class BucketsListController {
                     }
                 }
 
-                Bucket bucket = getTableView().getItems().get(getIndex());
+                GetAllBucketsResponseDTO.Bucket bucket = getTableView().getItems().get(getIndex());
                 controller.setBucket(bucket);
                 controller.setModalType("bucket");
 
@@ -94,18 +97,48 @@ public class BucketsListController {
         });
 
         // Populate with data
-        bucketsTable.getItems().addAll(createMockBuckets());
+        bucketsTable.getItems().addAll(getAllBuckets());
     }
 
-    private List<Bucket> createMockBuckets() {
-        List<Bucket> buckets = new ArrayList<>();
-        buckets.add(new Bucket(1, 50.0f, true, "Em uso", "Tio quim"));
-        buckets.add(new Bucket(2, 75.5f, false, "Em uso", "Tio quim"));
-        buckets.add(new Bucket(3, 100.0f, true, "Em uso", "Tio quim"));
-        buckets.add(new Bucket(4, 25.0f, false, "Em uso", "Tio quim"));
-        buckets.add(new Bucket(5, 60.0f, true, "Em uso", "Tio quim"));
-        buckets.add(new Bucket(6, 80.0f, false, "Em uso", "Tio quim"));
-        return buckets;
+    public List<GetAllBucketsResponseDTO.Bucket> getAllBuckets() {
+        // Define the API endpoint
+        String url = "http://localhost:8080/api/buckets";
+        List<GetAllBucketsResponseDTO.Bucket> buckets = null;
+
+        try {
+            // Create a URL object with the API endpoint
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(5000); // Timeout after 5 seconds
+            connection.setReadTimeout(5000); // Timeout for reading response
+
+            // Check if the response code is 200 (OK)
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                // Read the response data from the API
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+
+                // Parse the JSON response to GetAllBucketsResponseDTO
+                ObjectMapper objectMapper = new ObjectMapper();
+                GetAllBucketsResponseDTO responseDTO = objectMapper.readValue(response.toString(), GetAllBucketsResponseDTO.class);
+
+                // Get the buckets list from the response DTO
+                buckets = responseDTO.getBuckets();
+            } else {
+                System.out.println("Error: Unable to fetch data. HTTP code: " + connection.getResponseCode());
+            }
+
+            connection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return buckets; // Return the parsed buckets list
     }
 
     @FXML

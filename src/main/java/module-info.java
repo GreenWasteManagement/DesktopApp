@@ -10,11 +10,23 @@ module com.dashboard.desktopapp {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires static lombok;
+    requires com.fasterxml.jackson.databind;
+    requires org.json;
 
     opens com.dashboard.desktopapp to javafx.fxml;
     opens com.dashboard.desktopapp.components to javafx.fxml;
     opens com.dashboard.desktopapp.models to javafx.base;
+    opens com.dashboard.desktopapp.dtos.user.request to com.fasterxml.jackson.databind;
     exports com.dashboard.desktopapp;
     exports com.dashboard.desktopapp.components to javafx.fxml;
     exports com.dashboard.desktopapp.models to javafx.base;
+    exports com.dashboard.desktopapp.dtos.user.request;
+    exports com.dashboard.desktopapp.dtos.user.response;
+    exports com.dashboard.desktopapp.dtos.bucket.request;
+    exports com.dashboard.desktopapp.dtos.bucket.response;
+    exports com.dashboard.desktopapp.dtos.container.request;
+    exports com.dashboard.desktopapp.dtos.container.response;
+    exports com.dashboard.desktopapp.dtos.base;
+
 }

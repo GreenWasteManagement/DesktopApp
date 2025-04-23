@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
@@ -31,6 +32,8 @@ public class BucketsModalController {
     private TextField municipality;
     @FXML
     private ComboBox<Municipality> municipalities;
+    @FXML
+    private Label errorLabel;
 
 
     public void setViewBucketInfo(Bucket bucket) {

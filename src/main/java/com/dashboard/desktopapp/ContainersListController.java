@@ -1,7 +1,10 @@
 package com.dashboard.desktopapp;
 
-import com.dashboard.desktopapp.models.Container;
+import com.dashboard.desktopapp.components.ContainersModalController;
+import com.dashboard.desktopapp.dtos.container.response.GetAllContainersResponseDTO;
 import com.dashboard.desktopapp.components.EditButtonsController;
+import com.dashboard.desktopapp.interfaces.PageRefresh;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -18,36 +21,48 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
-public class ContainersListController {
+public class ContainersListController implements PageRefresh {
 
     @FXML
     private BorderPane content;
 
     @FXML
-    private TableView<Container> containersTable;
+    private TableView<GetAllContainersResponseDTO.Container> containersTable;
     @FXML
-    private TableColumn<Container, Integer> idColumn;
+    private TableColumn<GetAllContainersResponseDTO.Container, Integer> idColumn;
     @FXML
-    private TableColumn<Container, Float> capacityColumn;
+    private TableColumn<GetAllContainersResponseDTO.Container, Float> capacityColumn;
     @FXML
-    private TableColumn<Container, String> locationColumn;
+    private TableColumn<GetAllContainersResponseDTO.Container, String> currentVolumeColumn;
     @FXML
-    private TableColumn<Container, Void> actionsColumn;
+    private TableColumn<GetAllContainersResponseDTO.Container, String> locationColumn;
+    @FXML
+    private TableColumn<GetAllContainersResponseDTO.Container, Void> actionsColumn;
 
     private EditButtonsController controller;
 
+    @Override
+    public void refreshPage() {
+        containersTable.getItems().clear();
+        initialize();
+    }
+
     @FXML
     public void initialize() {
-        int columnCount = 4;
+        int columnCount = 5;
 
         // === USERS TABLE SETUP ===
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         capacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
-        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        currentVolumeColumn.setCellValueFactory(new PropertyValueFactory<>("currentVolumeLevel"));
+        locationColumn.setCellValueFactory(new PropertyValueFactory<>("localization"));
 
         // Edit button column
         actionsColumn.setCellFactory(param -> new TableCell<>() {
@@ -67,12 +82,13 @@ public class ContainersListController {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("components/edit-button.fxml"));
                         buttonComponent = loader.load();
                         controller = loader.getController();
+                        controller.setReloadController(ContainersListController.this);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
 
-                Container container = getTableView().getItems().get(getIndex());
+                GetAllContainersResponseDTO.Container container = getTableView().getItems().get(getIndex());
                 controller.setContainer(container);
                 controller.setModalType("container");
 
@@ -90,18 +106,48 @@ public class ContainersListController {
         });
 
         // Populate with data
-        containersTable.getItems().addAll(createMockContainers());
+        containersTable.getItems().addAll(getAllContainers());
     }
 
-    private List<Container> createMockContainers() {
-        List<Container> containers = new ArrayList<>();
-        containers.add(new Container(1, 120.0f, "38.7169, -9.1399" ,35.0f));
-        containers.add(new Container(2, 90.0f, "41.1579, -8.6291", 44.5f));
-        containers.add(new Container(3, 100.0f, "40.6405, -8.6538", 15.7f));
-        containers.add(new Container(4, 110.0f, "39.7444, -8.8076", 8.9f));
-        containers.add(new Container(5, 95.0f, "37.0194, -7.9304", 96.4f));
-        containers.add(new Container(6, 130.0f, "38.5244, -8.8926", 55.0f));
-        return containers;
+    public List<GetAllContainersResponseDTO.Container> getAllContainers() {
+        // Define the API endpoint
+        String url = "http://localhost:8080/api/containers";
+        List<GetAllContainersResponseDTO.Container> containers = null;
+
+        try {
+            // Create a URL object with the API endpoint
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(5000); // Timeout after 5 seconds
+            connection.setReadTimeout(5000); // Timeout for reading response
+
+            // Check if the response code is 200 (OK)
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                // Read the response data from the API
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+
+                // Parse the JSON response to GetAllContainersResponseDTO
+                ObjectMapper objectMapper = new ObjectMapper();
+                GetAllContainersResponseDTO responseDTO = objectMapper.readValue(response.toString(), GetAllContainersResponseDTO.class);
+
+                // Get the containers list from the response DTO
+                containers = responseDTO.getContainers();
+            } else {
+                System.out.println("Error: Unable to fetch data. HTTP code: " + connection.getResponseCode());
+            }
+
+            connection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return containers; // Return the parsed containers list
     }
 
     @FXML
@@ -166,6 +212,8 @@ public class ContainersListController {
             // Load the modal's FXML
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("components/container-create-modal.fxml"));
             Parent modalRoot = fxmlLoader.load();
+            ContainersModalController containersController = fxmlLoader.getController();
+            containersController.setReloadController(ContainersListController.this);
 
             // Create a new stage for the modal
             Stage modalStage = new Stage();

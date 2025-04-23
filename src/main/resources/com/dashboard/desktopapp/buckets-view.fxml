@@ -90,7 +90,6 @@
                         <TableColumn fx:id="idColumn" editable="false" prefWidth="75.0" text="ID" />
                         <TableColumn fx:id="capacityColumn" editable="false" prefWidth="75.0" text="Capacidade" />
                         <TableColumn fx:id="associatedColumn" editable="false" prefWidth="75.0" text="Associado?" />
-                        <TableColumn fx:id="municipalityColumn" editable="false" prefWidth="75.0" text="Munícipe" />
                   <TableColumn fx:id="actionsColumn" editable="false" prefWidth="75.0" sortable="false" text="Ações" />
                     </columns>
                     <VBox.margin>
