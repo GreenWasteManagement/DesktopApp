@@ -86,6 +86,7 @@
                         <TableColumn fx:id="idColumn" editable="false" prefWidth="120.0" text="ID contentor" />
                         <TableColumn fx:id="locationColumn" editable="false" minWidth="0.0" prefWidth="233.0" text="Localização" />
                         <TableColumn fx:id="depositAmountColumn" editable="false" prefWidth="190.0" text="Quantidade" />
+                  <TableColumn fx:id="municipalityNifColumn" editable="false" prefWidth="190.0" text="NIF Munícipe" />
                   <TableColumn fx:id="dateTimeColumn" editable="false" prefWidth="219.0" text="Data" />
                     </columns>
                     <VBox.margin>
