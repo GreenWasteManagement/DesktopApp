@@ -1,26 +1,35 @@
-package com.dashboard.desktopapp.dtos.user.request;
+package com.dashboard.desktopapp.dtos.user.response;
 
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Data
-public class CreateAdminRequestDTO {
+public class GetAllSmasResponseDTO {
+    private List<SmasData> smasList;
 
-    private User user;
-    private Admin admin;
-    private Address address;
-    private PostalCode postalCode;
+    @Getter
+    @Setter
+    @Data
+    public static class SmasData {
+        private User user;
+        private Smas smas;
+        private Address address;
+        private PostalCode postalCode;
+    }
 
     @Getter
     @Setter
     @Data
     public static class User {
+        private Long id;
         private String name;
         private String username;
-        private String password;
+        //private String password;
         private String email;
         private String phoneNumber;
         private String role;
@@ -29,7 +38,9 @@ public class CreateAdminRequestDTO {
     @Getter
     @Setter
     @Data
-    public static class Admin {
+    public static class Smas {
+        private String position;
+        private String employeeCode;
         private String citizenCardCode;
     }
 
@@ -52,4 +63,3 @@ public class CreateAdminRequestDTO {
         private String district;
     }
 }
-

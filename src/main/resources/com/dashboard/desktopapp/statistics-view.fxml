@@ -144,13 +144,13 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TableView style="-fx-background-color: #D9D9D9; -fx-background-radius: 0 0 15 15; -fx-border-radius: 0 0 15 15;" stylesheets="@style.css" VBox.vgrow="ALWAYS">
+            <TableView fx:id="containersTable" style="-fx-background-color: #D9D9D9; -fx-background-radius: 0 0 15 15; -fx-border-radius: 0 0 15 15;" stylesheets="@style.css" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn editable="false" prefWidth="120.0" text="ID contentor" />
-                <TableColumn editable="false" minWidth="0.0" prefWidth="233.0" text="Localização" />
-                  <TableColumn editable="false" prefWidth="174.0" text="Capacidade" />
-                  <TableColumn editable="false" prefWidth="190.0" text="Nº descargas" />
-                  <TableColumn editable="false" prefWidth="219.0" text="Toneladas descarregadas" />
+                <TableColumn fx:id="idColumn" editable="false" prefWidth="120.0" text="ID contentor" />
+                <TableColumn fx:id="locationColumn" editable="false" minWidth="0.0" prefWidth="233.0" text="Localização" />
+                  <TableColumn fx:id="capacityColumn" editable="false" prefWidth="174.0" text="Capacidade" />
+                  <TableColumn fx:id="depositsColumn" editable="false" prefWidth="190.0" text="Nº depósitos" />
+                  <TableColumn fx:id="totalTonsColumn" editable="false" prefWidth="219.0" text="Toneladas descarregadas" />
               </columns>
                <VBox.margin>
                   <Insets bottom="48.0" left="32.0" right="32.0" top="8.0" />

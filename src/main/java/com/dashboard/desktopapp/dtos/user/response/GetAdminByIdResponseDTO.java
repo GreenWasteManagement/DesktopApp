@@ -1,13 +1,14 @@
-package com.dashboard.desktopapp.dtos.user.request;
+package com.dashboard.desktopapp.dtos.user.response;
 
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @Data
-public class CreateAdminRequestDTO {
+public class GetAdminByIdResponseDTO {
 
     private User user;
     private Admin admin;
@@ -18,9 +19,10 @@ public class CreateAdminRequestDTO {
     @Setter
     @Data
     public static class User {
+        private Long id;
         private String name;
         private String username;
-        private String password;
+        //private String password;
         private String email;
         private String phoneNumber;
         private String role;

@@ -2,14 +2,14 @@ package com.dashboard.desktopapp.components;
 
 import com.dashboard.desktopapp.dtos.bucket.response.GetAllBucketsResponseDTO;
 import com.dashboard.desktopapp.dtos.container.response.GetAllContainersResponseDTO;
+import com.dashboard.desktopapp.dtos.user.response.GetAllMunicipalitiesAndBucketsResponseDTO;
+import com.dashboard.desktopapp.dtos.user.response.GetAllSmasResponseDTO;
 import com.dashboard.desktopapp.interfaces.PageRefresh;
-import com.dashboard.desktopapp.models.Municipality;
 import com.dashboard.desktopapp.models.SMAS;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableCell;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -19,8 +19,10 @@ import java.io.IOException;
 
 public class EditButtonsController {
 
-    private Municipality municipality;
-    private SMAS smas;
+    @Setter
+    private GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData municipality;
+    @Setter
+    private GetAllSmasResponseDTO.SmasData smas;
     @Setter
     private GetAllBucketsResponseDTO.Bucket bucket;
     @Setter
@@ -40,14 +42,6 @@ public class EditButtonsController {
         this.reloadController = controller;
     }
 
-
-    public void setMunicipality(Municipality municipality) {
-        this.municipality = municipality;
-    }
-    public void setSMAS(SMAS smas) {
-        this.smas = smas;
-    }
-
     public void setModalType(String modalType) {
         this.modalType = modalType;
     }
@@ -60,13 +54,13 @@ public class EditButtonsController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent modalRoot = fxmlLoader.load();
             if (municipality != null) {
-                System.out.println("Editing user ID: " + municipality.getId());
+                System.out.println("Editing user ID: " + municipality.getUser().getId());
                 municipalityController = fxmlLoader.getController();
                 municipalityController.setViewUserInfo(municipality);
             } else if (smas != null) {
-                System.out.println("Editing smas ID: " + smas.getId());
+                System.out.println("Editing smas ID: " + smas.getUser().getId());
                 smasController = fxmlLoader.getController();
-                smasController.setViewUserInfo(smas);
+                //smasController.setViewUserInfo(smas);
             } else if (bucket != null) {
                 System.out.println("Editing bucket ID: " + bucket.getId());
                 bucketController = fxmlLoader.getController();
@@ -101,13 +95,14 @@ public class EditButtonsController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent modalRoot = fxmlLoader.load();
             if (municipality != null) {
-                System.out.println("Editing user ID: " + municipality.getId());
+                System.out.println("Editing user ID: " + municipality.getUser().getId());
                 municipalityController = fxmlLoader.getController();
                 municipalityController.setEditUserInfo(municipality);
+                municipalityController.setReloadController(reloadController);
             } else if (smas != null) {
-                System.out.println("Editing smas ID: " + smas.getId());
+                System.out.println("Editing smas ID: " + smas.getUser().getId());
                 smasController = fxmlLoader.getController();
-                smasController.setEditUserInfo(smas);
+                //smasController.setEditUserInfo(smas);
             } else if (bucket != null) {
                 System.out.println("Editing bucket ID: " + bucket.getId());
                 bucketController = fxmlLoader.getController();
@@ -145,10 +140,10 @@ public class EditButtonsController {
             DeleteModalController deleteController = fxmlLoader.getController();
             deleteController.setReloadController(reloadController);
             if (municipality != null) {
-                System.out.println("Editing user ID: " + municipality.getId());
+                System.out.println("Editing user ID: " + municipality.getUser().getId());
                 //deleteController.setDeleteInfo("users/delete/user", municipality.getId());
             } else if (smas != null) {
-                System.out.println("Editing smas ID: " + smas.getId());
+                System.out.println("Editing smas ID: " + smas.getUser().getId());
                 //deleteController.setDeleteInfo("users/delete/user", smas.getId());
             } else if (bucket != null) {
                 System.out.println("Editing bucket ID: " + bucket.getId());

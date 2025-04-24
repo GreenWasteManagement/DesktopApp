@@ -108,7 +108,7 @@
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                  <ListView prefHeight="200.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15; -fx-border-radius: 15;" VBox.vgrow="ALWAYS" />
+                  <ListView fx:id="containerDeposits" prefHeight="200.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15; -fx-border-radius: 15;" VBox.vgrow="ALWAYS" />
                     </children>
                 </VBox>
                 <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
@@ -118,7 +118,7 @@
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                  <ListView prefHeight="200.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15; -fx-border-radius: 15;" VBox.vgrow="ALWAYS" />
+                  <ListView fx:id="containerUnloads" prefHeight="200.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15; -fx-border-radius: 15;" VBox.vgrow="ALWAYS" />
                     </children>
                 </VBox>
             </children>

@@ -1,7 +1,9 @@
 package com.dashboard.desktopapp.dtos.user.response;
 
 import com.dashboard.desktopapp.dtos.user.request.CreateAdminRequestDTO;
-import lombok.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter

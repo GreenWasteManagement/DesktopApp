@@ -1,9 +1,17 @@
 package com.dashboard.desktopapp;
 
+import com.dashboard.desktopapp.dtos.container.response.GetAllContainersResponseDTO;
+import com.dashboard.desktopapp.dtos.user.response.GetAllMunicipalitiesAndBucketsResponseDTO;
+import com.dashboard.desktopapp.dtos.user.response.GetAllSmasResponseDTO;
+import com.dashboard.desktopapp.interfaces.PageRefresh;
 import com.dashboard.desktopapp.models.Bucket;
 import com.dashboard.desktopapp.models.Municipality;
 import com.dashboard.desktopapp.models.SMAS;
 import com.dashboard.desktopapp.components.EditButtonsController;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -20,61 +28,91 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersListController {
+public class UsersListController implements PageRefresh {
     @FXML
     private BorderPane content;
 
     @FXML
-    private TableView<Municipality> usersTable;
+    private TableView<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> usersTable;
     @FXML
-    private TableColumn<Municipality, Integer> idColumn;
+    private TableColumn<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData, Long> idColumn;
     @FXML
-    private TableColumn<Municipality, String> usernameColumn;
+    private TableColumn<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData, String> usernameColumn;
     @FXML
-    private TableColumn<Municipality, String> nameColumn;
+    private TableColumn<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData, String> nameColumn;
     @FXML
-    private TableColumn<Municipality, String> ccColumn;
+    private TableColumn<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData, String> ccColumn;
     @FXML
-    private TableColumn<Municipality, String> phoneColumn;
+    private TableColumn<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData, String> phoneColumn;
     @FXML
-    private TableColumn<Municipality, Void> actionsColumn;
+    private TableColumn<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData, Void> actionsColumn;
 
     @FXML
-    private TableView<SMAS> smasTable;
+    private TableView<GetAllSmasResponseDTO.SmasData> smasTable;
     @FXML
-    private TableColumn<SMAS, Integer> smasidColumn;
+    private TableColumn<GetAllSmasResponseDTO.SmasData, Long> smasidColumn;
     @FXML
-    private TableColumn<SMAS, String> smasusernameColumn;
+    private TableColumn<GetAllSmasResponseDTO.SmasData, String> smasusernameColumn;
     @FXML
-    private TableColumn<SMAS, String> smasnameColumn;
+    private TableColumn<GetAllSmasResponseDTO.SmasData, String> smasnameColumn;
     @FXML
-    private TableColumn<SMAS, String> smasccColumn;
+    private TableColumn<GetAllSmasResponseDTO.SmasData, String> smasccColumn;
     @FXML
-    private TableColumn<SMAS, String> smasphoneColumn;
+    private TableColumn<GetAllSmasResponseDTO.SmasData, String> smasphoneColumn;
     @FXML
-    private TableColumn<SMAS, Void> smasactionsColumn;
+    private TableColumn<GetAllSmasResponseDTO.SmasData, Void> smasactionsColumn;
 
     private EditButtonsController controller;
+
+    @Override
+    public void refreshPage() {
+        usersTable.getItems().clear();
+        smasTable.getItems().clear();
+        initialize();
+    }
 
     @FXML
     public void initialize() {
         int columnCount = 6;
 
         // === USERS TABLE SETUP ===
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        ccColumn.setCellValueFactory(new PropertyValueFactory<>("cc"));
-        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        smasidColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        smasusernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
-        smasnameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        smasccColumn.setCellValueFactory(new PropertyValueFactory<>("cc"));
-        smasphoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        idColumn.setCellValueFactory(cellData ->
+                new ReadOnlyObjectWrapper<>(cellData.getValue().getUser().getId()));
+
+        usernameColumn.setCellValueFactory(cellData ->
+                new ReadOnlyObjectWrapper<>(cellData.getValue().getUser().getUsername()));
+
+        nameColumn.setCellValueFactory(cellData ->
+                new ReadOnlyObjectWrapper<>(cellData.getValue().getUser().getName()));
+
+        ccColumn.setCellValueFactory(cellData ->
+                new ReadOnlyObjectWrapper<>(cellData.getValue().getMunicipality().getNif()));
+
+        phoneColumn.setCellValueFactory(cellData ->
+                new ReadOnlyObjectWrapper<>(cellData.getValue().getUser().getPhoneNumber()));
+        smasidColumn.setCellValueFactory(cellData ->
+                new ReadOnlyObjectWrapper<>(cellData.getValue().getUser().getId()));
+
+        smasusernameColumn.setCellValueFactory(cellData ->
+                new ReadOnlyObjectWrapper<>(cellData.getValue().getUser().getUsername()));
+
+        smasnameColumn.setCellValueFactory(cellData ->
+                new ReadOnlyObjectWrapper<>(cellData.getValue().getUser().getName()));
+
+        smasccColumn.setCellValueFactory(cellData ->
+                new ReadOnlyObjectWrapper<>(cellData.getValue().getSmas().getCitizenCardCode()));
+
+        smasphoneColumn.setCellValueFactory(cellData ->
+                new ReadOnlyObjectWrapper<>(cellData.getValue().getUser().getPhoneNumber()));
+
 
         // Edit button column
         actionsColumn.setCellFactory(param -> new TableCell<>() {
@@ -94,12 +132,13 @@ public class UsersListController {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("components/edit-button.fxml"));
                         buttonComponent = loader.load();
                         controller = loader.getController();
+                        controller.setReloadController(UsersListController.this);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
 
-                Municipality user = getTableView().getItems().get(getIndex());
+                GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData user = getTableView().getItems().get(getIndex());
                 controller.setMunicipality(user);
                 controller.setModalType("municipality");
                 HBox hbox = new HBox(buttonComponent);
@@ -126,13 +165,14 @@ public class UsersListController {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("components/edit-button.fxml"));
                         buttonComponent = loader.load();
                         controller = loader.getController();
+                        controller.setReloadController(UsersListController.this);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
 
-                SMAS user = getTableView().getItems().get(getIndex());
-                controller.setSMAS(user);
+                GetAllSmasResponseDTO.SmasData user = getTableView().getItems().get(getIndex());
+                controller.setSmas(user);
                 controller.setModalType("smas");
 
                 HBox hbox = new HBox(buttonComponent);
@@ -148,70 +188,98 @@ public class UsersListController {
         });
 
         // Populate with data
-        usersTable.getItems().addAll(createMockUsers());
+        usersTable.getItems().addAll(getAllMunicipalities());
 
         // === SMAS TABLE SETUP ===
         smasTable.getColumns().forEach(column -> {
             column.prefWidthProperty().bind(smasTable.widthProperty().divide(columnCount));
         });
 
-        smasTable.getItems().addAll(createMockSmas());
+        smasTable.getItems().addAll(getAllSmas());
     }
 
-    private List<Municipality> createMockUsers() {
-        Bucket bucket1 = new Bucket(1, 50.0f, true, "Em uso","Lisbon");
-        Bucket bucket2 = new Bucket(2, 75.5f, false, "Inutilizado", "Porto");
+    public List<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> getAllMunicipalities() {
+        // Define the API endpoint
+        String url = "http://localhost:8080/api/users/get/municipalities/buckets";
+        List<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> municipalityData = null;
 
-        List<Bucket> bucketList = new ArrayList<>();
-        bucketList.add(bucket1);
-        bucketList.add(bucket2);
-        List<Municipality> users = new ArrayList<>();
-        users.add(new Municipality(
-                1,
-                "Jane Doe",
-                "jdoe",
-                "jane@example.com",
-                "912345678",
-                12345678,
-                987654321,
-                "municipality",
-                "Esq.",
-                2,
-                349,
-                "Rua de Viana",
-                "4900-555",
-                "Viana do castelo",
-                "Viana do castelo",
-                bucketList
-        ));
+        try {
+            // Create a URL object with the API endpoint
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(5000); // Timeout after 5 seconds
+            connection.setReadTimeout(5000); // Timeout for reading response
 
-        return users;
+            // Check if the response code is 200 (OK)
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                // Read the response data from the API
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+
+                // Parse the JSON response to GetAllMunicipalitiesAndBucketsResponseDTO
+                ObjectMapper objectMapper = new ObjectMapper();
+                GetAllMunicipalitiesAndBucketsResponseDTO responseDTO = objectMapper.readValue(response.toString(), GetAllMunicipalitiesAndBucketsResponseDTO.class);
+
+                // Get the municipalities list from the response DTO
+                municipalityData = responseDTO.getMunicipalities();
+            } else {
+                System.out.println("Error: Unable to fetch data. HTTP code: " + connection.getResponseCode());
+            }
+
+            connection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return municipalityData; // Return the parsed containers list
     }
 
-    private List<SMAS> createMockSmas() {
-        List<SMAS> users = new ArrayList<>();
-        users.add(new SMAS(
-                2,
-                "Jane Doe",
-                "jdoe",
-                "jane@example.com",
-                "912345678",
-                12345678,
-                987654321,
-                "municipality",
-                "Esq.",
-                2,
-                349,
-                "Rua de Viana",
-                "4900-555",
-                "Viana do castelo",
-                "Viana do castelo",
-                "18444",
-                "Garbage Collector"
-        ));
+    public List<GetAllSmasResponseDTO.SmasData> getAllSmas() {
+        // Define the API endpoint
+        String url = "http://localhost:8080/api/users/get/smas";
+        List<GetAllSmasResponseDTO.SmasData> smasData = null;
 
-        return users;
+        try {
+            // Create a URL object with the API endpoint
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(5000); // Timeout after 5 seconds
+            connection.setReadTimeout(5000); // Timeout for reading response
+
+            // Check if the response code is 200 (OK)
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                // Read the response data from the API
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+
+                // Parse the JSON response to GetAllSmasResponseDTO
+                ObjectMapper objectMapper = new ObjectMapper();
+                GetAllSmasResponseDTO responseDTO = objectMapper.readValue(response.toString(), GetAllSmasResponseDTO.class);
+
+                // Get the smas list from the response DTO
+                smasData = responseDTO.getSmasList();
+            } else {
+                System.out.println("Error: Unable to fetch data. HTTP code: " + connection.getResponseCode());
+            }
+
+            connection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return smasData; // Return the parsed containers list
     }
+
 
     @FXML
     protected void onMenuBtnClick() {

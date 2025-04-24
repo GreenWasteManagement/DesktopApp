@@ -1,4 +1,4 @@
-package com.dashboard.desktopapp.dtos.user.request;
+package com.dashboard.desktopapp.dtos.user.response;
 
 import lombok.Data;
 import lombok.Getter;
@@ -7,10 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Data
-public class CreateAdminRequestDTO {
+public class GetMunicipalityByIdResponseDTO {
 
     private User user;
-    private Admin admin;
+    private Municipality municipality;
     private Address address;
     private PostalCode postalCode;
 
@@ -18,9 +18,10 @@ public class CreateAdminRequestDTO {
     @Setter
     @Data
     public static class User {
+        private Long id;
         private String name;
         private String username;
-        private String password;
+        //private String password;
         private String email;
         private String phoneNumber;
         private String role;
@@ -29,8 +30,9 @@ public class CreateAdminRequestDTO {
     @Getter
     @Setter
     @Data
-    public static class Admin {
+    public static class Municipality {
         private String citizenCardCode;
+        private String nif;
     }
 
     @Getter
@@ -51,5 +53,5 @@ public class CreateAdminRequestDTO {
         private String county;
         private String district;
     }
-}
 
+}

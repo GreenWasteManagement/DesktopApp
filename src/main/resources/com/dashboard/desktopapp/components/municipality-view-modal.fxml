@@ -39,7 +39,7 @@
                   </TextField>
                </children>
             </VBox>
-            <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
+            <VBox HBox.hgrow="ALWAYS">
                <children>
                   <Label text="Nome:">
                      <font>
@@ -80,7 +80,7 @@
                   </TextField>
                </children>
             </VBox>
-            <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
+            <VBox HBox.hgrow="ALWAYS">
                <children>
                   <Label text="Email:">
                      <font>
@@ -121,9 +121,9 @@
                   </TextField>
                </children>
             </VBox>
-            <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
+            <VBox HBox.hgrow="ALWAYS">
                <children>
-                  <Label text="Nº cartão de cidadão:">
+                  <Label text="Nº Cartão cidadão:">
                      <font>
                         <Font size="16.0" />
                      </font>

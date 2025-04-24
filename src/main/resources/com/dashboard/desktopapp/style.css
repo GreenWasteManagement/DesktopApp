@@ -126,4 +126,5 @@
 .list-view, .list-cell {
     -fx-background-radius: 15;
     -fx-border-radius: 15;
+    -fx-font-size: 16px;
 }

@@ -11,8 +11,10 @@ module com.dashboard.desktopapp {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires static lombok;
-    requires com.fasterxml.jackson.databind;
     requires org.json;
+    requires com.fasterxml.jackson.datatype.jsr310;
+    requires com.fasterxml.jackson.databind;
+    requires jakarta.validation;
 
     opens com.dashboard.desktopapp to javafx.fxml;
     opens com.dashboard.desktopapp.components to javafx.fxml;

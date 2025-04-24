@@ -4,6 +4,7 @@ import com.dashboard.desktopapp.dtos.bucket.response.GetAllBucketsResponseDTO;
 import com.dashboard.desktopapp.models.Bucket;
 import com.dashboard.desktopapp.components.EditButtonsController;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -40,7 +41,7 @@ public class BucketsListController {
     @FXML
     private TableColumn<GetAllBucketsResponseDTO.Bucket, Integer> capacityColumn;
     @FXML
-    private TableColumn<GetAllBucketsResponseDTO.Bucket, Integer> associatedColumn;
+    private TableColumn<GetAllBucketsResponseDTO.Bucket, String> associatedColumn;
     @FXML
     private TableColumn<GetAllBucketsResponseDTO.Bucket, Void> actionsColumn;
 
@@ -54,7 +55,11 @@ public class BucketsListController {
         // === USERS TABLE SETUP ===
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         capacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
-        associatedColumn.setCellValueFactory(new PropertyValueFactory<>("associated"));
+        associatedColumn.setCellValueFactory(cellData -> {
+            boolean isAssociated = cellData.getValue().getIsAssociated();
+            String displayText = isAssociated ? "Sim" : "Não";
+            return new ReadOnlyObjectWrapper<>(displayText);
+        });
 
         // Edit button column
         actionsColumn.setCellFactory(param -> new TableCell<>() {
