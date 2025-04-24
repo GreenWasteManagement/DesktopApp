@@ -1,5 +1,8 @@
 package com.dashboard.desktopapp.components;
 
+import com.dashboard.desktopapp.dtos.bucket.response.GetAllBucketsResponseDTO;
+import com.dashboard.desktopapp.dtos.user.response.GetAllMunicipalitiesResponseDTO;
+import com.dashboard.desktopapp.interfaces.PageRefresh;
 import com.dashboard.desktopapp.models.Bucket;
 import com.dashboard.desktopapp.models.Municipality;
 import javafx.collections.FXCollections;
@@ -31,9 +34,15 @@ public class BucketsModalController {
     @FXML
     private TextField municipality;
     @FXML
-    private ComboBox<Municipality> municipalities;
+    private ComboBox<GetAllMunicipalitiesResponseDTO.MunicipalityData> municipalities;
     @FXML
     private Label errorLabel;
+
+    private PageRefresh reloadController;
+
+    public void setReloadController(PageRefresh controller) {
+        this.reloadController = controller;
+    }
 
 
     public void setViewBucketInfo(Bucket bucket) {
@@ -51,11 +60,6 @@ public class BucketsModalController {
         this.state.setText(bucket.getState());
         this.municipality.setText(bucket.getMunicipality());
         this.municipalities.setItems(FXCollections.observableArrayList());
-    }
-
-    @FXML
-    public void onCancelBtnClick() {
-        closeModal();
     }
 
     @FXML
@@ -104,6 +108,11 @@ public class BucketsModalController {
         ConfirmationModalController controller = fxmlLoader.getController();
         controller.setConfirmationText(201); // Pass the request status code to set the text
         modalStage.showAndWait();
+    }
+
+    @FXML
+    public void onCancelBtnClick() {
+        closeModal();
     }
 
     public void closeModal() {

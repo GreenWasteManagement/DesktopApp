@@ -41,6 +41,7 @@ public class GetAllMunicipalitiesAndBucketsResponseDTO {
     @Setter
     @Data
     public static class Municipality {
+        private Long id;
         private String citizenCardCode;
         private String nif;
     }

@@ -39,6 +39,7 @@ public class GetAllSmasResponseDTO {
     @Setter
     @Data
     public static class Smas {
+        private Long id;
         private String position;
         private String employeeCode;
         private String citizenCardCode;
@@ -48,6 +49,7 @@ public class GetAllSmasResponseDTO {
     @Setter
     @Data
     public static class Address {
+        private Long id;
         private String floorDetails;
         private Integer floorNumber;
         private Integer doorNumber;
@@ -58,8 +60,10 @@ public class GetAllSmasResponseDTO {
     @Setter
     @Data
     public static class PostalCode {
+        private Long id;
         private String postalCode;
         private String county;
         private String district;
     }
 }
+

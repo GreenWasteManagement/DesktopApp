@@ -123,21 +123,6 @@
             <Insets top="24.0" />
          </VBox.margin>
       </HBox>
-      <HBox alignment="CENTER_RIGHT" fillHeight="false" layoutX="42.0" layoutY="296.0" spacing="24.0" VBox.vgrow="ALWAYS">
-         <children>
-            <Button mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15; -fx-border-radius: 15;" styleClass="hover" text="Desassociar" textAlignment="CENTER" textFill="#c03d3d">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <padding>
-                  <Insets bottom="4.0" left="32.0" right="32.0" top="4.0" />
-               </padding>
-            </Button>
-         </children>
-         <VBox.margin>
-            <Insets top="16.0" />
-         </VBox.margin>
-      </HBox>
       <HBox fillHeight="false" spacing="24.0">
          <children>
             <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">

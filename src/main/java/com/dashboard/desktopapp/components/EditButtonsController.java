@@ -60,11 +60,12 @@ public class EditButtonsController {
             } else if (smas != null) {
                 System.out.println("Editing smas ID: " + smas.getUser().getId());
                 smasController = fxmlLoader.getController();
-                //smasController.setViewUserInfo(smas);
+                smasController.setViewUserInfo(smas);
             } else if (bucket != null) {
                 System.out.println("Editing bucket ID: " + bucket.getId());
                 bucketController = fxmlLoader.getController();
                 //bucketController.setViewBucketInfo(bucket);
+                bucketController.setReloadController(reloadController);
             } else if (container != null) {
                 System.out.println("Editing container ID: " + container.getId());
                 containerController = fxmlLoader.getController();
@@ -102,11 +103,13 @@ public class EditButtonsController {
             } else if (smas != null) {
                 System.out.println("Editing smas ID: " + smas.getUser().getId());
                 smasController = fxmlLoader.getController();
-                //smasController.setEditUserInfo(smas);
+                smasController.setEditUserInfo(smas);
+                smasController.setReloadController(reloadController);
             } else if (bucket != null) {
                 System.out.println("Editing bucket ID: " + bucket.getId());
                 bucketController = fxmlLoader.getController();
                 //bucketController.setEditBucketInfo(bucket);
+                bucketController.setReloadController(reloadController);
             } else if (container != null) {
                 System.out.println("Editing container ID: " + container.getId());
                 containerController = fxmlLoader.getController();
@@ -140,16 +143,16 @@ public class EditButtonsController {
             DeleteModalController deleteController = fxmlLoader.getController();
             deleteController.setReloadController(reloadController);
             if (municipality != null) {
-                System.out.println("Editing user ID: " + municipality.getUser().getId());
-                //deleteController.setDeleteInfo("users/delete/user", municipality.getId());
+                System.out.println("Deleting user ID: " + municipality.getUser().getId());
+                deleteController.setDeleteInfo("users/delete/user", municipality.getUser().getId());
             } else if (smas != null) {
-                System.out.println("Editing smas ID: " + smas.getUser().getId());
-                //deleteController.setDeleteInfo("users/delete/user", smas.getId());
+                System.out.println("Deleting smas ID: " + smas.getUser().getId());
+                deleteController.setDeleteInfo("users/delete/user", smas.getUser().getId());
             } else if (bucket != null) {
-                System.out.println("Editing bucket ID: " + bucket.getId());
-                //deleteController.setDeleteInfo("buckets/delete", bucket.getId());
+                System.out.println("Deleting bucket ID: " + bucket.getId());
+                deleteController.setDeleteInfo("buckets/delete", bucket.getId());
             } else if (container != null) {
-                System.out.println("Editing container ID: " + container.getId());
+                System.out.println("Deleting container ID: " + container.getId());
                 deleteController.setDeleteInfo("containers/delete", container.getId());
             }
 

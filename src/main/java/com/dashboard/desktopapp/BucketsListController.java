@@ -1,6 +1,9 @@
 package com.dashboard.desktopapp;
 
+import com.dashboard.desktopapp.components.BucketsModalController;
+import com.dashboard.desktopapp.components.SMASModalController;
 import com.dashboard.desktopapp.dtos.bucket.response.GetAllBucketsResponseDTO;
+import com.dashboard.desktopapp.interfaces.PageRefresh;
 import com.dashboard.desktopapp.models.Bucket;
 import com.dashboard.desktopapp.components.EditButtonsController;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,7 +32,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BucketsListController {
+public class BucketsListController implements PageRefresh {
 
     @FXML
     private BorderPane content;
@@ -45,8 +48,13 @@ public class BucketsListController {
     @FXML
     private TableColumn<GetAllBucketsResponseDTO.Bucket, Void> actionsColumn;
 
-
     private EditButtonsController controller;
+
+    @Override
+    public void refreshPage() {
+        bucketsTable.getItems().clear();
+        initialize();
+    }
 
     @FXML
     public void initialize() {
@@ -79,6 +87,7 @@ public class BucketsListController {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("components/edit-button.fxml"));
                         buttonComponent = loader.load();
                         controller = loader.getController();
+                        controller.setReloadController(BucketsListController.this);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -208,6 +217,8 @@ public class BucketsListController {
             // Load the modal's FXML
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("components/bucket-create-modal.fxml"));
             Parent modalRoot = fxmlLoader.load();
+            BucketsModalController controller = fxmlLoader.getController();
+            controller.setReloadController(BucketsListController.this);
 
             // Create a new stage for the modal
             Stage modalStage = new Stage();

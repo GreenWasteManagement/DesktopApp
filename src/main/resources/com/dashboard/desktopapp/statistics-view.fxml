@@ -85,9 +85,9 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label text="9999" textAlignment="CENTER">
+                        <Label fx:id="depositCount" textAlignment="CENTER">
                            <font>
-                              <Font name="System Bold" size="18.0" />
+                              <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
                      </children>
@@ -99,9 +99,9 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label text="9999" textAlignment="CENTER">
+                        <Label fx:id="unloadsCount" textAlignment="CENTER">
                            <font>
-                              <Font name="System Bold" size="18.0" />
+                              <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
                      </children>
@@ -113,9 +113,9 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label text="9999" textAlignment="CENTER">
+                        <Label fx:id="municipalityCount" textAlignment="CENTER">
                            <font>
-                              <Font name="System Bold" size="18.0" />
+                              <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
                      </children>
@@ -127,9 +127,9 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label text="9999" textAlignment="CENTER">
+                        <Label fx:id="totalTons" textAlignment="CENTER">
                            <font>
-                              <Font name="System Bold" size="18.0" />
+                              <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
                      </children>

@@ -1,5 +1,7 @@
 package com.dashboard.desktopapp;
 
+import com.dashboard.desktopapp.components.ConfirmationModalController;
+import com.dashboard.desktopapp.components.SMASModalController;
 import com.dashboard.desktopapp.dtos.container.response.GetAllContainersResponseDTO;
 import com.dashboard.desktopapp.dtos.user.response.GetAllMunicipalitiesAndBucketsResponseDTO;
 import com.dashboard.desktopapp.dtos.user.response.GetAllSmasResponseDTO;
@@ -34,6 +36,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class UsersListController implements PageRefresh {
@@ -201,7 +204,7 @@ public class UsersListController implements PageRefresh {
     public List<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> getAllMunicipalities() {
         // Define the API endpoint
         String url = "http://localhost:8080/api/users/get/municipalities/buckets";
-        List<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> municipalityData = null;
+        List<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> municipalityData = Collections.emptyList();
 
         try {
             // Create a URL object with the API endpoint
@@ -280,7 +283,6 @@ public class UsersListController implements PageRefresh {
         return smasData; // Return the parsed containers list
     }
 
-
     @FXML
     protected void onMenuBtnClick() {
         try {
@@ -343,7 +345,9 @@ public class UsersListController implements PageRefresh {
             // Load the modal's FXML
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("components/smas-create-modal.fxml"));
             Parent modalRoot = fxmlLoader.load();
-
+            SMASModalController controller = fxmlLoader.getController();
+            controller.setReloadController(UsersListController.this);
+            
             // Create a new stage for the modal
             Stage modalStage = new Stage();
             modalStage.setTitle("");
@@ -353,7 +357,6 @@ public class UsersListController implements PageRefresh {
             modalStage.initOwner(content.getScene().getWindow());
             modalStage.setResizable(false);
             modalStage.initModality(javafx.stage.Modality.WINDOW_MODAL);
-
             modalStage.showAndWait();
 
         } catch (IOException e) {

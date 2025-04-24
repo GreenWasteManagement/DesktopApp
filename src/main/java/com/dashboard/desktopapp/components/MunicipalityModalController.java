@@ -1,8 +1,10 @@
 package com.dashboard.desktopapp.components;
 
 import com.dashboard.desktopapp.dtos.bucket.response.GetAllBucketsResponseDTO;
+import com.dashboard.desktopapp.dtos.container.request.CreateContainerRequestDTO;
 import com.dashboard.desktopapp.dtos.container.request.UpdateContainerRequestDTO;
 import com.dashboard.desktopapp.dtos.container.response.GetAllContainersResponseDTO;
+import com.dashboard.desktopapp.dtos.user.request.CreateMunicipalityRequestDTO;
 import com.dashboard.desktopapp.dtos.user.request.UpdateMunicipalityRequestDTO;
 import com.dashboard.desktopapp.dtos.user.response.GetAllMunicipalitiesAndBucketsResponseDTO;
 import com.dashboard.desktopapp.interfaces.PageRefresh;
@@ -100,6 +102,13 @@ public class MunicipalityModalController {
             nif.textProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue.matches("^\\d+$")) {
                     nif.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            });
+        }
+        if (cc != null) {
+            cc.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.matches("^\\d+$")) {
+                    cc.setText(newValue.replaceAll("[^\\d]", ""));
                 }
             });
         }
@@ -293,7 +302,7 @@ public class MunicipalityModalController {
 
             toggleErrorLabel(false);
         }
-        String url = String.format("http://localhost:8080/api/users/update/municipality");
+        String url = String.format("http://localhost:8080/api/users/update-full-municipality");
         int responseCode = 0;
 
         try {
