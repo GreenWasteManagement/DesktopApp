@@ -109,7 +109,7 @@ public class HistoryViewController {
     public List<GetMunicipalityDepositsResponseDTO> getDepositHistory() {
         // Define the API endpoint
         String url = "http://localhost:8080/api/buckets/deposits/municipality";
-        List<GetMunicipalityDepositsResponseDTO> deposits = new ArrayList<>();;
+        List<GetMunicipalityDepositsResponseDTO> deposits = new ArrayList<>();
 
         try {
             // Create a URL object with the API endpoint

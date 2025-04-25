@@ -1,5 +1,6 @@
 package com.dashboard.desktopapp.appsession;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import java.util.Base64;
@@ -15,11 +16,29 @@ import javafx.stage.Stage;
 import javafx.application.Platform;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class AppSession {
     @Setter
     @Getter
     private static String token;
+
+    public static Map<String, Object> decodeJWT(String jwt) {
+        try {
+            String[] parts = jwt.split("\\.");
+            if (parts.length < 2) throw new IllegalArgumentException("Invalid JWT format");
+
+            String payload = parts[1];
+            byte[] decodedBytes = Base64.getUrlDecoder().decode(payload);
+            String jsonPayload = new String(decodedBytes);
+
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(jsonPayload, Map.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public static boolean isTokenExpired() {
         if (token == null || token.trim().isEmpty()) {

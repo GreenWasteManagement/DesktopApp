@@ -3,6 +3,7 @@ package com.dashboard.desktopapp;
 import com.dashboard.desktopapp.components.AdminModalController;
 import com.dashboard.desktopapp.dtos.user.response.GetAdminByIdResponseDTO;
 import com.dashboard.desktopapp.dtos.user.response.GetAllSmasResponseDTO;
+import com.dashboard.desktopapp.interfaces.PageRefresh;
 import com.dashboard.desktopapp.models.Admin;
 import com.dashboard.desktopapp.appsession.AppSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,8 +24,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 
-public class ProfileController {
+public class ProfileController implements PageRefresh {
 
     @FXML
     private BorderPane content;
@@ -40,21 +42,23 @@ public class ProfileController {
     @FXML
     private TextField cc;
     @FXML
-    private TextField nif;
-    @FXML
-    private TextField userType;
-    @FXML
     private TextField address;
+
+    String sessionToken = AppSession.getToken();
+
+    @Override
+    public void refreshPage() {
+        initialize();
+    }
 
     public String setAddress(GetAdminByIdResponseDTO admin) {
         String address = String.format("%s, %d, %d, %s, %s, %s, %s",
-                admin.getStreet(), admin.getDoorNumber(), admin.getFloorNumber(), admin.getFloorDetails(), admin.getPostalCode(), admin.getCounty(), admin.getDistrict());
+                admin.getAddress().getStreet(), admin.getAddress().getDoorNumber(), admin.getAddress().getFloorNumber(), admin.getAddress().getFloorDetails(), admin.getPostalCode().getPostalCode(), admin.getPostalCode().getCounty(), admin.getPostalCode().getDistrict());
         return address;
     }
 
     @FXML
     public void initialize() {
-        String sessionToken = AppSession.getToken();
         setViewUserInfo(getProfileInfo(sessionToken));
     }
 
@@ -64,7 +68,6 @@ public class ProfileController {
         this.email.setText(admin.getUser().getEmail());
         this.phone.setText(admin.getUser().getPhoneNumber());
         this.cc.setText(admin.getAdmin().getCitizenCardCode());
-        this.userType.setText(admin.getUser().getRole());
         this.address.setText(setAddress(admin));
     }
 
@@ -75,7 +78,8 @@ public class ProfileController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("components/edit-profile-modal.fxml"));
             Parent modalRoot = fxmlLoader.load();
             AdminModalController adminController = fxmlLoader.getController();
-            adminController.setEditUserInfo(getProfileInfo());
+            adminController.setEditUserInfo(getProfileInfo(sessionToken));
+            adminController.setReloadController(ProfileController.this);
 
             // Create a new stage for the modal
             Stage modalStage = new Stage();
@@ -95,16 +99,16 @@ public class ProfileController {
     }
 
     public GetAdminByIdResponseDTO getProfileInfo(String sessionToken) {
+        Map<String, Object> userInfo = AppSession.decodeJWT(sessionToken);
         // Define the API endpoint
         String baseUrl = "http://localhost:8080/api/users/get/admin/";
-        String url = baseUrl + sessionToken;
-
+        String url = baseUrl + userInfo.get("id");
         GetAdminByIdResponseDTO adminData = null;
 
         try {
             // Create a URL object with the API endpoint
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-            connection.setRequestMethod("GET");
+            connection.setRequestMethod("POST");
             connection.setConnectTimeout(5000); // Timeout after 5 seconds
             connection.setReadTimeout(5000); // Timeout for reading response
 

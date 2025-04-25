@@ -1,5 +1,6 @@
 package com.dashboard.desktopapp.components;
 
+import com.dashboard.desktopapp.dtos.bucket.response.BucketWithMunicipalityInfoDTO;
 import com.dashboard.desktopapp.dtos.bucket.response.GetAllBucketsResponseDTO;
 import com.dashboard.desktopapp.dtos.container.response.GetAllContainersResponseDTO;
 import com.dashboard.desktopapp.dtos.user.response.GetAllMunicipalitiesAndBucketsResponseDTO;
@@ -24,7 +25,7 @@ public class EditButtonsController {
     @Setter
     private GetAllSmasResponseDTO.SmasData smas;
     @Setter
-    private GetAllBucketsResponseDTO.Bucket bucket;
+    private BucketWithMunicipalityInfoDTO bucket;
     @Setter
     private GetAllContainersResponseDTO.Container container;
     private String modalType;
@@ -62,7 +63,7 @@ public class EditButtonsController {
                 smasController = fxmlLoader.getController();
                 smasController.setViewUserInfo(smas);
             } else if (bucket != null) {
-                System.out.println("Editing bucket ID: " + bucket.getId());
+                System.out.println("Editing bucket ID: " + bucket.getBucketId());
                 bucketController = fxmlLoader.getController();
                 //bucketController.setViewBucketInfo(bucket);
                 bucketController.setReloadController(reloadController);
@@ -106,7 +107,7 @@ public class EditButtonsController {
                 smasController.setEditUserInfo(smas);
                 smasController.setReloadController(reloadController);
             } else if (bucket != null) {
-                System.out.println("Editing bucket ID: " + bucket.getId());
+                System.out.println("Editing bucket ID: " + bucket.getBucketId());
                 bucketController = fxmlLoader.getController();
                 //bucketController.setEditBucketInfo(bucket);
                 bucketController.setReloadController(reloadController);
@@ -149,8 +150,8 @@ public class EditButtonsController {
                 System.out.println("Deleting smas ID: " + smas.getUser().getId());
                 deleteController.setDeleteInfo("users/delete/user", smas.getUser().getId());
             } else if (bucket != null) {
-                System.out.println("Deleting bucket ID: " + bucket.getId());
-                deleteController.setDeleteInfo("buckets/delete", bucket.getId());
+                System.out.println("Deleting bucket ID: " + bucket.getBucketId());
+                deleteController.setDeleteInfo("buckets/delete", bucket.getBucketId());
             } else if (container != null) {
                 System.out.println("Deleting container ID: " + container.getId());
                 deleteController.setDeleteInfo("containers/delete", container.getId());
