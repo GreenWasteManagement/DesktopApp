@@ -79,7 +79,7 @@ public class BucketsModalController {
     public void initialize() {
         if (capacity != null) {
             capacity.textProperty().addListener((observable, oldValue, newValue) -> {
-                if (!newValue.matches("^\\d+$")) {
+                if (!newValue.matches("^\\d*(\\.\\d*)?$")) {
                     capacity.setText(newValue.replaceAll("[^\\d]", ""));
                 }
             });
