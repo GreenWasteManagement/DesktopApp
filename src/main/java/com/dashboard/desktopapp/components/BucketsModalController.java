@@ -1,9 +1,11 @@
 package com.dashboard.desktopapp.components;
 
 import com.dashboard.desktopapp.dtos.bucket.request.CreateBucketRequestDTO;
+import com.dashboard.desktopapp.dtos.bucket.response.BucketWithMunicipalityInfoDTO;
 import com.dashboard.desktopapp.dtos.bucket.response.CreateBucketResponseDTO;
 import com.dashboard.desktopapp.dtos.bucket.response.GetAllBucketsResponseDTO;
 import com.dashboard.desktopapp.dtos.container.request.CreateContainerRequestDTO;
+import com.dashboard.desktopapp.dtos.container.request.UpdateContainerRequestDTO;
 import com.dashboard.desktopapp.dtos.user.response.GetAllMunicipalitiesAndBucketsResponseDTO;
 import com.dashboard.desktopapp.dtos.user.response.GetAllMunicipalitiesResponseDTO;
 import com.dashboard.desktopapp.interfaces.PageRefresh;
@@ -15,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -46,11 +49,14 @@ public class BucketsModalController {
     @FXML
     private TextField state;
     @FXML
+    private ChoiceBox<String> editState;
+    @FXML
     private TextField municipality;
     @FXML
     private ComboBox<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> municipalities;
     @FXML
     private Label errorLabel;
+    Long excludedUserId;
 
     private PageRefresh reloadController;
 
@@ -68,39 +74,68 @@ public class BucketsModalController {
         }
     }
 
-    public void setViewBucketInfo(Bucket bucket) {
-        this.id.setText(bucket.getId().toString());
+    public void setViewBucketInfo(BucketWithMunicipalityInfoDTO bucket) {
+        this.id.setText(bucket.getBucketId().toString());
         this.capacity.setText(bucket.getCapacity().toString());
-        this.associated.setText(bucket.getAssociated().toString());
-        this.state.setText(bucket.getState());
-        this.municipality.setText(bucket.getMunicipality());
+        if (bucket.getIsAssociated()) {
+            this.associated.setText("Sim");
+        }else {
+            this.associated.setText("Não");
+        }
+        if (bucket.getIsAssociated()) {
+            if (bucket.getBucketMunicipalities().getFirst().getStatus()){
+                this.state.setText("Associação ativa");
+            }else {
+                this.state.setText("Associação inativa");
+            }
+            this.municipality.setText(bucket.getBucketMunicipalities().getFirst().getMunicipality().getNif() + " - " +
+                    bucket.getBucketMunicipalities().getFirst().getMunicipality().getUser().getName());
+        } else {
+            this.state.setText("Sem associação");
+        }
     }
 
-    public void setEditBucketInfo(Bucket bucket) {
-        this.id.setText(bucket.getId().toString());
+    public void setEditBucketInfo(BucketWithMunicipalityInfoDTO bucket) {
+        this.id.setText(bucket.getBucketId().toString());
         this.capacity.setText(bucket.getCapacity().toString());
-        this.associated.setText(bucket.getAssociated().toString());
-        this.state.setText(bucket.getState());
-        this.municipality.setText(bucket.getMunicipality());
-        this.municipalities.setItems(FXCollections.observableArrayList());
-//        List<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> data = getAllMunicipalities();
-//        municipalities.getItems().addAll(data);
-//
-//        municipalities.setConverter(new StringConverter<>() {
-//            @Override
-//            public String toString(GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData object) {
-//                if (object == null) return "";
-//                return object.getMunicipality().getNif() + " - " + object.getUser().getName();
-//            }
-//
-//            @Override
-//            public GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData fromString(Bucket bucket) {
-//                return municipalities.getItems().stream()
-//                        .filter(item -> item.getBuckets().contains(bucket.getId()))
-//                        .findFirst()
-//                        .orElse(null);
-//            }
-//        });
+        if (bucket.getIsAssociated()) {
+            this.associated.setText("Sim");
+        }else {
+            this.associated.setText("Não");
+        }
+        if (bucket.getIsAssociated()) {
+            if (bucket.getBucketMunicipalities().getFirst().getStatus()){
+                this.editState.setValue("Associação ativa");
+            }else {
+                this.editState.setValue("Associação inativa");
+            }
+            this.municipality.setText(bucket.getBucketMunicipalities().getFirst().getMunicipality().getNif() + " - " +
+                    bucket.getBucketMunicipalities().getFirst().getMunicipality().getUser().getName());
+        } else {
+            this.editState.setValue("Sem associação");
+        }
+        excludedUserId = bucket.getBucketMunicipalities().getFirst().getMunicipality().getUser().getId();
+
+        List<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> data = getAllMunicipalities()
+                .stream()
+                .filter(m -> !m.getUser().getId().equals(excludedUserId))
+                .toList();
+
+        municipalities.setItems(FXCollections.observableArrayList(data));
+
+        municipalities.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData object) {
+                if (object == null) return "";
+                return object.getMunicipality().getNif() + " - " + object.getUser().getName();
+            }
+
+            @Override
+            public GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData fromString(String string) {
+                return null; // Not used
+            }
+        });
+
     }
 
     public void setCreateBucketInfo() {
@@ -123,6 +158,56 @@ public class BucketsModalController {
 
     @FXML
     public void onSaveBtnClick() throws IOException {
+        if (capacity.getText().isEmpty()) {
+            toggleErrorLabel(true);
+            return; // Don't proceed with the request
+        } else {
+
+            toggleErrorLabel(false);
+        }
+        String url = String.format("http://localhost:8080/api/buckets/update-full-bucket");
+        int responseCode = 0;
+
+        try {
+            // Prepare the connection
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setRequestMethod("PUT");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type", "application/json");
+            // Add Authorization header if needed
+//            if (AppSession.getToken() != null) {
+//                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getToken());
+//            }
+
+            // Create JSON body
+            UpdateContainerRequestDTO.Container container = new UpdateContainerRequestDTO.Container();
+            container.setId(Long.parseLong(id.getText()));
+            container.setCapacity(new BigDecimal(capacity.getText()));
+            container.setLocalization(containerLocation.getText());
+            container.setCurrentVolumeLevel(new BigDecimal(currentVolume.getText()));
+
+            String jsonBody = String.format("{\n" +
+                    "  \"container\": {\n" +
+                    "    \"id\": %s,\n" +
+                    "    \"capacity\": %s,\n" +
+                    "    \"localization\": \"%s\",\n" +
+                    "    \"currentVolumeLevel\": %s\n" +
+                    "  }\n" +
+                    "}", container.getId(), container.getCapacity(), container.getLocalization(), container.getCurrentVolumeLevel());
+
+            // Write the body to the output stream
+            try (OutputStream os = connection.getOutputStream()) {
+                byte[] input = jsonBody.getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+
+            // Capture the response code
+            responseCode = connection.getResponseCode();
+            connection.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+            responseCode = 500;
+        }
 
         // __LOGIC FOR CLOSING MODAL AND SHOWING CONFIRMATION MODAL__
         closeModal();

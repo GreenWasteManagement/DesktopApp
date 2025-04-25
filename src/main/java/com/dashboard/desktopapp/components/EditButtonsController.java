@@ -65,8 +65,7 @@ public class EditButtonsController {
             } else if (bucket != null) {
                 System.out.println("Editing bucket ID: " + bucket.getBucketId());
                 bucketController = fxmlLoader.getController();
-                //bucketController.setViewBucketInfo(bucket);
-                bucketController.setReloadController(reloadController);
+                bucketController.setViewBucketInfo(bucket);
             } else if (container != null) {
                 System.out.println("Editing container ID: " + container.getId());
                 containerController = fxmlLoader.getController();
@@ -109,7 +108,7 @@ public class EditButtonsController {
             } else if (bucket != null) {
                 System.out.println("Editing bucket ID: " + bucket.getBucketId());
                 bucketController = fxmlLoader.getController();
-                //bucketController.setEditBucketInfo(bucket);
+                bucketController.setEditBucketInfo(bucket);
                 bucketController.setReloadController(reloadController);
             } else if (container != null) {
                 System.out.println("Editing container ID: " + container.getId());
