@@ -1,5 +1,6 @@
 package com.dashboard.desktopapp.components;
 
+import com.dashboard.desktopapp.dtos.bucket.request.BucketFullUpdateRequestDTO;
 import com.dashboard.desktopapp.dtos.bucket.request.CreateBucketRequestDTO;
 import com.dashboard.desktopapp.dtos.bucket.response.BucketWithMunicipalityInfoDTO;
 import com.dashboard.desktopapp.dtos.bucket.response.CreateBucketResponseDTO;
@@ -35,6 +36,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class BucketsModalController {
     @FXML
@@ -56,6 +58,16 @@ public class BucketsModalController {
     private ComboBox<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> municipalities;
     @FXML
     private Label errorLabel;
+
+    private Long bucketMunicipalityId;
+    private Boolean bucketMunicipalityStatus;
+    private Long municipalityId;
+    private String municipalityNif;
+    private String municipalityCitizenCardCode;
+    private Long userId;
+    private String userName;
+    private String userEmail;
+
     Long excludedUserId;
 
     private PageRefresh reloadController;
@@ -76,7 +88,7 @@ public class BucketsModalController {
 
     public void setViewBucketInfo(BucketWithMunicipalityInfoDTO bucket) {
         this.id.setText(bucket.getBucketId().toString());
-        this.capacity.setText(bucket.getCapacity().toString());
+        this.capacity.setText(String.format("%.2f", bucket.getCapacity().floatValue()));
         if (bucket.getIsAssociated()) {
             this.associated.setText("Sim");
         }else {
@@ -97,13 +109,24 @@ public class BucketsModalController {
 
     public void setEditBucketInfo(BucketWithMunicipalityInfoDTO bucket) {
         this.id.setText(bucket.getBucketId().toString());
-        this.capacity.setText(bucket.getCapacity().toString());
+        this.capacity.setText(String.format("%.2f", bucket.getCapacity().floatValue()));
         if (bucket.getIsAssociated()) {
             this.associated.setText("Sim");
         }else {
             this.associated.setText("Não");
         }
         if (bucket.getIsAssociated()) {
+            editState.getItems().clear();
+            editState.getItems().addAll("Associação ativa", "Associação inativa");
+            excludedUserId = bucket.getBucketMunicipalities().getFirst().getMunicipality().getUser().getId();
+            bucketMunicipalityId = bucket.getBucketMunicipalities().getFirst().getId();
+            bucketMunicipalityStatus = bucket.getBucketMunicipalities().getFirst().getStatus();
+            municipalityId = bucket.getBucketMunicipalities().getFirst().getMunicipality().getId();
+            municipalityNif = bucket.getBucketMunicipalities().getFirst().getMunicipality().getNif();
+            municipalityCitizenCardCode = bucket.getBucketMunicipalities().getFirst().getMunicipality().getCitizenCardCode();
+            userId = bucket.getBucketMunicipalities().getFirst().getMunicipality().getUser().getId();
+            userName = bucket.getBucketMunicipalities().getFirst().getMunicipality().getUser().getName();
+            userEmail = bucket.getBucketMunicipalities().getFirst().getMunicipality().getUser().getEmail();
             if (bucket.getBucketMunicipalities().getFirst().getStatus()){
                 this.editState.setValue("Associação ativa");
             }else {
@@ -112,9 +135,11 @@ public class BucketsModalController {
             this.municipality.setText(bucket.getBucketMunicipalities().getFirst().getMunicipality().getNif() + " - " +
                     bucket.getBucketMunicipalities().getFirst().getMunicipality().getUser().getName());
         } else {
+            editState.getItems().clear();
+            editState.getItems().addAll("Associação ativa", "Associação inativa", "Sem associação");
+            excludedUserId = null;
             this.editState.setValue("Sem associação");
         }
-        excludedUserId = bucket.getBucketMunicipalities().getFirst().getMunicipality().getUser().getId();
 
         List<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> data = getAllMunicipalities()
                 .stream()
@@ -135,7 +160,6 @@ public class BucketsModalController {
                 return null; // Not used
             }
         });
-
     }
 
     public void setCreateBucketInfo() {
@@ -180,20 +204,99 @@ public class BucketsModalController {
 //            }
 
             // Create JSON body
-            UpdateContainerRequestDTO.Container container = new UpdateContainerRequestDTO.Container();
-            container.setId(Long.parseLong(id.getText()));
-            container.setCapacity(new BigDecimal(capacity.getText()));
-            container.setLocalization(containerLocation.getText());
-            container.setCurrentVolumeLevel(new BigDecimal(currentVolume.getText()));
+            String jsonBody;
 
-            String jsonBody = String.format("{\n" +
-                    "  \"container\": {\n" +
-                    "    \"id\": %s,\n" +
-                    "    \"capacity\": %s,\n" +
-                    "    \"localization\": \"%s\",\n" +
-                    "    \"currentVolumeLevel\": %s\n" +
-                    "  }\n" +
-                    "}", container.getId(), container.getCapacity(), container.getLocalization(), container.getCurrentVolumeLevel());
+            BucketFullUpdateRequestDTO bucketInfo = new BucketFullUpdateRequestDTO();
+            BucketFullUpdateRequestDTO.BucketMunicipalityUpdate bucketMunicipalityInfo = new BucketFullUpdateRequestDTO.BucketMunicipalityUpdate();
+            BucketFullUpdateRequestDTO.MunicipalityDTO bucketMunicipality = new BucketFullUpdateRequestDTO.MunicipalityDTO();
+            BucketFullUpdateRequestDTO.MunicipalityDTO.UserDTO bucketUser = new BucketFullUpdateRequestDTO.MunicipalityDTO.UserDTO();
+
+            bucketInfo.setBucketId(Long.parseLong(id.getText()));
+            bucketInfo.setCapacity(new BigDecimal(capacity.getText()));
+            if (Objects.equals(associated.getText(), "Sim")){
+                bucketInfo.setIsAssociated(true);
+
+                bucketMunicipalityInfo.setId(bucketMunicipalityId);
+                if (Objects.equals(editState.getSelectionModel().getSelectedItem(), "Associação ativa")) {
+                    bucketMunicipalityInfo.setStatus(true);
+                }else if(Objects.equals(editState.getSelectionModel().getSelectedItem(), "Associação inativa")) {
+                    bucketMunicipalityInfo.setStatus(false);
+                }
+
+                // Same association
+                if (municipalities.getSelectionModel().isEmpty()) {
+                    bucketMunicipality.setId(municipalityId);
+                    bucketMunicipality.setNif(municipalityNif);
+                    bucketMunicipality.setCitizenCardCode(municipalityCitizenCardCode);
+
+                    bucketUser.setId(userId);
+                    bucketUser.setName(userName);
+                    bucketUser.setEmail(userEmail);
+                }else {
+                    // New association
+                    GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData newMunicipality = municipalities.getSelectionModel().getSelectedItem();
+                    bucketMunicipality.setId(newMunicipality.getMunicipality().getId());
+                    bucketMunicipality.setNif(newMunicipality.getMunicipality().getNif());
+                    bucketMunicipality.setCitizenCardCode(newMunicipality.getMunicipality().getCitizenCardCode());
+
+                    bucketUser.setId(newMunicipality.getUser().getId());
+                    bucketUser.setName(newMunicipality.getUser().getName());
+                    bucketUser.setEmail(newMunicipality.getUser().getEmail());
+                }
+
+                jsonBody = String.format("{\n" +
+                        "  \"bucketId\": %s,\n" +
+                        "  \"capacity\": %s,\n" +
+                        "  \"isAssociated\": %s,\n" +
+                        "  \"bucketMunicipalities\": [\n" +
+                        "    {\n" +
+                        "      \"id\": %s,\n" +
+                        "      \"status\": %s,\n" +
+                        "      \"municipality\": {\n" +
+                        "        \"id\": %s,\n" +
+                        "        \"nif\": \"%s\",\n" +
+                        "        \"citizenCardCode\": \"%s\",\n" +
+                        "        \"user\": {\n" +
+                        "          \"id\": %s,\n" +
+                        "          \"name\": \"%s\",\n" +
+                        "          \"email\": \"%s\"\n" +
+                        "        }\n" +
+                        "      }\n" +
+                        "    }\n" +
+                        "  ]\n" +
+                        "}", bucketInfo.getBucketId(), bucketInfo.getCapacity(), bucketInfo.getIsAssociated(), bucketMunicipalityInfo.getId(),
+                        bucketMunicipalityInfo.getStatus(), bucketMunicipality.getId(), bucketMunicipality.getNif(), bucketMunicipality.getCitizenCardCode(),
+                        bucketUser.getId(), bucketUser.getName(), bucketUser.getEmail());
+            }else {
+                // Same association
+                if (municipalities.getSelectionModel().isEmpty()) {
+                    bucketInfo.setIsAssociated(false);
+
+                    jsonBody = String.format("{\n" +
+                            "  \"bucketId\": %s,\n" +
+                            "  \"capacity\": %s,\n" +
+                            "  \"isAssociated\": %s,\n" +
+                            "  \"bucketMunicipalities\": [\n" +
+                            "    \n" +
+                            "  ]\n" +
+                            "}", bucketInfo.getBucketId(), bucketInfo.getCapacity(), bucketInfo.getIsAssociated());
+                }else {
+                    bucketInfo.setIsAssociated(true);
+                    jsonBody = String.format("{\n" +
+                            "  \"bucketId\": %s,\n" +
+                            "  \"capacity\": %s,\n" +
+                            "  \"isAssociated\": %s,\n" +
+                            "  \"bucketMunicipalities\": [\n" +
+                            "    \n" +
+                            "  ]\n" +
+                            "}", bucketInfo.getBucketId(), bucketInfo.getCapacity(), bucketInfo.getIsAssociated());
+                    // New association
+                    GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData newMunicipality = municipalities.getSelectionModel().getSelectedItem();
+                    bucketMunicipality.setId(newMunicipality.getMunicipality().getId());
+
+                    createBucketAssociation(bucketInfo.getBucketId().toString(), bucketMunicipality.getId().toString());
+                }
+            }
 
             // Write the body to the output stream
             try (OutputStream os = connection.getOutputStream()) {
@@ -226,7 +329,8 @@ public class BucketsModalController {
         modalStage.initModality(javafx.stage.Modality.WINDOW_MODAL);
         // Pass the message to the function for confirmation modal
         ConfirmationModalController controller = fxmlLoader.getController();
-        controller.setConfirmationText(201); // Pass the request status code to set the text
+        controller.setConfirmationText(responseCode); // Pass the request status code to set the text
+        controller.setReloadController(reloadController);
         modalStage.showAndWait();
     }
 
