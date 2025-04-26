@@ -58,7 +58,7 @@
                 <Insets top="24.0" />
             </VBox.margin>
         </HBox>
-        <HBox fillHeight="false" layoutX="42.0" layoutY="221.0" spacing="24.0">
+        <HBox fillHeight="false" layoutX="42.0" layoutY="221.0" spacing="24.0" VBox.vgrow="ALWAYS">
             <children>
                 <VBox HBox.hgrow="ALWAYS">
                     <children>
@@ -77,14 +77,21 @@
                         </TextField>
                     </children>
                 </VBox>
-                <VBox layoutX="10.0" layoutY="10.0">
+                <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
                     <children>
                         <Label text="Estado:">
                             <font>
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                  <ChoiceBox fx:id="editState" prefHeight="42.0" prefWidth="356.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15; -fx-border-radius: 15;" VBox.vgrow="ALWAYS" />
+                  <TextField fx:id="state" editable="false" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                     </padding>
+                  </TextField>
                     </children>
                 </VBox>
             </children>

@@ -244,47 +244,6 @@ public class MunicipalityModalController {
         this.addressId = municipality.getAddress().getId();
     }
 
-    public List<GetAllBucketsResponseDTO.Bucket> getAllBuckets() {
-        // Define the API endpoint
-        String url = "http://localhost:8080/api/buckets";
-        List<GetAllBucketsResponseDTO.Bucket> buckets = null;
-
-        try {
-            // Create a URL object with the API endpoint
-            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-            connection.setRequestMethod("GET");
-            connection.setConnectTimeout(5000); // Timeout after 5 seconds
-            connection.setReadTimeout(5000); // Timeout for reading response
-
-            // Check if the response code is 200 (OK)
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                // Read the response data from the API
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder response = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
-                }
-                reader.close();
-
-                // Parse the JSON response to GetAllBucketsResponseDTO
-                ObjectMapper objectMapper = new ObjectMapper();
-                GetAllBucketsResponseDTO responseDTO = objectMapper.readValue(response.toString(), GetAllBucketsResponseDTO.class);
-
-                // Get the buckets list from the response DTO
-                buckets = responseDTO.getBuckets();
-            } else {
-                System.out.println("Error: Unable to fetch data. HTTP code: " + connection.getResponseCode());
-            }
-
-            connection.disconnect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return buckets; // Return the parsed buckets list
-    }
-
     @FXML
     public void onCancelBtnClick() {
         closeModal();
@@ -399,6 +358,9 @@ public class MunicipalityModalController {
                     municipalityInfo.getNif()
             );
 
+            if (!availableBuckets.getSelectionModel().isEmpty()){
+                createBucketAssociation(availableBuckets.getSelectionModel().getSelectedItem().toString(), userInfo.getId().toString());
+            }
 
             // Write the body to the output stream
             try (OutputStream os = connection.getOutputStream()) {
@@ -443,5 +405,82 @@ public class MunicipalityModalController {
 
     public void toggleErrorLabel(boolean isVisible) {
         errorLabel.setVisible(isVisible);
+    }
+
+    public List<GetAllBucketsResponseDTO.Bucket> getAllBuckets() {
+        // Define the API endpoint
+        String url = "http://localhost:8080/api/buckets";
+        List<GetAllBucketsResponseDTO.Bucket> buckets = null;
+
+        try {
+            // Create a URL object with the API endpoint
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(5000); // Timeout after 5 seconds
+            connection.setReadTimeout(5000); // Timeout for reading response
+
+            // Check if the response code is 200 (OK)
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                // Read the response data from the API
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+
+                // Parse the JSON response to GetAllBucketsResponseDTO
+                ObjectMapper objectMapper = new ObjectMapper();
+                GetAllBucketsResponseDTO responseDTO = objectMapper.readValue(response.toString(), GetAllBucketsResponseDTO.class);
+
+                // Get the buckets list from the response DTO
+                buckets = responseDTO.getBuckets();
+            } else {
+                System.out.println("Error: Unable to fetch data. HTTP code: " + connection.getResponseCode());
+            }
+
+            connection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return buckets; // Return the parsed buckets list
+    }
+
+    public int createBucketAssociation(String bucketId, String municipalityId) {
+        String url = String.format("http://localhost:8080/api/buckets/bucket-association");
+        int responseCode = 0;
+
+        try {
+            // Prepare the connection
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type", "application/json");
+            // Add Authorization header if needed
+//            if (AppSession.getToken() != null) {
+//                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getToken());
+//            }
+
+            String jsonBody = String.format("{\n" +
+                    "  \"bucketId\": %s,\n" +
+                    "  \"municipalityId\": %s\n" +
+                    "}", bucketId, municipalityId);
+
+            // Write the body to the output stream
+            try (OutputStream os = connection.getOutputStream()) {
+                byte[] input = jsonBody.getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+
+            // Capture the response code
+            responseCode = connection.getResponseCode();
+            connection.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+            responseCode = 500;
+        }
+        return responseCode;
     }
 }

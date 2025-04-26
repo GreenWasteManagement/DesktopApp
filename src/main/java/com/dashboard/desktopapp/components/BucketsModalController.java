@@ -37,6 +37,7 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class BucketsModalController {
     @FXML
@@ -91,19 +92,27 @@ public class BucketsModalController {
         this.capacity.setText(String.format("%.2f", bucket.getCapacity().floatValue()));
         if (bucket.getIsAssociated()) {
             this.associated.setText("Sim");
+
+            Optional<BucketWithMunicipalityInfoDTO.BucketMunicipalityDTO> activeAssociation =
+                    bucket.getBucketMunicipalities()
+                            .stream()
+                            .filter(BucketWithMunicipalityInfoDTO.BucketMunicipalityDTO::getStatus)
+                            .findFirst();
+            if (activeAssociation.isPresent()) {
+                this.state.setText("Associação ativa");
+                this.municipality.setText(
+                        activeAssociation.get().getMunicipality().getNif() + " - " +
+                                activeAssociation.get().getMunicipality().getUser().getName()
+                );
+            } else {
+                this.municipality.setText(bucket.getBucketMunicipalities().getLast().getMunicipality().getNif() + " - " +
+                        bucket.getBucketMunicipalities().getLast().getMunicipality().getUser().getName());
+                this.state.setText("Associação desativada");
+            }
         }else {
             this.associated.setText("Não");
-        }
-        if (bucket.getIsAssociated()) {
-            if (bucket.getBucketMunicipalities().getFirst().getStatus()){
-                this.state.setText("Associação ativa");
-            }else {
-                this.state.setText("Associação inativa");
-            }
-            this.municipality.setText(bucket.getBucketMunicipalities().getFirst().getMunicipality().getNif() + " - " +
-                    bucket.getBucketMunicipalities().getFirst().getMunicipality().getUser().getName());
-        } else {
             this.state.setText("Sem associação");
+            this.municipality.setText("");
         }
     }
 
@@ -112,33 +121,30 @@ public class BucketsModalController {
         this.capacity.setText(String.format("%.2f", bucket.getCapacity().floatValue()));
         if (bucket.getIsAssociated()) {
             this.associated.setText("Sim");
+
+            Optional<BucketWithMunicipalityInfoDTO.BucketMunicipalityDTO> activeAssociation =
+                    bucket.getBucketMunicipalities()
+                            .stream()
+                            .filter(BucketWithMunicipalityInfoDTO.BucketMunicipalityDTO::getStatus)
+                            .findFirst();
+            if (activeAssociation.isPresent()) {
+                excludedUserId = activeAssociation.get().getMunicipality().getUser().getId();
+                this.state.setText("Associação ativa");
+                this.municipality.setText(
+                        activeAssociation.get().getMunicipality().getNif() + " - " +
+                                activeAssociation.get().getMunicipality().getUser().getName()
+                );
+            } else {
+                this.municipality.setText(bucket.getBucketMunicipalities().getLast().getMunicipality().getNif() + " - " +
+                        bucket.getBucketMunicipalities().getLast().getMunicipality().getUser().getName());
+                this.state.setText("Associação desativada");
+                excludedUserId = null;
+            }
         }else {
             this.associated.setText("Não");
-        }
-        if (bucket.getIsAssociated()) {
-            editState.getItems().clear();
-            editState.getItems().addAll("Associação ativa", "Associação inativa");
-            excludedUserId = bucket.getBucketMunicipalities().getFirst().getMunicipality().getUser().getId();
-            bucketMunicipalityId = bucket.getBucketMunicipalities().getFirst().getId();
-            bucketMunicipalityStatus = bucket.getBucketMunicipalities().getFirst().getStatus();
-            municipalityId = bucket.getBucketMunicipalities().getFirst().getMunicipality().getId();
-            municipalityNif = bucket.getBucketMunicipalities().getFirst().getMunicipality().getNif();
-            municipalityCitizenCardCode = bucket.getBucketMunicipalities().getFirst().getMunicipality().getCitizenCardCode();
-            userId = bucket.getBucketMunicipalities().getFirst().getMunicipality().getUser().getId();
-            userName = bucket.getBucketMunicipalities().getFirst().getMunicipality().getUser().getName();
-            userEmail = bucket.getBucketMunicipalities().getFirst().getMunicipality().getUser().getEmail();
-            if (bucket.getBucketMunicipalities().getFirst().getStatus()){
-                this.editState.setValue("Associação ativa");
-            }else {
-                this.editState.setValue("Associação inativa");
-            }
-            this.municipality.setText(bucket.getBucketMunicipalities().getFirst().getMunicipality().getNif() + " - " +
-                    bucket.getBucketMunicipalities().getFirst().getMunicipality().getUser().getName());
-        } else {
-            editState.getItems().clear();
-            editState.getItems().addAll("Associação ativa", "Associação inativa", "Sem associação");
+            this.state.setText("Sem associação");
+            this.municipality.setText("");
             excludedUserId = null;
-            this.editState.setValue("Sem associação");
         }
 
         List<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> data = getAllMunicipalities()
@@ -189,7 +195,7 @@ public class BucketsModalController {
 
             toggleErrorLabel(false);
         }
-        String url = String.format("http://localhost:8080/api/buckets/update-full-bucket");
+        String url = String.format("http://localhost:8080/api/buckets/update");
         int responseCode = 0;
 
         try {
@@ -216,79 +222,109 @@ public class BucketsModalController {
             if (Objects.equals(associated.getText(), "Sim")){
                 bucketInfo.setIsAssociated(true);
 
-                bucketMunicipalityInfo.setId(bucketMunicipalityId);
-                if (Objects.equals(editState.getSelectionModel().getSelectedItem(), "Associação ativa")) {
-                    bucketMunicipalityInfo.setStatus(true);
-                }else if(Objects.equals(editState.getSelectionModel().getSelectedItem(), "Associação inativa")) {
-                    bucketMunicipalityInfo.setStatus(false);
-                }
-
+//                bucketMunicipalityInfo.setId(bucketMunicipalityId);
+//                if (Objects.equals(editState.getSelectionModel().getSelectedItem(), "Associação ativa")) {
+//                    bucketMunicipalityInfo.setStatus(true);
+//                }else if(Objects.equals(editState.getSelectionModel().getSelectedItem(), "Associação inativa")) {
+//                    bucketMunicipalityInfo.setStatus(false);
+//                }
+//
+//                // Same association
+//                if (municipalities.getSelectionModel().isEmpty()) {
+//                    bucketMunicipality.setId(municipalityId);
+//                    bucketMunicipality.setNif(municipalityNif);
+//                    bucketMunicipality.setCitizenCardCode(municipalityCitizenCardCode);
+//
+//                    bucketUser.setId(userId);
+//                    bucketUser.setName(userName);
+//                    bucketUser.setEmail(userEmail);
+//                }else {
+//                    // New association
+//                    GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData newMunicipality = municipalities.getSelectionModel().getSelectedItem();
+//                    bucketMunicipality.setId(newMunicipality.getMunicipality().getId());
+//                    bucketMunicipality.setNif(newMunicipality.getMunicipality().getNif());
+//                    bucketMunicipality.setCitizenCardCode(newMunicipality.getMunicipality().getCitizenCardCode());
+//
+//                    bucketUser.setId(newMunicipality.getUser().getId());
+//                    bucketUser.setName(newMunicipality.getUser().getName());
+//                    bucketUser.setEmail(newMunicipality.getUser().getEmail());
+//                }
+//
+//                jsonBody = String.format("{\n" +
+//                        "  \"bucketId\": %s,\n" +
+//                        "  \"capacity\": %s,\n" +
+//                        "  \"isAssociated\": %s,\n" +
+//                        "  \"bucketMunicipalities\": [\n" +
+//                        "    {\n" +
+//                        "      \"id\": %s,\n" +
+//                        "      \"status\": %s,\n" +
+//                        "      \"municipality\": {\n" +
+//                        "        \"id\": %s,\n" +
+//                        "        \"nif\": \"%s\",\n" +
+//                        "        \"citizenCardCode\": \"%s\",\n" +
+//                        "        \"user\": {\n" +
+//                        "          \"id\": %s,\n" +
+//                        "          \"name\": \"%s\",\n" +
+//                        "          \"email\": \"%s\"\n" +
+//                        "        }\n" +
+//                        "      }\n" +
+//                        "    }\n" +
+//                        "  ]\n" +
+//                        "}", bucketInfo.getBucketId(), bucketInfo.getCapacity(), bucketInfo.getIsAssociated(), bucketMunicipalityInfo.getId(),
+//                        bucketMunicipalityInfo.getStatus(), bucketMunicipality.getId(), bucketMunicipality.getNif(), bucketMunicipality.getCitizenCardCode(),
+//                        bucketUser.getId(), bucketUser.getName(), bucketUser.getEmail());
                 // Same association
-                if (municipalities.getSelectionModel().isEmpty()) {
-                    bucketMunicipality.setId(municipalityId);
-                    bucketMunicipality.setNif(municipalityNif);
-                    bucketMunicipality.setCitizenCardCode(municipalityCitizenCardCode);
-
-                    bucketUser.setId(userId);
-                    bucketUser.setName(userName);
-                    bucketUser.setEmail(userEmail);
-                }else {
+                jsonBody = String.format("{\n" +
+                        "  \"bucket\": {\n" +
+                        "    \"id\": %s,\n" +
+                        "    \"capacity\": %s,\n" +
+                        "    \"isAssociated\": %s\n" +
+                        "  }\n" +
+                        "}", bucketInfo.getBucketId(), bucketInfo.getCapacity(), bucketInfo.getIsAssociated());
+                if (!municipalities.getSelectionModel().isEmpty()) {
                     // New association
                     GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData newMunicipality = municipalities.getSelectionModel().getSelectedItem();
                     bucketMunicipality.setId(newMunicipality.getMunicipality().getId());
-                    bucketMunicipality.setNif(newMunicipality.getMunicipality().getNif());
-                    bucketMunicipality.setCitizenCardCode(newMunicipality.getMunicipality().getCitizenCardCode());
 
-                    bucketUser.setId(newMunicipality.getUser().getId());
-                    bucketUser.setName(newMunicipality.getUser().getName());
-                    bucketUser.setEmail(newMunicipality.getUser().getEmail());
+                    createBucketAssociation(bucketInfo.getBucketId().toString(), bucketMunicipality.getId().toString());
                 }
-
-                jsonBody = String.format("{\n" +
-                        "  \"bucketId\": %s,\n" +
-                        "  \"capacity\": %s,\n" +
-                        "  \"isAssociated\": %s,\n" +
-                        "  \"bucketMunicipalities\": [\n" +
-                        "    {\n" +
-                        "      \"id\": %s,\n" +
-                        "      \"status\": %s,\n" +
-                        "      \"municipality\": {\n" +
-                        "        \"id\": %s,\n" +
-                        "        \"nif\": \"%s\",\n" +
-                        "        \"citizenCardCode\": \"%s\",\n" +
-                        "        \"user\": {\n" +
-                        "          \"id\": %s,\n" +
-                        "          \"name\": \"%s\",\n" +
-                        "          \"email\": \"%s\"\n" +
-                        "        }\n" +
-                        "      }\n" +
-                        "    }\n" +
-                        "  ]\n" +
-                        "}", bucketInfo.getBucketId(), bucketInfo.getCapacity(), bucketInfo.getIsAssociated(), bucketMunicipalityInfo.getId(),
-                        bucketMunicipalityInfo.getStatus(), bucketMunicipality.getId(), bucketMunicipality.getNif(), bucketMunicipality.getCitizenCardCode(),
-                        bucketUser.getId(), bucketUser.getName(), bucketUser.getEmail());
             }else {
                 // Same association
                 if (municipalities.getSelectionModel().isEmpty()) {
                     bucketInfo.setIsAssociated(false);
 
+//                    jsonBody = String.format("{\n" +
+//                            "  \"bucketId\": %s,\n" +
+//                            "  \"capacity\": %s,\n" +
+//                            "  \"isAssociated\": %s,\n" +
+//                            "  \"bucketMunicipalities\": [\n" +
+//                            "    \n" +
+//                            "  ]\n" +
+//                            "}", bucketInfo.getBucketId(), bucketInfo.getCapacity(), bucketInfo.getIsAssociated());
                     jsonBody = String.format("{\n" +
-                            "  \"bucketId\": %s,\n" +
-                            "  \"capacity\": %s,\n" +
-                            "  \"isAssociated\": %s,\n" +
-                            "  \"bucketMunicipalities\": [\n" +
-                            "    \n" +
-                            "  ]\n" +
+                            "  \"bucket\": {\n" +
+                            "    \"id\": %s,\n" +
+                            "    \"capacity\": %s,\n" +
+                            "    \"isAssociated\": %s\n" +
+                            "  }\n" +
                             "}", bucketInfo.getBucketId(), bucketInfo.getCapacity(), bucketInfo.getIsAssociated());
                 }else {
                     bucketInfo.setIsAssociated(true);
+//                    jsonBody = String.format("{\n" +
+//                            "  \"bucketId\": %s,\n" +
+//                            "  \"capacity\": %s,\n" +
+//                            "  \"isAssociated\": %s,\n" +
+//                            "  \"bucketMunicipalities\": [\n" +
+//                            "    \n" +
+//                            "  ]\n" +
+//                            "}", bucketInfo.getBucketId(), bucketInfo.getCapacity(), bucketInfo.getIsAssociated());
+
                     jsonBody = String.format("{\n" +
-                            "  \"bucketId\": %s,\n" +
-                            "  \"capacity\": %s,\n" +
-                            "  \"isAssociated\": %s,\n" +
-                            "  \"bucketMunicipalities\": [\n" +
-                            "    \n" +
-                            "  ]\n" +
+                            "  \"bucket\": {\n" +
+                            "    \"id\": %s,\n" +
+                            "    \"capacity\": %s,\n" +
+                            "    \"isAssociated\": %s\n" +
+                            "  }\n" +
                             "}", bucketInfo.getBucketId(), bucketInfo.getCapacity(), bucketInfo.getIsAssociated());
                     // New association
                     GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData newMunicipality = municipalities.getSelectionModel().getSelectedItem();
