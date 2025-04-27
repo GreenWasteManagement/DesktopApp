@@ -3,12 +3,16 @@ package com.dashboard.desktopapp;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class StartApplication extends Application {
+
+    public static void main(String[] args) {
+        launch();
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -27,9 +31,5 @@ public class StartApplication extends Application {
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 }

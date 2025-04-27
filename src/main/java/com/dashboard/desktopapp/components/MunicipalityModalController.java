@@ -1,17 +1,10 @@
 package com.dashboard.desktopapp.components;
 
 import com.dashboard.desktopapp.dtos.bucket.response.GetAllBucketsResponseDTO;
-import com.dashboard.desktopapp.dtos.container.request.CreateContainerRequestDTO;
-import com.dashboard.desktopapp.dtos.container.request.UpdateContainerRequestDTO;
-import com.dashboard.desktopapp.dtos.container.response.GetAllContainersResponseDTO;
-import com.dashboard.desktopapp.dtos.user.request.CreateMunicipalityRequestDTO;
 import com.dashboard.desktopapp.dtos.user.request.UpdateMunicipalityRequestDTO;
 import com.dashboard.desktopapp.dtos.user.response.GetAllMunicipalitiesAndBucketsResponseDTO;
 import com.dashboard.desktopapp.interfaces.PageRefresh;
-import com.dashboard.desktopapp.models.Municipality;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,11 +21,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -261,7 +252,7 @@ public class MunicipalityModalController {
 
             toggleErrorLabel(false);
         }
-        String url = String.format("http://localhost:8080/api/users/update-full-municipality");
+        String url = "http://localhost:8080/api/users/update-full-municipality";
         int responseCode = 0;
 
         try {
@@ -358,13 +349,13 @@ public class MunicipalityModalController {
                     municipalityInfo.getNif()
             );
 
-            if (!availableBuckets.getSelectionModel().isEmpty()){
+            if (!availableBuckets.getSelectionModel().isEmpty()) {
                 createBucketAssociation(availableBuckets.getSelectionModel().getSelectedItem().toString(), userInfo.getId().toString());
             }
 
             // Write the body to the output stream
             try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = jsonBody.getBytes("utf-8");
+                byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             }
 
@@ -449,7 +440,7 @@ public class MunicipalityModalController {
     }
 
     public int createBucketAssociation(String bucketId, String municipalityId) {
-        String url = String.format("http://localhost:8080/api/buckets/bucket-association");
+        String url = "http://localhost:8080/api/buckets/bucket-association";
         int responseCode = 0;
 
         try {
@@ -470,7 +461,7 @@ public class MunicipalityModalController {
 
             // Write the body to the output stream
             try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = jsonBody.getBytes("utf-8");
+                byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             }
 

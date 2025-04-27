@@ -15,9 +15,23 @@ public class Bucket {
         this.municipality = municipality;
     }
 
-    public Integer getId() { return id; }
-    public Float getCapacity() { return capacity; }
-    public Boolean getAssociated() { return associated; }
-    public String getState() { return state; }
-    public String getMunicipality() { return municipality; }
+    public Integer getId() {
+        return id;
+    }
+
+    public Float getCapacity() {
+        return capacity;
+    }
+
+    public Boolean getAssociated() {
+        return associated;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public String getMunicipality() {
+        return municipality;
+    }
 }

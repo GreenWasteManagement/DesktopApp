@@ -1,140 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
-<BorderPane fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dashboard.desktopapp.StartController">
-   <top>
-      <HBox alignment="CENTER_LEFT" stylesheets="@style.css" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/LOGO.png" />
-               </image>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </ImageView>
-            <Label style="-fx-font-family: Quicksand;" stylesheets="@style.css" text="Viana Circular" textFill="#057222">
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="System Bold" size="64.0" />
-               </font>
-            </Label>
-         </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-         <padding>
-            <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
-         </padding>
-         <styleClass>
-            <String fx:value="hbox-shadow" />
-            <String fx:value="background-color" />
-         </styleClass></HBox>
-   </top>
-   <center>
-      <VBox alignment="TOP_CENTER" maxWidth="600.0" prefWidth="600.0" BorderPane.alignment="TOP_CENTER">
-         <children>
-            <Label text="Painel de gestão" textFill="#057222">
-               <font>
-                  <Font name="System Bold" size="48.0" />
-               </font>
-            </Label>
-            <VBox alignment="CENTER" style="-fx-background-color: #057222; -fx-border-radius: 50; -fx-background-radius: 50;" VBox.vgrow="NEVER">
-               <VBox.margin>
-                  <Insets bottom="32.0" left="32.0" right="32.0" top="64.0" />
-               </VBox.margin>
-               <children>
-                  <Label text="Autenticação" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="48.0" />
-                     </font>
-                  </Label>
-                  <VBox>
-                     <VBox.margin>
-                        <Insets top="32.0" />
-                     </VBox.margin>
-                     <children>
-                        <Label text="Email:" textFill="WHITE">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
+<?import java.lang.String?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity"
+            minWidth="-Infinity" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12"
+            fx:controller="com.dashboard.desktopapp.StartController">
+    <top>
+        <HBox alignment="CENTER_LEFT" stylesheets="@style.css" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/LOGO.png"/>
+                    </image>
+                    <HBox.margin>
+                        <Insets/>
+                    </HBox.margin>
+                </ImageView>
+                <Label style="-fx-font-family: Quicksand;" stylesheets="@style.css" text="Viana Circular"
+                       textFill="#057222">
+                    <HBox.margin>
+                        <Insets left="10.0"/>
+                    </HBox.margin>
+                    <font>
+                        <Font name="System Bold" size="64.0"/>
+                    </font>
+                </Label>
+            </children>
+            <BorderPane.margin>
+                <Insets/>
+            </BorderPane.margin>
+            <padding>
+                <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
+            </padding>
+            <styleClass>
+                <String fx:value="hbox-shadow"/>
+                <String fx:value="background-color"/>
+            </styleClass>
+        </HBox>
+    </top>
+    <center>
+        <VBox alignment="TOP_CENTER" maxWidth="600.0" prefWidth="600.0" BorderPane.alignment="TOP_CENTER">
+            <children>
+                <Label text="Painel de gestão" textFill="#057222">
+                    <font>
+                        <Font name="System Bold" size="48.0"/>
+                    </font>
+                </Label>
+                <VBox alignment="CENTER"
+                      style="-fx-background-color: #057222; -fx-border-radius: 50; -fx-background-radius: 50;"
+                      VBox.vgrow="NEVER">
+                    <VBox.margin>
+                        <Insets bottom="32.0" left="32.0" right="32.0" top="64.0"/>
+                    </VBox.margin>
+                    <children>
+                        <Label text="Autenticação" textAlignment="CENTER" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="48.0"/>
+                            </font>
                         </Label>
-                        <TextField fx:id="email" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@style.css">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets top="8.0" />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
-                           </padding></TextField>
-                        <Label layoutX="10.0" layoutY="10.0" text="Palavra-passe:" textFill="WHITE">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets top="16.0" />
-                           </VBox.margin>
-                        </Label>
-                        <PasswordField fx:id="password" style="-fx-border-radius: 15; -fx-background-radius: 15;">
-                           <VBox.margin>
-                              <Insets top="8.0" />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
-                           </padding>
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </PasswordField>
-                        <VBox alignment="CENTER">
-                           <children>
-                              <Button fx:id="accessBtn" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#onAccessBtnClick" style="-fx-background-color: #FFFFFF; -fx-border-radius: 15; -fx-background-radius: 15; -fx-min-width: 100%;" styleClass="hover" text="Aceder" textAlignment="CENTER" textFill="#004713">
-                                 <font>
-                                    <Font name="System Bold" size="24.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                                 <padding>
-                                    <Insets bottom="10.0" left="48.0" right="48.0" top="10.0" />
-                                 </padding>
-                              </Button>
-                           </children>
-                           <VBox.margin>
-                              <Insets top="32.0" />
-                           </VBox.margin>
-                           <padding>
-                              <Insets left="32.0" right="32.0" />
-                           </padding>
+                        <VBox>
+                            <VBox.margin>
+                                <Insets top="32.0"/>
+                            </VBox.margin>
+                            <children>
+                                <Label text="Email:" textFill="WHITE">
+                                    <font>
+                                        <Font size="16.0"/>
+                                    </font>
+                                </Label>
+                                <TextField fx:id="email" style="-fx-border-radius: 15; -fx-background-radius: 15;"
+                                           stylesheets="@style.css">
+                                    <font>
+                                        <Font size="20.0"/>
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets top="8.0"/>
+                                    </VBox.margin>
+                                    <padding>
+                                        <Insets bottom="8.0" left="10.0" right="10.0" top="8.0"/>
+                                    </padding>
+                                </TextField>
+                                <Label layoutX="10.0" layoutY="10.0" text="Palavra-passe:" textFill="WHITE">
+                                    <font>
+                                        <Font size="16.0"/>
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets top="16.0"/>
+                                    </VBox.margin>
+                                </Label>
+                                <PasswordField fx:id="password"
+                                               style="-fx-border-radius: 15; -fx-background-radius: 15;">
+                                    <VBox.margin>
+                                        <Insets top="8.0"/>
+                                    </VBox.margin>
+                                    <padding>
+                                        <Insets bottom="8.0" left="10.0" right="10.0" top="8.0"/>
+                                    </padding>
+                                    <font>
+                                        <Font size="20.0"/>
+                                    </font>
+                                </PasswordField>
+                                <VBox alignment="CENTER">
+                                    <children>
+                                        <Button fx:id="accessBtn" alignment="CENTER" contentDisplay="CENTER"
+                                                defaultButton="true" mnemonicParsing="false"
+                                                onAction="#onAccessBtnClick"
+                                                style="-fx-background-color: #FFFFFF; -fx-border-radius: 15; -fx-background-radius: 15; -fx-min-width: 100%;"
+                                                styleClass="hover" text="Aceder" textAlignment="CENTER"
+                                                textFill="#004713">
+                                            <font>
+                                                <Font name="System Bold" size="24.0"/>
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets/>
+                                            </VBox.margin>
+                                            <padding>
+                                                <Insets bottom="10.0" left="48.0" right="48.0" top="10.0"/>
+                                            </padding>
+                                        </Button>
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets top="32.0"/>
+                                    </VBox.margin>
+                                    <padding>
+                                        <Insets left="32.0" right="32.0"/>
+                                    </padding>
+                                </VBox>
+                            </children>
                         </VBox>
-                     </children>
-                  </VBox>
-               </children>
-               <padding>
-                  <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
-               </padding>
-               <BorderPane.margin>
-                  <Insets left="400.0" right="400.0" top="48.0" />
-               </BorderPane.margin>
-            </VBox>
-         </children>
-         <BorderPane.margin>
-            <Insets top="48.0" />
-         </BorderPane.margin>
-      </VBox>
-   </center>
-   <styleClass>
-      <String fx:value="background-color" />
-      <String fx:value="background-img" />
-   </styleClass>
+                    </children>
+                    <padding>
+                        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
+                    </padding>
+                    <BorderPane.margin>
+                        <Insets left="400.0" right="400.0" top="48.0"/>
+                    </BorderPane.margin>
+                </VBox>
+            </children>
+            <BorderPane.margin>
+                <Insets top="48.0"/>
+            </BorderPane.margin>
+        </VBox>
+    </center>
+    <styleClass>
+        <String fx:value="background-color"/>
+        <String fx:value="background-img"/>
+    </styleClass>
 </BorderPane>

@@ -1,12 +1,10 @@
 package com.dashboard.desktopapp.components;
 
 import com.dashboard.desktopapp.dtos.bucket.response.BucketWithMunicipalityInfoDTO;
-import com.dashboard.desktopapp.dtos.bucket.response.GetAllBucketsResponseDTO;
 import com.dashboard.desktopapp.dtos.container.response.GetAllContainersResponseDTO;
 import com.dashboard.desktopapp.dtos.user.response.GetAllMunicipalitiesAndBucketsResponseDTO;
 import com.dashboard.desktopapp.dtos.user.response.GetAllSmasResponseDTO;
 import com.dashboard.desktopapp.interfaces.PageRefresh;
-import com.dashboard.desktopapp.models.SMAS;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

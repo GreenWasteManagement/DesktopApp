@@ -1,11 +1,9 @@
 package com.dashboard.desktopapp;
 
+import com.dashboard.desktopapp.appsession.AppSession;
 import com.dashboard.desktopapp.components.AdminModalController;
 import com.dashboard.desktopapp.dtos.user.response.GetAdminByIdResponseDTO;
-import com.dashboard.desktopapp.dtos.user.response.GetAllSmasResponseDTO;
 import com.dashboard.desktopapp.interfaces.PageRefresh;
-import com.dashboard.desktopapp.models.Admin;
-import com.dashboard.desktopapp.appsession.AppSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,14 +21,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 import java.util.Map;
 
 public class ProfileController implements PageRefresh {
 
+    String sessionToken = AppSession.getToken();
     @FXML
     private BorderPane content;
-
     @FXML
     private TextField name;
     @FXML
@@ -43,8 +40,6 @@ public class ProfileController implements PageRefresh {
     private TextField cc;
     @FXML
     private TextField address;
-
-    String sessionToken = AppSession.getToken();
 
     @Override
     public void refreshPage() {

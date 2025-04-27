@@ -1,5 +1,7 @@
 package com.dashboard.desktopapp;
 
+import com.dashboard.desktopapp.appsession.AppSession;
+import com.dashboard.desktopapp.dtos.user.request.LoginRequestDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
@@ -20,9 +22,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import com.dashboard.desktopapp.dtos.user.request.LoginRequestDTO;
-import com.dashboard.desktopapp.appsession.AppSession;
+import java.nio.charset.StandardCharsets;
 
 public class StartController {
 
@@ -53,13 +53,13 @@ public class StartController {
             connection.setDoOutput(true);
 
             try (OutputStream os = connection.getOutputStream()) {
-                os.write(requestBody.getBytes("utf-8"));
+                os.write(requestBody.getBytes(StandardCharsets.UTF_8));
             }
 
             int responseCode = connection.getResponseCode();
 
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                try (BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), "utf-8"))) {
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
                     StringBuilder response = new StringBuilder();
                     String line;
                     while ((line = br.readLine()) != null) {

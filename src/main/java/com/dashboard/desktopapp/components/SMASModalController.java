@@ -1,12 +1,9 @@
 package com.dashboard.desktopapp.components;
 
-import com.dashboard.desktopapp.dtos.user.request.CreateMunicipalityRequestDTO;
 import com.dashboard.desktopapp.dtos.user.request.CreateSmasRequestDTO;
-import com.dashboard.desktopapp.dtos.user.request.UpdateMunicipalityRequestDTO;
 import com.dashboard.desktopapp.dtos.user.request.UpdateSmasRequestDTO;
 import com.dashboard.desktopapp.dtos.user.response.GetAllSmasResponseDTO;
 import com.dashboard.desktopapp.interfaces.PageRefresh;
-import com.dashboard.desktopapp.models.SMAS;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,6 +18,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class SMASModalController {
 
@@ -177,7 +175,7 @@ public class SMASModalController {
 
             toggleErrorLabel(false);
         }
-        String url = String.format("http://localhost:8080/api/users/update-full-smas");
+        String url = "http://localhost:8080/api/users/update-full-smas";
         int responseCode = 0;
 
         try {
@@ -281,7 +279,7 @@ public class SMASModalController {
 
             // Write the body to the output stream
             try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = jsonBody.getBytes("utf-8");
+                byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             }
 
@@ -327,7 +325,7 @@ public class SMASModalController {
 
             toggleErrorLabel(false);
         }
-        String url = String.format("http://localhost:8080/api/users/create/smas");
+        String url = "http://localhost:8080/api/users/create/smas";
         int responseCode = 0;
 
         try {
@@ -420,7 +418,7 @@ public class SMASModalController {
 
             // Write the body to the output stream
             try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = jsonBody.getBytes("utf-8");
+                byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             }
 

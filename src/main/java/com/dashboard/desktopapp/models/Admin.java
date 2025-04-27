@@ -35,20 +35,64 @@ public class Admin {
         this.district = district;
     }
 
-    public Integer getId() { return id; }
-    public String getName() { return name; }
-    public String getUsername() { return username; }
-    public String getEmail() { return email; }
-    public String getPhone() { return phone; }
-    public Integer getCc() { return cc; }
-    public Integer getNif() { return nif; }
-    public String getUserType() { return userType; }
-    public String getFloorDetails() { return floorDetails; }
-    public Integer getFloorNumber() { return floorNumber; }
-    public Integer getDoorNumber() { return doorNumber; }
-    public String getStreet() { return street; }
-    public String getPostalCode() { return postalCode; }
-    public String getCounty() { return county; }
-    public String getDistrict() { return district; }
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public Integer getCc() {
+        return cc;
+    }
+
+    public Integer getNif() {
+        return nif;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public String getFloorDetails() {
+        return floorDetails;
+    }
+
+    public Integer getFloorNumber() {
+        return floorNumber;
+    }
+
+    public Integer getDoorNumber() {
+        return doorNumber;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
 }
 

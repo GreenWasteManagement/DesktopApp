@@ -2,9 +2,8 @@ package com.dashboard.desktopapp.components;
 
 import com.dashboard.desktopapp.dtos.container.request.CreateContainerRequestDTO;
 import com.dashboard.desktopapp.dtos.container.request.UpdateContainerRequestDTO;
-import com.dashboard.desktopapp.interfaces.PageRefresh;
-import com.dashboard.desktopapp.models.Container;
 import com.dashboard.desktopapp.dtos.container.response.GetAllContainersResponseDTO;
+import com.dashboard.desktopapp.interfaces.PageRefresh;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,8 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
@@ -24,15 +23,16 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 public class ContainersModalController {
 
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
     @FXML
     private VBox modal;
-
     @FXML
     private TextField id;
     @FXML
@@ -47,7 +47,6 @@ public class ContainersModalController {
     private ListView<GetAllContainersResponseDTO.ContainerUnloading> containerUnloads;
     @FXML
     private ListView<GetAllContainersResponseDTO.BucketMunicipalityContainer> containerDeposits;
-
     private PageRefresh reloadController;
 
     @FXML
@@ -65,12 +64,9 @@ public class ContainersModalController {
 
     }
 
-
     public void setReloadController(PageRefresh controller) {
         this.reloadController = controller;
     }
-
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
     public void setViewContainerInfo(GetAllContainersResponseDTO.Container container) {
         this.id.setText(container.getId().toString());
@@ -140,7 +136,7 @@ public class ContainersModalController {
 
             toggleErrorLabel(false);
         }
-        String url = String.format("http://localhost:8080/api/containers/update");
+        String url = "http://localhost:8080/api/containers/update";
         int responseCode = 0;
 
         try {
@@ -172,7 +168,7 @@ public class ContainersModalController {
 
             // Write the body to the output stream
             try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = jsonBody.getBytes("utf-8");
+                byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             }
 
@@ -215,7 +211,7 @@ public class ContainersModalController {
 
             toggleErrorLabel(false);
         }
-        String url = String.format("http://localhost:8080/api/containers");
+        String url = "http://localhost:8080/api/containers";
         int responseCode = 0;
 
         try {
@@ -242,7 +238,7 @@ public class ContainersModalController {
 
             // Write the body to the output stream
             try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = jsonBody.getBytes("utf-8");
+                byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             }
 

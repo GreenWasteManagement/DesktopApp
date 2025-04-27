@@ -1,12 +1,9 @@
 package com.dashboard.desktopapp;
 
 import com.dashboard.desktopapp.components.BucketsModalController;
-import com.dashboard.desktopapp.components.SMASModalController;
-import com.dashboard.desktopapp.dtos.bucket.response.BucketWithMunicipalityInfoDTO;
-import com.dashboard.desktopapp.dtos.bucket.response.GetAllBucketsResponseDTO;
-import com.dashboard.desktopapp.interfaces.PageRefresh;
-import com.dashboard.desktopapp.models.Bucket;
 import com.dashboard.desktopapp.components.EditButtonsController;
+import com.dashboard.desktopapp.dtos.bucket.response.BucketWithMunicipalityInfoDTO;
+import com.dashboard.desktopapp.interfaces.PageRefresh;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -33,7 +30,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BucketsListController implements PageRefresh {

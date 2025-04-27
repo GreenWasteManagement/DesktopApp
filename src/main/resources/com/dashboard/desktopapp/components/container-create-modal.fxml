@@ -4,14 +4,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
-<VBox fx:id="modal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="800.0" style="-fx-background-color: #D9D9D9;" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dashboard.desktopapp.components.ContainersModalController">
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="modal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity" prefWidth="800.0" style="-fx-background-color: #D9D9D9;"
+      stylesheets="@../style.css" xmlns="http://javafx.com/javafx/17.0.12"
+      fx:controller="com.dashboard.desktopapp.components.ContainersModalController">
     <children>
         <HBox fillHeight="false" VBox.vgrow="NEVER">
             <children>
                 <Label text="Criar contentor">
                     <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font name="System Bold" size="24.0"/>
                     </font>
                 </Label>
             </children>
@@ -22,22 +24,23 @@
                     <children>
                         <Label text="Capacidade:">
                             <font>
-                                <Font size="16.0" />
+                                <Font size="16.0"/>
                             </font>
                         </Label>
-                        <TextField fx:id="capacity" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                        <TextField fx:id="capacity" style="-fx-border-radius: 15; -fx-background-radius: 15;"
+                                   stylesheets="@../style.css">
                             <font>
-                                <Font size="20.0" />
+                                <Font size="20.0"/>
                             </font>
                             <padding>
-                                <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                                <Insets bottom="8.0" left="10.0" right="10.0" top="8.0"/>
                             </padding>
                         </TextField>
                     </children>
                 </VBox>
             </children>
             <VBox.margin>
-                <Insets top="24.0" />
+                <Insets top="24.0"/>
             </VBox.margin>
         </HBox>
         <HBox fillHeight="false" layoutX="42.0" layoutY="221.0" spacing="24.0">
@@ -46,57 +49,63 @@
                     <children>
                         <Label text="Localização:">
                             <font>
-                                <Font size="16.0" />
+                                <Font size="16.0"/>
                             </font>
                         </Label>
-                        <TextField fx:id="containerLocation" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                        <TextField fx:id="containerLocation" style="-fx-border-radius: 15; -fx-background-radius: 15;"
+                                   stylesheets="@../style.css">
                             <font>
-                                <Font size="20.0" />
+                                <Font size="20.0"/>
                             </font>
                             <padding>
-                                <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                                <Insets bottom="8.0" left="10.0" right="10.0" top="8.0"/>
                             </padding>
                         </TextField>
-                  <Label fx:id="errorLabel" text="Por favor preencha todos os campos." textFill="#c03d3d" visible="false">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="4.0" />
-                     </VBox.margin>
-                  </Label>
+                        <Label fx:id="errorLabel" text="Por favor preencha todos os campos." textFill="#c03d3d"
+                               visible="false">
+                            <font>
+                                <Font size="16.0"/>
+                            </font>
+                            <VBox.margin>
+                                <Insets top="4.0"/>
+                            </VBox.margin>
+                        </Label>
                     </children>
                 </VBox>
             </children>
             <VBox.margin>
-                <Insets top="24.0" />
+                <Insets top="24.0"/>
             </VBox.margin>
         </HBox>
         <HBox alignment="CENTER_RIGHT" spacing="24.0" VBox.vgrow="ALWAYS">
             <children>
-                <Button mnemonicParsing="false" onAction="#onCancelBtnClick" style="-fx-background-color: #C03D3D; -fx-background-radius: 15; -fx-border-radius: 15;" styleClass="hover" text="Cancelar" textAlignment="CENTER" textFill="WHITE">
+                <Button mnemonicParsing="false" onAction="#onCancelBtnClick"
+                        style="-fx-background-color: #C03D3D; -fx-background-radius: 15; -fx-border-radius: 15;"
+                        styleClass="hover" text="Cancelar" textAlignment="CENTER" textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="System Bold" size="18.0"/>
                     </font>
                     <padding>
-                        <Insets bottom="4.0" left="32.0" right="32.0" top="4.0" />
+                        <Insets bottom="4.0" left="32.0" right="32.0" top="4.0"/>
                     </padding>
                 </Button>
-                <Button mnemonicParsing="false" onAction="#onCreateBtnClick" style="-fx-background-color: #057222; -fx-background-radius: 15; -fx-border-radius: 15;" styleClass="hover" text="Criar" textAlignment="CENTER" textFill="WHITE">
+                <Button mnemonicParsing="false" onAction="#onCreateBtnClick"
+                        style="-fx-background-color: #057222; -fx-background-radius: 15; -fx-border-radius: 15;"
+                        styleClass="hover" text="Criar" textAlignment="CENTER" textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="System Bold" size="18.0"/>
                     </font>
                     <padding>
-                        <Insets bottom="4.0" left="32.0" right="32.0" top="4.0" />
+                        <Insets bottom="4.0" left="32.0" right="32.0" top="4.0"/>
                     </padding>
                 </Button>
             </children>
             <VBox.margin>
-                <Insets top="24.0" />
+                <Insets top="24.0"/>
             </VBox.margin>
         </HBox>
     </children>
     <padding>
-        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
     </padding>
 </VBox>

@@ -1,21 +1,20 @@
 package com.dashboard.desktopapp.appsession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.geometry.Rectangle2D;
-import javafx.stage.Screen;
-import java.util.Base64;
-import java.nio.charset.StandardCharsets;
-import org.json.JSONObject;
-import lombok.Getter;
-import lombok.Setter;
-
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.application.Platform;
+import lombok.Getter;
+import lombok.Setter;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Map;
 
 public class AppSession {
@@ -56,7 +55,7 @@ public class AppSession {
             JSONObject payload = new JSONObject(payloadJson);
 
             if (!payload.has("exp")) {
-                return true; 
+                return true;
             }
 
             long exp = payload.getLong("exp");

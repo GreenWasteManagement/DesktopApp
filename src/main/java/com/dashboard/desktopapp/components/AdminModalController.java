@@ -1,10 +1,8 @@
 package com.dashboard.desktopapp.components;
 
 import com.dashboard.desktopapp.dtos.user.request.UpdateAdminRequestDTO;
-import com.dashboard.desktopapp.dtos.user.request.UpdateMunicipalityRequestDTO;
 import com.dashboard.desktopapp.dtos.user.response.GetAdminByIdResponseDTO;
 import com.dashboard.desktopapp.interfaces.PageRefresh;
-import com.dashboard.desktopapp.models.Admin;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,6 +17,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class AdminModalController {
 
@@ -96,7 +95,7 @@ public class AdminModalController {
 
             toggleErrorLabel(false);
         }
-        String url = String.format("http://localhost:8080/api/users/update-full-admin");
+        String url = "http://localhost:8080/api/users/update-full-admin";
         int responseCode = 0;
 
         try {
@@ -193,7 +192,7 @@ public class AdminModalController {
 
             // Write the body to the output stream
             try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = jsonBody.getBytes("utf-8");
+                byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             }
 

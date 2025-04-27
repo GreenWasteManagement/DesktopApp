@@ -1,21 +1,19 @@
 package com.dashboard.desktopapp.components;
 
-import com.dashboard.desktopapp.appsession.AppSession;
 import com.dashboard.desktopapp.interfaces.PageRefresh;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class DeleteModalController {
     @FXML
@@ -61,7 +59,7 @@ public class DeleteModalController {
 
             // Write the body to the output stream
             try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = jsonBody.getBytes("utf-8");
+                byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             }
 

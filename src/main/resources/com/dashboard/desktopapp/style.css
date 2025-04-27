@@ -23,9 +23,8 @@
 }
 
 .background-img {
-    -fx-background-image:
-            url("images/APP_LOGO_BIG.png"),
-            url("images/SMVC_LOGO.png");
+    -fx-background-image: url("images/APP_LOGO_BIG.png"),
+    url("images/SMVC_LOGO.png");
 
     -fx-background-repeat: no-repeat;
     -fx-background-position: 120% center, 32 95%;

@@ -13,8 +13,19 @@ public class Container {
         this.currentVolume = currentVolume;
     }
 
-    public Integer getId() { return id; }
-    public Float getCapacity() { return capacity; }
-    public String getLocation() { return containerLocation; }
-    public Float getCurrentVolume() { return currentVolume; }
+    public Integer getId() {
+        return id;
+    }
+
+    public Float getCapacity() {
+        return capacity;
+    }
+
+    public String getLocation() {
+        return containerLocation;
+    }
+
+    public Float getCurrentVolume() {
+        return currentVolume;
+    }
 }

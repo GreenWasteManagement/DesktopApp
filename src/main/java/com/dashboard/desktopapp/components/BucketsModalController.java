@@ -4,14 +4,8 @@ import com.dashboard.desktopapp.dtos.bucket.request.BucketFullUpdateRequestDTO;
 import com.dashboard.desktopapp.dtos.bucket.request.CreateBucketRequestDTO;
 import com.dashboard.desktopapp.dtos.bucket.response.BucketWithMunicipalityInfoDTO;
 import com.dashboard.desktopapp.dtos.bucket.response.CreateBucketResponseDTO;
-import com.dashboard.desktopapp.dtos.bucket.response.GetAllBucketsResponseDTO;
-import com.dashboard.desktopapp.dtos.container.request.CreateContainerRequestDTO;
-import com.dashboard.desktopapp.dtos.container.request.UpdateContainerRequestDTO;
 import com.dashboard.desktopapp.dtos.user.response.GetAllMunicipalitiesAndBucketsResponseDTO;
-import com.dashboard.desktopapp.dtos.user.response.GetAllMunicipalitiesResponseDTO;
 import com.dashboard.desktopapp.interfaces.PageRefresh;
-import com.dashboard.desktopapp.models.Bucket;
-import com.dashboard.desktopapp.models.Municipality;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -34,15 +28,16 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 public class BucketsModalController {
+    Long excludedUserId;
     @FXML
     private VBox modal;
-
     @FXML
     private TextField id;
     @FXML
@@ -59,7 +54,6 @@ public class BucketsModalController {
     private ComboBox<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> municipalities;
     @FXML
     private Label errorLabel;
-
     private Long bucketMunicipalityId;
     private Boolean bucketMunicipalityStatus;
     private Long municipalityId;
@@ -68,9 +62,6 @@ public class BucketsModalController {
     private Long userId;
     private String userName;
     private String userEmail;
-
-    Long excludedUserId;
-
     private PageRefresh reloadController;
 
     public void setReloadController(PageRefresh controller) {
@@ -109,7 +100,7 @@ public class BucketsModalController {
                         bucket.getBucketMunicipalities().getLast().getMunicipality().getUser().getName());
                 this.state.setText("Associação desativada");
             }
-        }else {
+        } else {
             this.associated.setText("Não");
             this.state.setText("Sem associação");
             this.municipality.setText("");
@@ -140,7 +131,7 @@ public class BucketsModalController {
                 this.state.setText("Associação desativada");
                 excludedUserId = null;
             }
-        }else {
+        } else {
             this.associated.setText("Não");
             this.state.setText("Sem associação");
             this.municipality.setText("");
@@ -195,7 +186,7 @@ public class BucketsModalController {
 
             toggleErrorLabel(false);
         }
-        String url = String.format("http://localhost:8080/api/buckets/update");
+        String url = "http://localhost:8080/api/buckets/update";
         int responseCode = 0;
 
         try {
@@ -219,7 +210,7 @@ public class BucketsModalController {
 
             bucketInfo.setBucketId(Long.parseLong(id.getText()));
             bucketInfo.setCapacity(new BigDecimal(capacity.getText()));
-            if (Objects.equals(associated.getText(), "Sim")){
+            if (Objects.equals(associated.getText(), "Sim")) {
                 bucketInfo.setIsAssociated(true);
 
 //                bucketMunicipalityInfo.setId(bucketMunicipalityId);
@@ -288,7 +279,7 @@ public class BucketsModalController {
 
                     createBucketAssociation(bucketInfo.getBucketId().toString(), bucketMunicipality.getId().toString());
                 }
-            }else {
+            } else {
                 // Same association
                 if (municipalities.getSelectionModel().isEmpty()) {
                     bucketInfo.setIsAssociated(false);
@@ -308,7 +299,7 @@ public class BucketsModalController {
                             "    \"isAssociated\": %s\n" +
                             "  }\n" +
                             "}", bucketInfo.getBucketId(), bucketInfo.getCapacity(), bucketInfo.getIsAssociated());
-                }else {
+                } else {
                     bucketInfo.setIsAssociated(true);
 //                    jsonBody = String.format("{\n" +
 //                            "  \"bucketId\": %s,\n" +
@@ -336,7 +327,7 @@ public class BucketsModalController {
 
             // Write the body to the output stream
             try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = jsonBody.getBytes("utf-8");
+                byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             }
 
@@ -378,7 +369,7 @@ public class BucketsModalController {
         } else {
             toggleErrorLabel(false);
         }
-        String url = String.format("http://localhost:8080/api/buckets/create");
+        String url = "http://localhost:8080/api/buckets/create";
         int responseCode = 0;
         String createdBucketId = null;
 
@@ -408,7 +399,7 @@ public class BucketsModalController {
 
             // Write the body to the output stream
             try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = jsonBody.getBytes("utf-8");
+                byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             }
 
@@ -531,7 +522,7 @@ public class BucketsModalController {
     }
 
     public int createBucketAssociation(String bucketId, String municipalityId) {
-        String url = String.format("http://localhost:8080/api/buckets/bucket-association");
+        String url = "http://localhost:8080/api/buckets/bucket-association";
         int responseCode = 0;
 
         try {
@@ -552,7 +543,7 @@ public class BucketsModalController {
 
             // Write the body to the output stream
             try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = jsonBody.getBytes("utf-8");
+                byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             }
 

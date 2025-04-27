@@ -1,18 +1,11 @@
 package com.dashboard.desktopapp;
 
-import com.dashboard.desktopapp.components.ConfirmationModalController;
+import com.dashboard.desktopapp.components.EditButtonsController;
 import com.dashboard.desktopapp.components.SMASModalController;
-import com.dashboard.desktopapp.dtos.container.response.GetAllContainersResponseDTO;
 import com.dashboard.desktopapp.dtos.user.response.GetAllMunicipalitiesAndBucketsResponseDTO;
 import com.dashboard.desktopapp.dtos.user.response.GetAllSmasResponseDTO;
 import com.dashboard.desktopapp.interfaces.PageRefresh;
-import com.dashboard.desktopapp.models.Bucket;
-import com.dashboard.desktopapp.models.Municipality;
-import com.dashboard.desktopapp.models.SMAS;
-import com.dashboard.desktopapp.components.EditButtonsController;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,22 +13,20 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-import javafx.util.Callback;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -347,7 +338,7 @@ public class UsersListController implements PageRefresh {
             Parent modalRoot = fxmlLoader.load();
             SMASModalController controller = fxmlLoader.getController();
             controller.setReloadController(UsersListController.this);
-            
+
             // Create a new stage for the modal
             Stage modalStage = new Stage();
             modalStage.setTitle("");

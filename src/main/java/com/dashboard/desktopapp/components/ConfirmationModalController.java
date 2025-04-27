@@ -2,12 +2,9 @@ package com.dashboard.desktopapp.components;
 
 import com.dashboard.desktopapp.interfaces.PageRefresh;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.lang.reflect.Method;
 
 public class ConfirmationModalController {
 
@@ -36,7 +33,7 @@ public class ConfirmationModalController {
     public void setConfirmationText(int statusCode) {
         if (statusCode == 200 || statusCode == 201) {
             confirmationText.setText("Operação realizada com sucesso!");
-        }else{
+        } else {
             confirmationText.setText("Ocorreu um erro ao realizar a operação!");
         }
 
