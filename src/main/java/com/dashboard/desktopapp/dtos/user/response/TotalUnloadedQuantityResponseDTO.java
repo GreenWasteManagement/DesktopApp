@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Data
-public class LoginResponseDTO {
-    private String token;
+public class TotalUnloadedQuantityResponseDTO {
+    private Long totalUnloadedQuantity;
 }

@@ -5,12 +5,15 @@ import com.dashboard.desktopapp.dtos.container.request.UpdateContainerRequestDTO
 import com.dashboard.desktopapp.interfaces.PageRefresh;
 import com.dashboard.desktopapp.models.Container;
 import com.dashboard.desktopapp.dtos.container.response.GetAllContainersResponseDTO;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
@@ -21,6 +24,9 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 public class ContainersModalController {
 
@@ -37,18 +43,22 @@ public class ContainersModalController {
     private TextField currentVolume;
     @FXML
     private Label errorLabel;
+    @FXML
+    private ListView<GetAllContainersResponseDTO.ContainerUnloading> containerUnloads;
+    @FXML
+    private ListView<GetAllContainersResponseDTO.BucketMunicipalityContainer> containerDeposits;
 
     private PageRefresh reloadController;
 
     @FXML
     public void initialize() {
         capacity.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
+            if (!newValue.matches("^\\d+$")) {
                 capacity.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
         currentVolume.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
+            if (!newValue.matches("^\\d+$")) {
                 capacity.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
@@ -60,11 +70,53 @@ public class ContainersModalController {
         this.reloadController = controller;
     }
 
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
     public void setViewContainerInfo(GetAllContainersResponseDTO.Container container) {
         this.id.setText(container.getId().toString());
         this.capacity.setText(container.getCapacity().toString());
         this.containerLocation.setText(container.getLocalization());
         this.currentVolume.setText(container.getCurrentVolumeLevel().toString());
+        ObservableList<GetAllContainersResponseDTO.ContainerUnloading> unloadings = FXCollections.observableArrayList(container.getContainerUnloadings());
+        containerUnloads.setItems(unloadings);
+        containerUnloads.setCellFactory(list -> new ListCell<>() {
+            @Override
+            protected void updateItem(GetAllContainersResponseDTO.ContainerUnloading unloading, boolean empty) {
+                super.updateItem(unloading, empty);
+                if (empty || unloading == null) {
+                    setText(null);
+                } else {
+                    LocalDateTime localDateTime = LocalDateTime.ofInstant(
+                            unloading.getUnloadingTimestamp(), ZoneId.systemDefault()
+                    );
+                    setText(String.format(
+                            "Qnt: %.2f Kg | Data: %s",
+                            unloading.getUnloadedQuantity(),
+                            localDateTime.format(formatter)
+                    ));
+                }
+            }
+        });
+        ObservableList<GetAllContainersResponseDTO.BucketMunicipalityContainer> deposits = FXCollections.observableArrayList(container.getBucketMunicipalityContainers());
+        containerDeposits.setItems(deposits);
+        containerDeposits.setCellFactory(list -> new ListCell<>() {
+            @Override
+            protected void updateItem(GetAllContainersResponseDTO.BucketMunicipalityContainer deposits, boolean empty) {
+                super.updateItem(deposits, empty);
+                if (empty || deposits == null) {
+                    setText(null);
+                } else {
+                    LocalDateTime localDateTime = LocalDateTime.ofInstant(
+                            deposits.getDepositTimestamp(), ZoneId.systemDefault()
+                    );
+                    setText(String.format(
+                            "Qnt: %.2f Kg | Data: %s",
+                            deposits.getDepositAmount(),
+                            localDateTime.format(formatter)
+                    ));
+                }
+            }
+        });
     }
 
     public void setEditContainerInfo(GetAllContainersResponseDTO.Container container) {

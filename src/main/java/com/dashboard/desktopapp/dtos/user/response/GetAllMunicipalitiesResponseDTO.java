@@ -1,57 +1,64 @@
-package com.dashboard.desktopapp.dtos.user.request;
+package com.dashboard.desktopapp.dtos.user.response;
 
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Data
+import java.util.List;
+
 @Getter
 @Setter
-public class UpdateAdminRequestDTO {
+@Data
+public class GetAllMunicipalitiesResponseDTO {
+    private List<MunicipalityData> municipalities;
 
-    private User user;
-    private Address address;
-    private PostalCode postalCode;
-    private Admin admin;
-
-    @Data
     @Getter
     @Setter
+    @Data
+    public static class MunicipalityData {
+        private User user;
+        private Municipality municipality;
+        private Address address;
+        private PostalCode postalCode;
+    }
+
+    @Getter
+    @Setter
+    @Data
     public static class User {
         private Long id;
         private String name;
         private String username;
+        //private String password;
         private String email;
         private String phoneNumber;
+        private String role;
     }
 
-    @Data
     @Getter
     @Setter
+    @Data
+    public static class Municipality {
+        private String citizenCardCode;
+        private String nif;
+    }
+
+    @Getter
+    @Setter
+    @Data
     public static class Address {
-        private Long id;
         private String floorDetails;
         private Integer floorNumber;
         private Integer doorNumber;
         private String street;
     }
 
-    @Data
     @Getter
     @Setter
+    @Data
     public static class PostalCode {
-        private Long id;
         private String postalCode;
         private String county;
         private String district;
     }
-
-    @Data
-    @Getter
-    @Setter
-    public static class Admin {
-        private Long id;
-        private String citizenCardCode;
-    }
-
 }

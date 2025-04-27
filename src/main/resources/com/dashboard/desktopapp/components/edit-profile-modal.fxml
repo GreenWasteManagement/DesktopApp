@@ -9,7 +9,7 @@
     <children>
         <HBox fillHeight="false" VBox.vgrow="NEVER">
             <children>
-                <Label text="Editar utilizador">
+                <Label text="Editar administrador">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
@@ -101,55 +101,14 @@
                         </TextField>
                     </children>
                 </VBox>
-                <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
-                    <children>
-                        <Label text="Nº cartão de cidadão:">
-                            <font>
-                                <Font size="16.0" />
-                            </font>
-                        </Label>
-                        <TextField fx:id="cc" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
-                            <font>
-                                <Font size="20.0" />
-                            </font>
-                            <padding>
-                                <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
-                            </padding>
-                        </TextField>
-                    </children>
-                </VBox>
-            </children>
-            <VBox.margin>
-                <Insets top="24.0" />
-            </VBox.margin>
-        </HBox>
-        <HBox fillHeight="false" layoutX="42.0" layoutY="421.0" spacing="24.0">
-            <children>
                 <VBox HBox.hgrow="ALWAYS">
                     <children>
-                        <Label text="NIF:">
+                        <Label text="Nº Cartão cidadão:">
                             <font>
                                 <Font size="16.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="nif" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
-                            <font>
-                                <Font size="20.0" />
-                            </font>
-                            <padding>
-                                <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
-                            </padding>
-                        </TextField>
-                    </children>
-                </VBox>
-                <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
-                    <children>
-                        <Label text="Tipo utilizador:">
-                            <font>
-                                <Font size="16.0" />
-                            </font>
-                        </Label>
-                        <TextField fx:id="userType" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
+                        <TextField fx:id="cc" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css" VBox.vgrow="ALWAYS">
                             <font>
                                 <Font size="20.0" />
                             </font>
@@ -296,47 +255,6 @@
                 <Insets top="24.0" />
             </VBox.margin>
         </HBox>
-      <HBox fillHeight="false" layoutX="42.0" layoutY="619.0" spacing="24.0">
-         <children>
-            <VBox HBox.hgrow="ALWAYS">
-               <children>
-                  <Label text="Nova palavra-passe:">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="newPassword" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
-                     </padding>
-                  </TextField>
-               </children>
-            </VBox>
-            <VBox layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <Label text="Confirmar palavra-passe:">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="currPassword" style="-fx-border-radius: 15; -fx-background-radius: 15;" stylesheets="@../style.css">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
-                     </padding>
-                  </TextField>
-               </children>
-            </VBox>
-         </children>
-         <padding>
-            <Insets top="24.0" />
-         </padding>
-      </HBox>
         <Label fx:id="errorLabel" text="Por favor preencha todos os campos." textFill="#c03d3d" visible="false">
             <font>
                 <Font size="16.0" />

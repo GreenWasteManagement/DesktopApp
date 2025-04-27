@@ -46,7 +46,7 @@ public class StartController {
             String requestBody = objectMapper.writeValueAsString(loginDTO);
 
             // Send POST request
-            URL url = new URL("http://localhost:8080/api/users/login"); // Replace with your API login URL
+            URL url = new URL("http://localhost:8080/api/users/login");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");

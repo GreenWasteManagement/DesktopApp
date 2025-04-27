@@ -1,9 +1,17 @@
 package com.dashboard.desktopapp;
 
+import com.dashboard.desktopapp.components.BucketsModalController;
+import com.dashboard.desktopapp.components.SMASModalController;
+import com.dashboard.desktopapp.dtos.bucket.response.BucketWithMunicipalityInfoDTO;
 import com.dashboard.desktopapp.dtos.bucket.response.GetAllBucketsResponseDTO;
+import com.dashboard.desktopapp.interfaces.PageRefresh;
 import com.dashboard.desktopapp.models.Bucket;
 import com.dashboard.desktopapp.components.EditButtonsController;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -28,33 +36,42 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BucketsListController {
+public class BucketsListController implements PageRefresh {
 
     @FXML
     private BorderPane content;
 
     @FXML
-    private TableView<GetAllBucketsResponseDTO.Bucket> bucketsTable;
+    private TableView<BucketWithMunicipalityInfoDTO> bucketsTable;
     @FXML
-    private TableColumn<GetAllBucketsResponseDTO.Bucket, Integer> idColumn;
+    private TableColumn<BucketWithMunicipalityInfoDTO, Integer> idColumn;
     @FXML
-    private TableColumn<GetAllBucketsResponseDTO.Bucket, Integer> capacityColumn;
+    private TableColumn<BucketWithMunicipalityInfoDTO, Integer> capacityColumn;
     @FXML
-    private TableColumn<GetAllBucketsResponseDTO.Bucket, Integer> associatedColumn;
+    private TableColumn<BucketWithMunicipalityInfoDTO, String> associatedColumn;
     @FXML
-    private TableColumn<GetAllBucketsResponseDTO.Bucket, Void> actionsColumn;
-
+    private TableColumn<BucketWithMunicipalityInfoDTO, Void> actionsColumn;
 
     private EditButtonsController controller;
+
+    @Override
+    public void refreshPage() {
+        bucketsTable.getItems().clear();
+        initialize();
+    }
 
     @FXML
     public void initialize() {
         int columnCount = 4;
 
         // === USERS TABLE SETUP ===
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("bucketId"));
         capacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
-        associatedColumn.setCellValueFactory(new PropertyValueFactory<>("associated"));
+        associatedColumn.setCellValueFactory(cellData -> {
+            boolean isAssociated = cellData.getValue().getIsAssociated();
+            String displayText = isAssociated ? "Sim" : "Não";
+            return new ReadOnlyObjectWrapper<>(displayText);
+        });
 
         // Edit button column
         actionsColumn.setCellFactory(param -> new TableCell<>() {
@@ -74,12 +91,13 @@ public class BucketsListController {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("components/edit-button.fxml"));
                         buttonComponent = loader.load();
                         controller = loader.getController();
+                        controller.setReloadController(BucketsListController.this);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
 
-                GetAllBucketsResponseDTO.Bucket bucket = getTableView().getItems().get(getIndex());
+                BucketWithMunicipalityInfoDTO bucket = getTableView().getItems().get(getIndex());
                 controller.setBucket(bucket);
                 controller.setModalType("bucket");
 
@@ -100,10 +118,10 @@ public class BucketsListController {
         bucketsTable.getItems().addAll(getAllBuckets());
     }
 
-    public List<GetAllBucketsResponseDTO.Bucket> getAllBuckets() {
+    public List<BucketWithMunicipalityInfoDTO> getAllBuckets() {
         // Define the API endpoint
-        String url = "http://localhost:8080/api/buckets";
-        List<GetAllBucketsResponseDTO.Bucket> buckets = null;
+        String url = "http://localhost:8080/api/buckets/with-municipalities";
+        List<BucketWithMunicipalityInfoDTO> buckets = null;
 
         try {
             // Create a URL object with the API endpoint
@@ -123,12 +141,19 @@ public class BucketsListController {
                 }
                 reader.close();
 
-                // Parse the JSON response to GetAllBucketsResponseDTO
+                // Parse the JSON response to BucketWithMunicipalityInfoDTO
                 ObjectMapper objectMapper = new ObjectMapper();
-                GetAllBucketsResponseDTO responseDTO = objectMapper.readValue(response.toString(), GetAllBucketsResponseDTO.class);
+                objectMapper.registerModule(new JavaTimeModule());
+                objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+                buckets = objectMapper.readValue(
+                        response.toString(),
+                        new TypeReference<>() {
+                        }
+                );
+                //BucketWithMunicipalityInfoDTO responseDTO = objectMapper.readValue(response.toString(), BucketWithMunicipalityInfoDTO.class);
 
                 // Get the buckets list from the response DTO
-                buckets = responseDTO.getBuckets();
+                //buckets = responseDTO;
             } else {
                 System.out.println("Error: Unable to fetch data. HTTP code: " + connection.getResponseCode());
             }
@@ -203,6 +228,8 @@ public class BucketsListController {
             // Load the modal's FXML
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("components/bucket-create-modal.fxml"));
             Parent modalRoot = fxmlLoader.load();
+            BucketsModalController controller = fxmlLoader.getController();
+            controller.setReloadController(BucketsListController.this);
 
             // Create a new stage for the modal
             Stage modalStage = new Stage();
@@ -214,8 +241,9 @@ public class BucketsListController {
             modalStage.setResizable(false);
             modalStage.initModality(javafx.stage.Modality.WINDOW_MODAL);
 
-            modalStage.showAndWait();
+            controller.setCreateBucketInfo();
 
+            modalStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }

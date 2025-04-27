@@ -23,7 +23,7 @@ public class CreateAdminRequestDTO {
         private String password;
         private String email;
         private String phoneNumber;
-        private String role; // ADMIN, MUNICIPALITY, SMAS
+        private String role;
     }
 
     @Getter

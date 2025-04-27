@@ -5,6 +5,8 @@ import com.dashboard.desktopapp.dtos.container.response.GetAllContainersResponse
 import com.dashboard.desktopapp.components.EditButtonsController;
 import com.dashboard.desktopapp.interfaces.PageRefresh;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -58,7 +60,7 @@ public class ContainersListController implements PageRefresh {
     public void initialize() {
         int columnCount = 5;
 
-        // === USERS TABLE SETUP ===
+        // === CONTAINERS TABLE SETUP ===
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         capacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
         currentVolumeColumn.setCellValueFactory(new PropertyValueFactory<>("currentVolumeLevel"));
@@ -134,6 +136,8 @@ public class ContainersListController implements PageRefresh {
 
                 // Parse the JSON response to GetAllContainersResponseDTO
                 ObjectMapper objectMapper = new ObjectMapper();
+                objectMapper.registerModule(new JavaTimeModule());
+                objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
                 GetAllContainersResponseDTO responseDTO = objectMapper.readValue(response.toString(), GetAllContainersResponseDTO.class);
 
                 // Get the containers list from the response DTO
