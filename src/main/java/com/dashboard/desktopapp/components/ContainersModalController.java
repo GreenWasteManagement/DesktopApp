@@ -56,12 +56,13 @@ public class ContainersModalController {
                 capacity.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
-        currentVolume.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("^\\d+$")) {
-                capacity.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
-
+        if (currentVolume != null) {
+            currentVolume.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.matches("^\\d+$")) {
+                    capacity.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            });
+        }
     }
 
     public void setReloadController(PageRefresh controller) {

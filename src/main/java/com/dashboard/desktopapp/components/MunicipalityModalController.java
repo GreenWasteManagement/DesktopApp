@@ -1,10 +1,16 @@
 package com.dashboard.desktopapp.components;
 
+import com.dashboard.desktopapp.appsession.AppSession;
+import com.dashboard.desktopapp.dtos.bucket.response.BucketWithMunicipalityInfoDTO;
+import com.dashboard.desktopapp.dtos.bucket.response.GetAllBucketMunicipalitiesResponseDTO;
 import com.dashboard.desktopapp.dtos.bucket.response.GetAllBucketsResponseDTO;
 import com.dashboard.desktopapp.dtos.user.request.UpdateMunicipalityRequestDTO;
 import com.dashboard.desktopapp.dtos.user.response.GetAllMunicipalitiesAndBucketsResponseDTO;
 import com.dashboard.desktopapp.interfaces.PageRefresh;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -65,7 +71,7 @@ public class MunicipalityModalController {
     @FXML
     private TextField district;
     @FXML
-    private ComboBox<GetAllBucketsResponseDTO.Bucket> availableBuckets;
+    private ComboBox<BucketWithMunicipalityInfoDTO> availableBuckets;
     @FXML
     private ListView<GetAllMunicipalitiesAndBucketsResponseDTO.Bucket> buckets;
     @FXML
@@ -197,21 +203,25 @@ public class MunicipalityModalController {
                 }
             }
         });
-        List<GetAllBucketsResponseDTO.Bucket> filteredBuckets = getAllBuckets().stream()
-                .filter(bucket -> !bucket.getIsAssociated()) // Filter the buckets that already have an association
+        List<BucketWithMunicipalityInfoDTO> filteredBuckets = getAllBuckets().stream()
+                .filter(bucket -> bucket.getBucketMunicipalities()
+                        .stream()
+                        .noneMatch(BucketWithMunicipalityInfoDTO.BucketMunicipalityDTO::getStatus)) // No status true
                 .collect(Collectors.toList());
-        ObservableList<GetAllBucketsResponseDTO.Bucket> buckets = FXCollections.observableArrayList(filteredBuckets);
+
+        ObservableList<BucketWithMunicipalityInfoDTO> buckets = FXCollections.observableArrayList(filteredBuckets);
+
         availableBuckets.setItems(buckets);
         availableBuckets.setCellFactory(list -> new ListCell<>() {
             @Override
-            protected void updateItem(GetAllBucketsResponseDTO.Bucket bucket, boolean empty) {
+            protected void updateItem(BucketWithMunicipalityInfoDTO bucket, boolean empty) {
                 super.updateItem(bucket, empty);
                 if (empty || bucket == null) {
                     setText(null);
                 } else {
                     setText(String.format(
                             "ID: %s | Capacidade: %s Kg",
-                            bucket.getId(),
+                            bucket.getBucketId(),
                             bucket.getCapacity()
                     ));
                 }
@@ -219,15 +229,15 @@ public class MunicipalityModalController {
         });
         availableBuckets.setConverter(new StringConverter<>() {
             @Override
-            public String toString(GetAllBucketsResponseDTO.Bucket bucket) {
+            public String toString(BucketWithMunicipalityInfoDTO bucket) {
                 if (bucket == null) {
                     return "";
                 }
-                return String.format("ID: %s | Capacidade: %s Kg", bucket.getId(), bucket.getCapacity());
+                return String.format("ID: %s | Capacidade: %s Kg", bucket.getBucketId(), bucket.getCapacity());
             }
 
             @Override
-            public GetAllBucketsResponseDTO.Bucket fromString(String s) {
+            public BucketWithMunicipalityInfoDTO fromString(String s) {
                 return null;
             }
         });
@@ -398,10 +408,10 @@ public class MunicipalityModalController {
         errorLabel.setVisible(isVisible);
     }
 
-    public List<GetAllBucketsResponseDTO.Bucket> getAllBuckets() {
+    public List<BucketWithMunicipalityInfoDTO> getAllBuckets() {
         // Define the API endpoint
-        String url = "http://localhost:8080/api/buckets";
-        List<GetAllBucketsResponseDTO.Bucket> buckets = null;
+        String url = "http://localhost:8080/api/buckets/with-municipalities";
+        List<BucketWithMunicipalityInfoDTO> buckets = null;
 
         try {
             // Create a URL object with the API endpoint
@@ -421,12 +431,19 @@ public class MunicipalityModalController {
                 }
                 reader.close();
 
-                // Parse the JSON response to GetAllBucketsResponseDTO
+                // Parse the JSON response to BucketWithMunicipalityInfoDTO
                 ObjectMapper objectMapper = new ObjectMapper();
-                GetAllBucketsResponseDTO responseDTO = objectMapper.readValue(response.toString(), GetAllBucketsResponseDTO.class);
+                objectMapper.registerModule(new JavaTimeModule());
+                objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+                buckets = objectMapper.readValue(
+                        response.toString(),
+                        new TypeReference<>() {
+                        }
+                );
+                //BucketWithMunicipalityInfoDTO responseDTO = objectMapper.readValue(response.toString(), BucketWithMunicipalityInfoDTO.class);
 
                 // Get the buckets list from the response DTO
-                buckets = responseDTO.getBuckets();
+                //buckets = responseDTO;
             } else {
                 System.out.println("Error: Unable to fetch data. HTTP code: " + connection.getResponseCode());
             }
