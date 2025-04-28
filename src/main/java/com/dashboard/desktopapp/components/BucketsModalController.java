@@ -54,14 +54,6 @@ public class BucketsModalController {
     private ComboBox<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> municipalities;
     @FXML
     private Label errorLabel;
-    private Long bucketMunicipalityId;
-    private Boolean bucketMunicipalityStatus;
-    private Long municipalityId;
-    private String municipalityNif;
-    private String municipalityCitizenCardCode;
-    private Long userId;
-    private String userName;
-    private String userEmail;
     private PageRefresh reloadController;
 
     public void setReloadController(PageRefresh controller) {
@@ -71,8 +63,8 @@ public class BucketsModalController {
     public void initialize() {
         if (capacity != null) {
             capacity.textProperty().addListener((observable, oldValue, newValue) -> {
-                if (!newValue.matches("^\\d*(\\.\\d*)?$")) {
-                    capacity.setText(newValue.replaceAll("[^\\d]", ""));
+                if (!newValue.matches("^\\d*\\.?\\d*$")) {
+                    capacity.setText(oldValue); // restore the old valid value
                 }
             });
         }
@@ -80,7 +72,7 @@ public class BucketsModalController {
 
     public void setViewBucketInfo(BucketWithMunicipalityInfoDTO bucket) {
         this.id.setText(bucket.getBucketId().toString());
-        this.capacity.setText(String.format("%.2f", bucket.getCapacity().floatValue()));
+        this.capacity.setText(bucket.getCapacity().toString());
         if (bucket.getIsAssociated()) {
             this.associated.setText("Sim");
 
@@ -109,7 +101,7 @@ public class BucketsModalController {
 
     public void setEditBucketInfo(BucketWithMunicipalityInfoDTO bucket) {
         this.id.setText(bucket.getBucketId().toString());
-        this.capacity.setText(String.format("%.2f", bucket.getCapacity().floatValue()));
+        this.capacity.setText(bucket.getCapacity().toString());
         if (bucket.getIsAssociated()) {
             this.associated.setText("Sim");
 
@@ -213,57 +205,6 @@ public class BucketsModalController {
             if (Objects.equals(associated.getText(), "Sim")) {
                 bucketInfo.setIsAssociated(true);
 
-//                bucketMunicipalityInfo.setId(bucketMunicipalityId);
-//                if (Objects.equals(editState.getSelectionModel().getSelectedItem(), "Associação ativa")) {
-//                    bucketMunicipalityInfo.setStatus(true);
-//                }else if(Objects.equals(editState.getSelectionModel().getSelectedItem(), "Associação inativa")) {
-//                    bucketMunicipalityInfo.setStatus(false);
-//                }
-//
-//                // Same association
-//                if (municipalities.getSelectionModel().isEmpty()) {
-//                    bucketMunicipality.setId(municipalityId);
-//                    bucketMunicipality.setNif(municipalityNif);
-//                    bucketMunicipality.setCitizenCardCode(municipalityCitizenCardCode);
-//
-//                    bucketUser.setId(userId);
-//                    bucketUser.setName(userName);
-//                    bucketUser.setEmail(userEmail);
-//                }else {
-//                    // New association
-//                    GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData newMunicipality = municipalities.getSelectionModel().getSelectedItem();
-//                    bucketMunicipality.setId(newMunicipality.getMunicipality().getId());
-//                    bucketMunicipality.setNif(newMunicipality.getMunicipality().getNif());
-//                    bucketMunicipality.setCitizenCardCode(newMunicipality.getMunicipality().getCitizenCardCode());
-//
-//                    bucketUser.setId(newMunicipality.getUser().getId());
-//                    bucketUser.setName(newMunicipality.getUser().getName());
-//                    bucketUser.setEmail(newMunicipality.getUser().getEmail());
-//                }
-//
-//                jsonBody = String.format("{\n" +
-//                        "  \"bucketId\": %s,\n" +
-//                        "  \"capacity\": %s,\n" +
-//                        "  \"isAssociated\": %s,\n" +
-//                        "  \"bucketMunicipalities\": [\n" +
-//                        "    {\n" +
-//                        "      \"id\": %s,\n" +
-//                        "      \"status\": %s,\n" +
-//                        "      \"municipality\": {\n" +
-//                        "        \"id\": %s,\n" +
-//                        "        \"nif\": \"%s\",\n" +
-//                        "        \"citizenCardCode\": \"%s\",\n" +
-//                        "        \"user\": {\n" +
-//                        "          \"id\": %s,\n" +
-//                        "          \"name\": \"%s\",\n" +
-//                        "          \"email\": \"%s\"\n" +
-//                        "        }\n" +
-//                        "      }\n" +
-//                        "    }\n" +
-//                        "  ]\n" +
-//                        "}", bucketInfo.getBucketId(), bucketInfo.getCapacity(), bucketInfo.getIsAssociated(), bucketMunicipalityInfo.getId(),
-//                        bucketMunicipalityInfo.getStatus(), bucketMunicipality.getId(), bucketMunicipality.getNif(), bucketMunicipality.getCitizenCardCode(),
-//                        bucketUser.getId(), bucketUser.getName(), bucketUser.getEmail());
                 // Same association
                 jsonBody = String.format("{\n" +
                         "  \"bucket\": {\n" +
@@ -284,14 +225,6 @@ public class BucketsModalController {
                 if (municipalities.getSelectionModel().isEmpty()) {
                     bucketInfo.setIsAssociated(false);
 
-//                    jsonBody = String.format("{\n" +
-//                            "  \"bucketId\": %s,\n" +
-//                            "  \"capacity\": %s,\n" +
-//                            "  \"isAssociated\": %s,\n" +
-//                            "  \"bucketMunicipalities\": [\n" +
-//                            "    \n" +
-//                            "  ]\n" +
-//                            "}", bucketInfo.getBucketId(), bucketInfo.getCapacity(), bucketInfo.getIsAssociated());
                     jsonBody = String.format("{\n" +
                             "  \"bucket\": {\n" +
                             "    \"id\": %s,\n" +
@@ -301,15 +234,6 @@ public class BucketsModalController {
                             "}", bucketInfo.getBucketId(), bucketInfo.getCapacity(), bucketInfo.getIsAssociated());
                 } else {
                     bucketInfo.setIsAssociated(true);
-//                    jsonBody = String.format("{\n" +
-//                            "  \"bucketId\": %s,\n" +
-//                            "  \"capacity\": %s,\n" +
-//                            "  \"isAssociated\": %s,\n" +
-//                            "  \"bucketMunicipalities\": [\n" +
-//                            "    \n" +
-//                            "  ]\n" +
-//                            "}", bucketInfo.getBucketId(), bucketInfo.getCapacity(), bucketInfo.getIsAssociated());
-
                     jsonBody = String.format("{\n" +
                             "  \"bucket\": {\n" +
                             "    \"id\": %s,\n" +

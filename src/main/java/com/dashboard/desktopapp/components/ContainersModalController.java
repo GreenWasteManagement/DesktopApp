@@ -51,15 +51,17 @@ public class ContainersModalController {
 
     @FXML
     public void initialize() {
-        capacity.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("^\\d+$")) {
-                capacity.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
+        if (capacity != null) {
+            capacity.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.matches("^\\d*\\.?\\d*$")) {
+                    capacity.setText(oldValue); // restore the old valid value
+                }
+            });
+        }
         if (currentVolume != null) {
             currentVolume.textProperty().addListener((observable, oldValue, newValue) -> {
-                if (!newValue.matches("^\\d+$")) {
-                    capacity.setText(newValue.replaceAll("[^\\d]", ""));
+                if (!newValue.matches("^\\d*\\.?\\d*$")) {
+                    currentVolume.setText(oldValue); // restore the old valid value
                 }
             });
         }
