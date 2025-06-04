@@ -1,6 +1,7 @@
 package com.dashboard.desktopapp.appsession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -20,7 +21,7 @@ import java.util.Map;
 public class AppSession {
     @Setter
     @Getter
-    private static String token;
+    private static String jwtToken;
 
     public static Map<String, Object> decodeJWT(String jwt) {
         try {
@@ -40,13 +41,13 @@ public class AppSession {
     }
 
     public static boolean isTokenExpired() {
-        if (token == null || token.trim().isEmpty()) {
+        if (jwtToken == null || jwtToken.trim().isEmpty()) {
             return true;
         }
 
         try {
             // JWT format: header.payload.signature
-            String[] parts = token.split("\\.");
+            String[] parts = jwtToken.split("\\.");
             if (parts.length != 3) {
                 return true;
             }
@@ -68,6 +69,26 @@ public class AppSession {
         }
     }
 
+    public static boolean setTokenIfAllowed(String token) {
+        Map<String, Object> payloadMap = decodeJWT(token);
+        if (payloadMap == null) {
+            return false;
+        }
+
+        Object roleObj = payloadMap.get("role");
+        if (roleObj == null) {
+            return false;
+        }
+
+        String role = roleObj.toString();
+        if ("ADMIN".equals(role) || "SMAS".equals(role)) {
+            jwtToken = token;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static void handleTokenExpiration(Stage currentStage) {
         if (isTokenExpired()) {
             Platform.runLater(() -> {
@@ -79,7 +100,6 @@ public class AppSession {
                     Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
                     double screenWidth = screenBounds.getWidth();
                     double screenHeight = screenBounds.getHeight();
-
 
                     Stage stage = (Stage) currentStage.getScene().getWindow();
                     Scene loginScene = new Scene(loginRoot, screenWidth, screenHeight);

@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class ProfileController implements PageRefresh {
 
-    String sessionToken = AppSession.getToken();
+    String sessionToken = AppSession.getJwtToken();
     @FXML
     private BorderPane content;
     @FXML

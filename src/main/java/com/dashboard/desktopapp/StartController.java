@@ -69,19 +69,22 @@ public class StartController {
                     // Parse response and store token
                     JsonNode jsonNode = objectMapper.readTree(response.toString());
                     String token = jsonNode.get("token").asText();
-                    AppSession.setToken(token);
 
-                    // Load main view
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homenav-view.fxml"));
-                    Parent root = fxmlLoader.load();
+                    if(AppSession.setTokenIfAllowed(token)){
+                        // Load main view
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homenav-view.fxml"));
+                        Parent root = fxmlLoader.load();
 
-                    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-                    Stage stage = (Stage) content.getScene().getWindow();
-                    Scene newScene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
+                        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+                        Stage stage = (Stage) content.getScene().getWindow();
+                        Scene newScene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
 
-                    stage.setScene(newScene);
-                    stage.setMaximized(true);
-                    stage.show();
+                        stage.setScene(newScene);
+                        stage.setMaximized(true);
+                        stage.show();
+                    }else {
+                        showLoginFailedModal();
+                    }
                 }
             } else {
                 showLoginFailedModal();

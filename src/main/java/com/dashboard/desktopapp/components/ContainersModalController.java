@@ -89,9 +89,10 @@ public class ContainersModalController {
                             unloading.getUnloadingTimestamp(), ZoneId.systemDefault()
                     );
                     setText(String.format(
-                            "Qnt: %.2f Kg | Data: %s",
+                            "Qnt: %.2f Kg | Data: %s | SMAS: %s",
                             unloading.getUnloadedQuantity(),
-                            localDateTime.format(formatter)
+                            localDateTime.format(formatter),
+                            unloading.getUserId()
                     ));
                 }
             }
