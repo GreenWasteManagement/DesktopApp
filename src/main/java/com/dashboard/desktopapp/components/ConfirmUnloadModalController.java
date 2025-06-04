@@ -1,11 +1,13 @@
 package com.dashboard.desktopapp.components;
 
 import com.dashboard.desktopapp.appsession.AppSession;
+import com.dashboard.desktopapp.dtos.container.response.GetAllContainersResponseDTO;
 import com.dashboard.desktopapp.interfaces.PageRefresh;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -15,12 +17,21 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
-public class DeleteModalController {
+public class ConfirmUnloadModalController {
+    String sessionToken = AppSession.getJwtToken();
     @FXML
     private VBox modal;
-    private String dataType;
-    private Long dataId;
+    @FXML
+    private Label id;
+    @FXML
+    private Label capacity;
+    @FXML
+    private Label containerLocation;
+    @FXML
+    private Label currentVolume;
+    private Long containerId;
 
     private PageRefresh reloadController;
 
@@ -28,9 +39,12 @@ public class DeleteModalController {
         this.reloadController = controller;
     }
 
-    public void setDeleteInfo(String dataType, Long dataId) {
-        this.dataType = dataType;
-        this.dataId = dataId;
+    public void setViewContainerInfo(GetAllContainersResponseDTO.Container container) {
+        this.id.setText(String.format("ID: " + container.getId().toString()));
+        this.capacity.setText(String.format("Capacidade: " + container.getCapacity().toString()));
+        this.containerLocation.setText(String.format("Localização: " + container.getLocalization()));
+        this.currentVolume.setText(String.format("Volume atual: " + container.getCurrentVolumeLevel().toString()));
+        containerId = container.getId();
     }
 
     @FXML
@@ -40,22 +54,26 @@ public class DeleteModalController {
 
     @FXML
     public void onConfirmBtnClick() throws IOException {
-        String url = String.format("http://localhost:8080/api/%s", dataType);
+        String url = "http://localhost:8080/api/containers/unloading";
         int responseCode = 0;
 
         try {
             // Prepare the connection
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-            connection.setRequestMethod("DELETE");
+            connection.setRequestMethod("POST");
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Type", "application/json");
-
+            // Add Authorization header if needed
             if (AppSession.getJwtToken() != null) {
                 connection.setRequestProperty("Authorization", "Bearer " + AppSession.getJwtToken());
             }
 
-            // Create JSON body with the ID
-            String jsonBody = String.format("{\"id\": %s}", dataId);
+            Map<String, Object> userInfo = AppSession.decodeJWT(sessionToken);
+
+            String jsonBody = String.format("{\n" +
+                    "  \"smasId\": %s,\n" +
+                    "  \"containerId\": %s\n" +
+                    "}", userInfo.get("id"), containerId);
 
             // Write the body to the output stream
             try (OutputStream os = connection.getOutputStream()) {
@@ -71,14 +89,13 @@ public class DeleteModalController {
             responseCode = 500;
         }
 
-        // Close the current modal
+        // __LOGIC FOR CLOSING MODAL AND SHOWING CONFIRMATION MODAL__
         closeModal();
-
-        // Load the confirmation modal FXML
+        // Load the modal's FXML
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/dashboard/desktopapp/components/confirmation-modal.fxml"));
         Parent modalRoot = fxmlLoader.load();
 
-        // Set up the modal
+        // Create a new stage for the modal
         Stage modalStage = new Stage();
         modalStage.setTitle("");
         Image image = new Image(this.getClass().getResourceAsStream("/com/dashboard/desktopapp/images/APP_LOGO.png"));
@@ -87,12 +104,10 @@ public class DeleteModalController {
         modalStage.initOwner(modal.getScene().getWindow());
         modalStage.setResizable(false);
         modalStage.initModality(javafx.stage.Modality.WINDOW_MODAL);
-
-        // Pass the response code to the confirmation modal
+        // Pass the message to the function for confirmation modal
         ConfirmationModalController controller = fxmlLoader.getController();
-        controller.setConfirmationText(responseCode);
+        controller.setConfirmationText(responseCode); // Pass the request status code to set the text
         controller.setReloadController(reloadController);
-
         modalStage.showAndWait();
     }
 

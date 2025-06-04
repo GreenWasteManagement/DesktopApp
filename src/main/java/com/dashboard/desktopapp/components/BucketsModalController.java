@@ -1,5 +1,6 @@
 package com.dashboard.desktopapp.components;
 
+import com.dashboard.desktopapp.appsession.AppSession;
 import com.dashboard.desktopapp.dtos.bucket.request.BucketFullUpdateRequestDTO;
 import com.dashboard.desktopapp.dtos.bucket.request.CreateBucketRequestDTO;
 import com.dashboard.desktopapp.dtos.bucket.response.BucketWithMunicipalityInfoDTO;
@@ -188,9 +189,9 @@ public class BucketsModalController {
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Type", "application/json");
             // Add Authorization header if needed
-//            if (AppSession.getToken() != null) {
-//                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getToken());
-//            }
+            if (AppSession.getJwtToken() != null) {
+                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getJwtToken());
+            }
 
             // Create JSON body
             String jsonBody;
@@ -304,9 +305,9 @@ public class BucketsModalController {
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Type", "application/json");
             // Add Authorization header if needed
-//            if (AppSession.getToken() != null) {
-//                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getToken());
-//            }
+            if (AppSession.getJwtToken() != null) {
+                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getJwtToken());
+            }
 
             // Create JSON body
             CreateBucketRequestDTO.Bucket bucket = new CreateBucketRequestDTO.Bucket();
@@ -456,9 +457,9 @@ public class BucketsModalController {
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Type", "application/json");
             // Add Authorization header if needed
-//            if (AppSession.getToken() != null) {
-//                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getToken());
-//            }
+            if (AppSession.getJwtToken() != null) {
+                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getJwtToken());
+            }
 
             String jsonBody = String.format("{\n" +
                     "  \"bucketId\": %s,\n" +

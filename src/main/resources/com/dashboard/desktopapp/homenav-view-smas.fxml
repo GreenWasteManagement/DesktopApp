@@ -1,132 +1,149 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
-<BorderPane fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="background-color" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dashboard.desktopapp.HomeNavControllerSmas">
+<?import java.lang.String?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" styleClass="background-color" stylesheets="@style.css"
+            xmlns="http://javafx.com/javafx/17.0.12" fx:controller="com.dashboard.desktopapp.HomeNavControllerSmas">
     <top>
         <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER_LEFT">
             <children>
                 <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@images/LOGO.png" />
+                        <Image url="@images/LOGO.png"/>
                     </image>
                     <HBox.margin>
-                        <Insets />
+                        <Insets/>
                     </HBox.margin>
                 </ImageView>
                 <Label text="Painel de gestão" textFill="#057222">
                     <font>
-                        <Font name="System Bold" size="48.0" />
+                        <Font name="System Bold" size="48.0"/>
                     </font>
                     <HBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="10.0"/>
                     </HBox.margin>
                 </Label>
-                <Region HBox.hgrow="ALWAYS" />
+                <Region HBox.hgrow="ALWAYS"/>
                 <HBox alignment="CENTER_RIGHT" spacing="32.0">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#onMenuBtnClick" style="-fx-background-color: transparent;" styleClass="hover" text="Menu" textAlignment="CENTER">
+                        <Button mnemonicParsing="false" onAction="#onMenuBtnClick"
+                                style="-fx-background-color: transparent;" styleClass="hover" text="Menu"
+                                textAlignment="CENTER">
                             <font>
-                                <Font name="System Bold" size="24.0" />
+                                <Font name="System Bold" size="24.0"/>
                             </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#onLogoutBtnClick" style="-fx-background-color: transparent;" styleClass="hover" text="Terminar sessão" textAlignment="CENTER" textFill="#c03d3d">
+                        <Button mnemonicParsing="false" onAction="#onLogoutBtnClick"
+                                style="-fx-background-color: transparent;" styleClass="hover" text="Terminar sessão"
+                                textAlignment="CENTER" textFill="#c03d3d">
                             <font>
-                                <Font name="System Bold" size="24.0" />
+                                <Font name="System Bold" size="24.0"/>
                             </font>
                         </Button>
                     </children>
                 </HBox>
             </children>
             <BorderPane.margin>
-                <Insets />
+                <Insets/>
             </BorderPane.margin>
             <padding>
-                <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+                <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
             </padding>
             <styleClass>
-                <String fx:value="hbox-shadow" />
-                <String fx:value="background-color" />
+                <String fx:value="hbox-shadow"/>
+                <String fx:value="background-color"/>
             </styleClass>
         </HBox>
     </top>
     <center>
         <GridPane alignment="CENTER" hgap="32.0" vgap="32.0" BorderPane.alignment="CENTER">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="101.0" minWidth="10.0" percentWidth="33.0" prefWidth="94.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" percentWidth="33.0" prefWidth="125.80000000000001" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.39999999999998" minWidth="10.0" percentWidth="33.0" prefWidth="86.79999999999995" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" percentWidth="33.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" percentWidth="33.0"
+                                   prefWidth="125.80000000000001"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.39999999999998" minWidth="10.0" percentWidth="33.0"
+                                   prefWidth="86.79999999999995"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                <RowConstraints valignment="CENTER" vgrow="ALWAYS"/>
+                <RowConstraints/>
             </rowConstraints>
             <BorderPane.margin>
-                <Insets bottom="64.0" left="152.0" right="152.0" top="48.0" />
+                <Insets bottom="64.0" left="152.0" right="152.0" top="48.0"/>
             </BorderPane.margin>
             <children>
-                <VBox alignment="CENTER" layoutX="10.0" layoutY="-104.0" onMousePressed="#onContainersBtnClick" style="-fx-background-color: #057222; -fx-border-radius: 50; -fx-background-radius: 50;" styleClass="hover">
+                <VBox alignment="CENTER" layoutX="10.0" layoutY="-104.0" onMousePressed="#onContainersBtnClick"
+                      prefHeight="200.0" prefWidth="100.0"
+                      style="-fx-background-color: #057222; -fx-border-radius: 50; -fx-background-radius: 50;"
+                      styleClass="hover">
                     <children>
                         <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/Trash_Full.png" />
+                                <Image url="@images/Trash_Full.png"/>
                             </image>
                         </ImageView>
                         <Label alignment="CENTER" text="Contentores" textAlignment="CENTER" textFill="WHITE">
                             <font>
-                                <Font name="System Bold" size="24.0" />
+                                <Font name="System Bold" size="24.0"/>
                             </font>
                             <VBox.margin>
-                                <Insets top="8.0" />
+                                <Insets top="8.0"/>
                             </VBox.margin>
                         </Label>
                     </children>
                     <padding>
-                        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+                        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
                     </padding>
                 </VBox>
-                <VBox alignment="CENTER" layoutX="10.0" layoutY="-104.0" onMousePressed="#onBucketsBtnClick" style="-fx-background-color: #057222; -fx-border-radius: 50; -fx-background-radius: 50;" styleClass="hover" GridPane.columnIndex="1">
+                <VBox alignment="CENTER" layoutX="10.0" layoutY="-104.0" onMousePressed="#onBucketsBtnClick"
+                      prefHeight="200.0" prefWidth="100.0"
+                      style="-fx-background-color: #057222; -fx-border-radius: 50; -fx-background-radius: 50;"
+                      styleClass="hover" GridPane.columnIndex="1">
                     <children>
                         <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/Trash_Empty.png" />
+                                <Image url="@images/Trash_Empty.png"/>
                             </image>
                         </ImageView>
                         <Label alignment="CENTER" text="Baldes" textAlignment="CENTER" textFill="WHITE">
                             <font>
-                                <Font name="System Bold" size="24.0" />
+                                <Font name="System Bold" size="24.0"/>
                             </font>
                             <VBox.margin>
-                                <Insets top="8.0" />
+                                <Insets top="8.0"/>
                             </VBox.margin>
                         </Label>
                     </children>
                     <padding>
-                        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+                        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
                     </padding>
                 </VBox>
-                <VBox alignment="CENTER" layoutX="10.0" layoutY="-104.0" onMousePressed="#onProfileBtnClick" style="-fx-background-color: #057222; -fx-border-radius: 50; -fx-background-radius: 50;" styleClass="hover" GridPane.columnIndex="2">
+                <VBox alignment="CENTER" layoutX="10.0" layoutY="-104.0" onMousePressed="#onStatsBtnClick"
+                      prefHeight="200.0" prefWidth="100.0"
+                      style="-fx-background-color: #057222; -fx-border-radius: 50; -fx-background-radius: 50;"
+                      styleClass="hover" GridPane.columnIndex="2">
                     <children>
                         <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/Profile_Icon.png" />
+                                <Image url="@images/Chart_Icon.png"/>
                             </image>
                         </ImageView>
-                        <Label alignment="CENTER" text="Perfil" textAlignment="CENTER" textFill="WHITE">
+                        <Label alignment="CENTER" text="Estatísticas" textAlignment="CENTER" textFill="WHITE">
                             <font>
-                                <Font name="System Bold" size="24.0" />
+                                <Font name="System Bold" size="24.0"/>
                             </font>
                             <VBox.margin>
-                                <Insets top="8.0" />
+                                <Insets top="8.0"/>
                             </VBox.margin>
                         </Label>
                     </children>
                     <padding>
-                        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+                        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
                     </padding>
                 </VBox>
             </children>

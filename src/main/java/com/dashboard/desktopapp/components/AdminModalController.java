@@ -1,5 +1,6 @@
 package com.dashboard.desktopapp.components;
 
+import com.dashboard.desktopapp.appsession.AppSession;
 import com.dashboard.desktopapp.dtos.user.request.UpdateAdminRequestDTO;
 import com.dashboard.desktopapp.dtos.user.response.GetAdminByIdResponseDTO;
 import com.dashboard.desktopapp.interfaces.PageRefresh;
@@ -105,9 +106,9 @@ public class AdminModalController {
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Type", "application/json");
             // Add Authorization header if needed
-//            if (AppSession.getToken() != null) {
-//                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getToken());
-//            }
+            if (AppSession.getJwtToken() != null) {
+                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getJwtToken());
+            }
 
             // Create JSON body
             UpdateAdminRequestDTO admin = new UpdateAdminRequestDTO();

@@ -1,5 +1,6 @@
 package com.dashboard.desktopapp;
 
+import com.dashboard.desktopapp.appsession.AppSession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -47,6 +48,7 @@ public class HomeNavController {
     @FXML
     protected void onLogoutBtnClick() {
         try {
+            AppSession.setJwtToken(null);
             // Load the FXML file
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login-view.fxml"));
             Parent root = fxmlLoader.load();

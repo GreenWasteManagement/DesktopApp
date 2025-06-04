@@ -1,5 +1,6 @@
 package com.dashboard.desktopapp;
 
+import com.dashboard.desktopapp.appsession.AppSession;
 import com.dashboard.desktopapp.dtos.bucket.response.GetMunicipalityDepositsResponseDTO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -94,6 +95,9 @@ public class HistoryViewController {
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(5000); // Timeout after 5 seconds
             connection.setReadTimeout(5000); // Timeout for reading response
+            if (AppSession.getJwtToken() != null) {
+                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getJwtToken());
+            }
 
             // Check if the response code is 200 (OK)
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -158,6 +162,7 @@ public class HistoryViewController {
     @FXML
     protected void onLogoutBtnClick() {
         try {
+            AppSession.setJwtToken(null);
             // Load the FXML file
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login-view.fxml"));
             Parent root = fxmlLoader.load();

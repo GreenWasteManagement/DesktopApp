@@ -2,8 +2,6 @@ package com.dashboard.desktopapp.components;
 
 import com.dashboard.desktopapp.appsession.AppSession;
 import com.dashboard.desktopapp.dtos.bucket.response.BucketWithMunicipalityInfoDTO;
-import com.dashboard.desktopapp.dtos.bucket.response.GetAllBucketMunicipalitiesResponseDTO;
-import com.dashboard.desktopapp.dtos.bucket.response.GetAllBucketsResponseDTO;
 import com.dashboard.desktopapp.dtos.user.request.UpdateMunicipalityRequestDTO;
 import com.dashboard.desktopapp.dtos.user.response.GetAllMunicipalitiesAndBucketsResponseDTO;
 import com.dashboard.desktopapp.interfaces.PageRefresh;
@@ -272,9 +270,9 @@ public class MunicipalityModalController {
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Type", "application/json");
             // Add Authorization header if needed
-//            if (AppSession.getToken() != null) {
-//                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getToken());
-//            }
+            if (AppSession.getJwtToken() != null) {
+                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getJwtToken());
+            }
 
             // Create JSON body
             UpdateMunicipalityRequestDTO municipality = new UpdateMunicipalityRequestDTO();
@@ -418,7 +416,10 @@ public class MunicipalityModalController {
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(5000); // Timeout after 5 seconds
-            connection.setReadTimeout(5000); // Timeout for reading response
+            connection.setReadTimeout(5000);
+            if (AppSession.getJwtToken() != null) {
+                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getJwtToken());
+            }// Timeout for reading response
 
             // Check if the response code is 200 (OK)
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -467,9 +468,9 @@ public class MunicipalityModalController {
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Type", "application/json");
             // Add Authorization header if needed
-//            if (AppSession.getToken() != null) {
-//                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getToken());
-//            }
+            if (AppSession.getJwtToken() != null) {
+                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getJwtToken());
+            }
 
             String jsonBody = String.format("{\n" +
                     "  \"bucketId\": %s,\n" +

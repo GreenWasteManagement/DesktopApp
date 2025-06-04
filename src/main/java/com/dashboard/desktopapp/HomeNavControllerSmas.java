@@ -1,5 +1,6 @@
 package com.dashboard.desktopapp;
 
+import com.dashboard.desktopapp.appsession.AppSession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -47,6 +48,7 @@ public class HomeNavControllerSmas {
     @FXML
     protected void onLogoutBtnClick() {
         try {
+            AppSession.setJwtToken(null);
             // Load the FXML file
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login-view.fxml"));
             Parent root = fxmlLoader.load();
@@ -66,7 +68,6 @@ public class HomeNavControllerSmas {
             stage.setScene(newScene);
             stage.setMaximized(true);
             stage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -129,10 +130,10 @@ public class HomeNavControllerSmas {
     }
 
     @FXML
-    protected void onProfileBtnClick() {
+    protected void onStatsBtnClick() {
         try {
             // Load the FXML file
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("statistics-view.fxml"));
             Parent root = fxmlLoader.load();
 
             // Get the screen's width and height

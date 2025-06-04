@@ -1,5 +1,6 @@
 package com.dashboard.desktopapp;
 
+import com.dashboard.desktopapp.appsession.AppSession;
 import com.dashboard.desktopapp.dtos.bucket.response.BucketMunicipalityContainerCountResponseDTO;
 import com.dashboard.desktopapp.dtos.container.response.ContainerUnloadingCountResponseDTO;
 import com.dashboard.desktopapp.dtos.container.response.GetAllContainersResponseDTO;
@@ -28,6 +29,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 
 public class StatsViewController {
 
@@ -150,6 +152,9 @@ public class StatsViewController {
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(5000); // Timeout after 5 seconds
             connection.setReadTimeout(5000);    // Timeout for reading response
+            if (AppSession.getJwtToken() != null) {
+                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getJwtToken());
+            }
 
             // Check if the response code is 200 (OK)
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -191,6 +196,9 @@ public class StatsViewController {
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(5000); // Timeout after 5 seconds
             connection.setReadTimeout(5000);    // Timeout for reading response
+            if (AppSession.getJwtToken() != null) {
+                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getJwtToken());
+            }
 
             // Check if the response code is 200 (OK)
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -232,6 +240,9 @@ public class StatsViewController {
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(5000); // Timeout after 5 seconds
             connection.setReadTimeout(5000);    // Timeout for reading response
+            if (AppSession.getJwtToken() != null) {
+                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getJwtToken());
+            }
 
             // Check if the response code is 200 (OK)
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -273,6 +284,9 @@ public class StatsViewController {
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(5000); // Timeout after 5 seconds
             connection.setReadTimeout(5000);    // Timeout for reading response
+            if (AppSession.getJwtToken() != null) {
+                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getJwtToken());
+            }
 
             // Check if the response code is 200 (OK)
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -306,26 +320,36 @@ public class StatsViewController {
     @FXML
     protected void onMenuBtnClick() {
         try {
-            // Load the FXML file
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homenav-view.fxml"));
-            Parent root = fxmlLoader.load();
+            Map<String, Object> userInfo = AppSession.decodeJWT(AppSession.getJwtToken());
+            if ("ADMIN".equals(userInfo.get("role"))) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homenav-view.fxml"));
+                Parent root = fxmlLoader.load();
 
-            // Get the screen's width and height
-            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-            double screenWidth = screenBounds.getWidth();
-            double screenHeight = screenBounds.getHeight();
+                Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+                double screenWidth = screenBounds.getWidth();
+                double screenHeight = screenBounds.getHeight();
 
-            // Get the current stage
-            Stage stage = (Stage) content.getScene().getWindow();
+                Stage stage = (Stage) content.getScene().getWindow();
+                Scene newScene = new Scene(root, screenWidth, screenHeight);
 
-            // Create a new scene with the loaded content (root)
-            Scene newScene = new Scene(root, screenWidth, screenHeight);
+                stage.setScene(newScene);
+                stage.setMaximized(true);
+                stage.show();
+            } else {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homenav-view-smas.fxml"));
+                Parent root = fxmlLoader.load();
 
-            // Set the new scene to the stage and maximize it
-            stage.setScene(newScene);
-            stage.setMaximized(true);
-            stage.show();
+                Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+                double screenWidth = screenBounds.getWidth();
+                double screenHeight = screenBounds.getHeight();
 
+                Stage stage = (Stage) content.getScene().getWindow();
+                Scene newScene = new Scene(root, screenWidth, screenHeight);
+
+                stage.setScene(newScene);
+                stage.setMaximized(true);
+                stage.show();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -334,6 +358,7 @@ public class StatsViewController {
     @FXML
     protected void onLogoutBtnClick() {
         try {
+            AppSession.setJwtToken(null);
             // Load the FXML file
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login-view.fxml"));
             Parent root = fxmlLoader.load();

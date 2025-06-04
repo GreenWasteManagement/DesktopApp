@@ -1,54 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
-<BorderPane fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="787.5" prefWidth="1400.0" styleClass="background-color" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dashboard.desktopapp.HistoryViewController">
+<?import java.lang.String?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="787.5" prefWidth="1400.0" styleClass="background-color"
+            stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12"
+            fx:controller="com.dashboard.desktopapp.HistoryViewController">
     <top>
-        <HBox alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1">
+        <HBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/17.0.6">
             <children>
                 <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@images/LOGO.png" />
+                        <Image url="@images/LOGO.png"/>
                     </image>
                     <HBox.margin>
-                        <Insets />
+                        <Insets/>
                     </HBox.margin>
                 </ImageView>
                 <Label text="Painel de gestão" textFill="#057222">
                     <font>
-                        <Font name="System Bold" size="48.0" />
+                        <Font name="System Bold" size="48.0"/>
                     </font>
                     <HBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="10.0"/>
                     </HBox.margin>
                 </Label>
-                <Region HBox.hgrow="ALWAYS" />
+                <Region HBox.hgrow="ALWAYS"/>
                 <HBox alignment="CENTER_RIGHT" spacing="32.0">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#onMenuBtnClick" style="-fx-background-color: transparent;" styleClass="hover" text="Menu" textAlignment="CENTER">
+                        <Button mnemonicParsing="false" onAction="#onMenuBtnClick"
+                                style="-fx-background-color: transparent;" styleClass="hover" text="Menu"
+                                textAlignment="CENTER">
                             <font>
-                                <Font name="System Bold" size="24.0" />
+                                <Font name="System Bold" size="24.0"/>
                             </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#onLogoutBtnClick" style="-fx-background-color: transparent;" styleClass="hover" text="Terminar sessão" textAlignment="CENTER" textFill="#c03d3d">
+                        <Button mnemonicParsing="false" onAction="#onLogoutBtnClick"
+                                style="-fx-background-color: transparent;" styleClass="hover" text="Terminar sessão"
+                                textAlignment="CENTER" textFill="#c03d3d">
                             <font>
-                                <Font name="System Bold" size="24.0" />
+                                <Font name="System Bold" size="24.0"/>
                             </font>
                         </Button>
                     </children>
                 </HBox>
             </children>
             <padding>
-                <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+                <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
             </padding>
             <styleClass>
-                <String fx:value="hbox-shadow" />
-                <String fx:value="background-color" />
+                <String fx:value="hbox-shadow"/>
+                <String fx:value="background-color"/>
             </styleClass>
         </HBox>
 
@@ -60,37 +67,43 @@
                     <children>
                         <Label text="Histórico">
                             <font>
-                                <Font name="System Bold" size="32.0" />
+                                <Font name="System Bold" size="32.0"/>
                             </font>
                         </Label>
                     </children>
                     <VBox.margin>
-                        <Insets left="152.0" right="152.0" top="32.0" />
+                        <Insets left="152.0" right="152.0" top="32.0"/>
                     </VBox.margin>
                 </HBox>
-                <Region minHeight="8.0" prefHeight="8.0" style="-fx-background-color: #057222; -fx-background-radius: 15; -fx-border-radius: 15;" VBox.vgrow="NEVER">
+                <Region minHeight="8.0" prefHeight="8.0"
+                        style="-fx-background-color: #057222; -fx-background-radius: 15; -fx-border-radius: 15;"
+                        VBox.vgrow="NEVER">
                     <VBox.margin>
-                        <Insets left="32.0" right="32.0" top="24.0" />
+                        <Insets left="32.0" right="32.0" top="24.0"/>
                     </VBox.margin>
                 </Region>
                 <Label text="Depósitos:" textAlignment="CENTER">
                     <VBox.margin>
-                        <Insets left="32.0" top="24.0" />
+                        <Insets left="32.0" top="24.0"/>
                     </VBox.margin>
                     <font>
-                        <Font size="24.0" />
+                        <Font size="24.0"/>
                     </font>
                 </Label>
-                <TableView fx:id="historyTable" style="-fx-background-color: #D9D9D9; -fx-background-radius: 0 0 15 15; -fx-border-radius: 0 0 15 15;" stylesheets="@style.css" VBox.vgrow="ALWAYS">
+                <TableView fx:id="historyTable"
+                           style="-fx-background-color: #D9D9D9; -fx-background-radius: 0 0 15 15; -fx-border-radius: 0 0 15 15;"
+                           stylesheets="@style.css" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="idColumn" editable="false" prefWidth="120.0" text="ID contentor" />
-                        <TableColumn fx:id="locationColumn" editable="false" minWidth="0.0" prefWidth="233.0" text="Localização" />
-                        <TableColumn fx:id="depositAmountColumn" editable="false" prefWidth="190.0" text="Quantidade" />
-                        <TableColumn fx:id="municipalityNifColumn" editable="false" prefWidth="190.0" text="NIF Munícipe" />
-                        <TableColumn fx:id="dateTimeColumn" editable="false" prefWidth="219.0" text="Data" />
+                        <TableColumn fx:id="idColumn" editable="false" prefWidth="120.0" text="ID contentor"/>
+                        <TableColumn fx:id="locationColumn" editable="false" minWidth="0.0" prefWidth="233.0"
+                                     text="Localização"/>
+                        <TableColumn fx:id="depositAmountColumn" editable="false" prefWidth="190.0" text="Quantidade"/>
+                        <TableColumn fx:id="municipalityNifColumn" editable="false" prefWidth="190.0"
+                                     text="NIF Munícipe"/>
+                        <TableColumn fx:id="dateTimeColumn" editable="false" prefWidth="219.0" text="Data"/>
                     </columns>
                     <VBox.margin>
-                        <Insets bottom="48.0" left="32.0" right="32.0" top="8.0" />
+                        <Insets bottom="48.0" left="32.0" right="32.0" top="8.0"/>
                     </VBox.margin>
                 </TableView>
             </children>

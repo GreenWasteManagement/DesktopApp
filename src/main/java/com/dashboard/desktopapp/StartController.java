@@ -23,6 +23,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 public class StartController {
 
@@ -70,19 +71,33 @@ public class StartController {
                     JsonNode jsonNode = objectMapper.readTree(response.toString());
                     String token = jsonNode.get("token").asText();
 
-                    if(AppSession.setTokenIfAllowed(token)){
+                    if (AppSession.setTokenIfAllowed(token)) {
                         // Load main view
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homenav-view.fxml"));
-                        Parent root = fxmlLoader.load();
+                        Map<String, Object> userInfo = AppSession.decodeJWT(token);
+                        if ("ADMIN".equals(userInfo.get("role"))) {
+                            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homenav-view.fxml"));
+                            Parent root = fxmlLoader.load();
 
-                        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-                        Stage stage = (Stage) content.getScene().getWindow();
-                        Scene newScene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
+                            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+                            Stage stage = (Stage) content.getScene().getWindow();
+                            Scene newScene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
 
-                        stage.setScene(newScene);
-                        stage.setMaximized(true);
-                        stage.show();
-                    }else {
+                            stage.setScene(newScene);
+                            stage.setMaximized(true);
+                            stage.show();
+                        } else {
+                            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homenav-view-smas.fxml"));
+                            Parent root = fxmlLoader.load();
+
+                            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+                            Stage stage = (Stage) content.getScene().getWindow();
+                            Scene newScene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
+
+                            stage.setScene(newScene);
+                            stage.setMaximized(true);
+                            stage.show();
+                        }
+                    } else {
                         showLoginFailedModal();
                     }
                 }

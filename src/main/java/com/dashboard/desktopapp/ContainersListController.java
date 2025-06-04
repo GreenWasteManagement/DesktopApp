@@ -1,7 +1,9 @@
 package com.dashboard.desktopapp;
 
+import com.dashboard.desktopapp.appsession.AppSession;
 import com.dashboard.desktopapp.components.ContainersModalController;
 import com.dashboard.desktopapp.components.EditButtonsController;
+import com.dashboard.desktopapp.components.UnloadButtonController;
 import com.dashboard.desktopapp.dtos.container.response.GetAllContainersResponseDTO;
 import com.dashboard.desktopapp.interfaces.PageRefresh;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,12 +31,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 
 public class ContainersListController implements PageRefresh {
 
+    String sessionToken = AppSession.getJwtToken();
     @FXML
     private BorderPane content;
-
     @FXML
     private TableView<GetAllContainersResponseDTO.Container> containersTable;
     @FXML
@@ -47,8 +50,8 @@ public class ContainersListController implements PageRefresh {
     private TableColumn<GetAllContainersResponseDTO.Container, String> locationColumn;
     @FXML
     private TableColumn<GetAllContainersResponseDTO.Container, Void> actionsColumn;
-
     private EditButtonsController controller;
+    private UnloadButtonController unloadController;
 
     @Override
     public void refreshPage() {
@@ -69,6 +72,7 @@ public class ContainersListController implements PageRefresh {
         // Edit button column
         actionsColumn.setCellFactory(param -> new TableCell<>() {
             private Parent buttonComponent;
+            private Parent unloadButtonComponent;
 
             @Override
             protected void updateItem(Void item, boolean empty) {
@@ -94,10 +98,31 @@ public class ContainersListController implements PageRefresh {
                 controller.setContainer(container);
                 controller.setModalType("container");
 
-                HBox hbox = new HBox(buttonComponent);
-                hbox.setAlignment(Pos.CENTER);
-                hbox.setPrefWidth(Double.MAX_VALUE);
-                setGraphic(hbox);
+                Map<String, Object> userInfo = AppSession.decodeJWT(sessionToken);
+                if ("SMAS".equals(userInfo.get("role"))) {
+                    if (unloadButtonComponent == null) {
+                        try {
+                            FXMLLoader unloadLoader = new FXMLLoader(getClass().getResource("components/unload-button.fxml"));
+                            unloadButtonComponent = unloadLoader.load();
+                            unloadController = unloadLoader.getController();
+                            unloadController.setReloadController(ContainersListController.this);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    unloadController.setContainer(container);
+
+                    HBox hbox = new HBox(16, unloadButtonComponent, buttonComponent);
+                    hbox.setAlignment(Pos.CENTER);
+                    hbox.setPrefWidth(Double.MAX_VALUE);
+                    setGraphic(hbox);
+                } else {
+                    HBox hbox = new HBox(buttonComponent);
+                    hbox.setAlignment(Pos.CENTER);
+                    hbox.setPrefWidth(Double.MAX_VALUE);
+                    setGraphic(hbox);
+                }
             }
         });
 
@@ -122,6 +147,9 @@ public class ContainersListController implements PageRefresh {
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(5000); // Timeout after 5 seconds
             connection.setReadTimeout(5000); // Timeout for reading response
+            if (AppSession.getJwtToken() != null) {
+                connection.setRequestProperty("Authorization", "Bearer " + AppSession.getJwtToken());
+            }
 
             // Check if the response code is 200 (OK)
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -157,26 +185,36 @@ public class ContainersListController implements PageRefresh {
     @FXML
     protected void onMenuBtnClick() {
         try {
-            // Load the FXML file
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homenav-view.fxml"));
-            Parent root = fxmlLoader.load();
+            Map<String, Object> userInfo = AppSession.decodeJWT(AppSession.getJwtToken());
+            if ("ADMIN".equals(userInfo.get("role"))) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homenav-view.fxml"));
+                Parent root = fxmlLoader.load();
 
-            // Get the screen's width and height
-            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-            double screenWidth = screenBounds.getWidth();
-            double screenHeight = screenBounds.getHeight();
+                Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+                double screenWidth = screenBounds.getWidth();
+                double screenHeight = screenBounds.getHeight();
 
-            // Get the current stage
-            Stage stage = (Stage) content.getScene().getWindow();
+                Stage stage = (Stage) content.getScene().getWindow();
+                Scene newScene = new Scene(root, screenWidth, screenHeight);
 
-            // Create a new scene with the loaded content (root)
-            Scene newScene = new Scene(root, screenWidth, screenHeight);
+                stage.setScene(newScene);
+                stage.setMaximized(true);
+                stage.show();
+            } else {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homenav-view-smas.fxml"));
+                Parent root = fxmlLoader.load();
 
-            // Set the new scene to the stage and maximize it
-            stage.setScene(newScene);
-            stage.setMaximized(true);
-            stage.show();
+                Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+                double screenWidth = screenBounds.getWidth();
+                double screenHeight = screenBounds.getHeight();
 
+                Stage stage = (Stage) content.getScene().getWindow();
+                Scene newScene = new Scene(root, screenWidth, screenHeight);
+
+                stage.setScene(newScene);
+                stage.setMaximized(true);
+                stage.show();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -185,6 +223,7 @@ public class ContainersListController implements PageRefresh {
     @FXML
     protected void onLogoutBtnClick() {
         try {
+            AppSession.setJwtToken(null);
             // Load the FXML file
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login-view.fxml"));
             Parent root = fxmlLoader.load();
