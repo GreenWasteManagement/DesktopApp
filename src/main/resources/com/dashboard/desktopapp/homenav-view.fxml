@@ -6,7 +6,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.String?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity"
             minWidth="-Infinity" styleClass="background-color" stylesheets="@style.css"
             xmlns="http://javafx.com/javafx/17.0.12" fx:controller="com.dashboard.desktopapp.HomeNavController">
     <top>
