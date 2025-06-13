@@ -6,7 +6,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: transparent;" stylesheets="@../style.css"
-      xmlns="http://javafx.com/javafx/17.0.12" fx:controller="com.dashboard.desktopapp.components.UnloadButtonController">
+      xmlns="http://javafx.com/javafx/17.0.12"
+      fx:controller="com.dashboard.desktopapp.components.UnloadButtonController">
     <Button fx:id="unloadButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="48.0" maxWidth="48.0"
             mnemonicParsing="false" onAction="#onBtnClick" prefHeight="48.0" prefWidth="48.0"
             style="-fx-background-color: #CE8A4E; -fx-border-radius: 15; -fx-background-radius: 15;" styleClass="hover">
