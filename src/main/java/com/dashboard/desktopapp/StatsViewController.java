@@ -59,7 +59,7 @@ public class StatsViewController {
     @FXML
     public void initialize() {
         int columnCount = 5;
-
+        Long totalUnloads = getTotalUnloads();
         // === CONTAINERS TABLE SETUP ===
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         capacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
@@ -95,7 +95,11 @@ public class StatsViewController {
         depositCount.setText(getBucketDepositCount().toString());
         unloadsCount.setText(getContainerUnloadingCount().toString());
         municipalityCount.setText(getMunicipalityCount().toString());
-        totalTons.setText(String.valueOf(getTotalUnloads() / 1000));
+        if (totalUnloads != null) {
+            totalTons.setText(String.valueOf(totalUnloads));
+        } else {
+            totalTons.setText("0");
+        }
     }
 
     public List<GetAllContainersResponseDTO.Container> getAllContainers() {

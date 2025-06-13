@@ -5,7 +5,7 @@ import com.dashboard.desktopapp.dtos.bucket.request.BucketFullUpdateRequestDTO;
 import com.dashboard.desktopapp.dtos.bucket.request.CreateBucketRequestDTO;
 import com.dashboard.desktopapp.dtos.bucket.response.BucketWithMunicipalityInfoDTO;
 import com.dashboard.desktopapp.dtos.bucket.response.CreateBucketResponseDTO;
-import com.dashboard.desktopapp.dtos.user.response.GetAllMunicipalitiesAndBucketsResponseDTO;
+import com.dashboard.desktopapp.dtos.user.response.GetAllMunicipalitiesResponseDTO;
 import com.dashboard.desktopapp.interfaces.PageRefresh;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.FXCollections;
@@ -52,7 +52,7 @@ public class BucketsModalController {
     @FXML
     private TextField municipality;
     @FXML
-    private ComboBox<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> municipalities;
+    private ComboBox<GetAllMunicipalitiesResponseDTO.MunicipalityData> municipalities;
     @FXML
     private Label errorLabel;
     private PageRefresh reloadController;
@@ -131,7 +131,7 @@ public class BucketsModalController {
             excludedUserId = null;
         }
 
-        List<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> data = getAllMunicipalities()
+        List<GetAllMunicipalitiesResponseDTO.MunicipalityData> data = getAllMunicipalities()
                 .stream()
                 .filter(m -> !m.getUser().getId().equals(excludedUserId))
                 .toList();
@@ -140,31 +140,31 @@ public class BucketsModalController {
 
         municipalities.setConverter(new StringConverter<>() {
             @Override
-            public String toString(GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData object) {
+            public String toString(GetAllMunicipalitiesResponseDTO.MunicipalityData object) {
                 if (object == null) return "";
                 return object.getMunicipality().getNif() + " - " + object.getUser().getName();
             }
 
             @Override
-            public GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData fromString(String string) {
+            public GetAllMunicipalitiesResponseDTO.MunicipalityData fromString(String string) {
                 return null; // Not used
             }
         });
     }
 
     public void setCreateBucketInfo() {
-        List<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> data = getAllMunicipalities();
+        List<GetAllMunicipalitiesResponseDTO.MunicipalityData> data = getAllMunicipalities();
         municipalities.getItems().addAll(data);
 
         municipalities.setConverter(new StringConverter<>() {
             @Override
-            public String toString(GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData object) {
+            public String toString(GetAllMunicipalitiesResponseDTO.MunicipalityData object) {
                 if (object == null) return "";
                 return object.getMunicipality().getNif() + " - " + object.getUser().getName();
             }
 
             @Override
-            public GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData fromString(String string) {
+            public GetAllMunicipalitiesResponseDTO.MunicipalityData fromString(String string) {
                 return null; // Not needed since you're not filtering
             }
         });
@@ -216,8 +216,8 @@ public class BucketsModalController {
                         "}", bucketInfo.getBucketId(), bucketInfo.getCapacity(), bucketInfo.getIsAssociated());
                 if (!municipalities.getSelectionModel().isEmpty()) {
                     // New association
-                    GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData newMunicipality = municipalities.getSelectionModel().getSelectedItem();
-                    bucketMunicipality.setId(newMunicipality.getMunicipality().getId());
+                    GetAllMunicipalitiesResponseDTO.MunicipalityData newMunicipality = municipalities.getSelectionModel().getSelectedItem();
+                    bucketMunicipality.setId(newMunicipality.getUser().getId());
 
                     createBucketAssociation(bucketInfo.getBucketId().toString(), bucketMunicipality.getId().toString());
                 }
@@ -243,8 +243,8 @@ public class BucketsModalController {
                             "  }\n" +
                             "}", bucketInfo.getBucketId(), bucketInfo.getCapacity(), bucketInfo.getIsAssociated());
                     // New association
-                    GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData newMunicipality = municipalities.getSelectionModel().getSelectedItem();
-                    bucketMunicipality.setId(newMunicipality.getMunicipality().getId());
+                    GetAllMunicipalitiesResponseDTO.MunicipalityData newMunicipality = municipalities.getSelectionModel().getSelectedItem();
+                    bucketMunicipality.setId(newMunicipality.getUser().getId());
 
                     createBucketAssociation(bucketInfo.getBucketId().toString(), bucketMunicipality.getId().toString());
                 }
@@ -357,7 +357,7 @@ public class BucketsModalController {
             connection.disconnect();
             if ((responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) && createdBucketId != null) {
                 if (shouldAssociate) {
-                    GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData selectedMunicipality =
+                    GetAllMunicipalitiesResponseDTO.MunicipalityData selectedMunicipality =
                             municipalities.getSelectionModel().getSelectedItem();
                     responseCode = createBucketAssociation(createdBucketId, selectedMunicipality.getUser().getId().toString());
                 }
@@ -405,10 +405,10 @@ public class BucketsModalController {
         errorLabel.setVisible(isVisible);
     }
 
-    public List<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> getAllMunicipalities() {
+    public List<GetAllMunicipalitiesResponseDTO.MunicipalityData> getAllMunicipalities() {
         // Define the API endpoint
-        String url = "http://localhost:8080/api/users/get/municipalities/buckets";
-        List<GetAllMunicipalitiesAndBucketsResponseDTO.MunicipalityData> municipalityData = Collections.emptyList();
+        String url = "http://localhost:8080/api/users/get/municipalities";
+        List<GetAllMunicipalitiesResponseDTO.MunicipalityData> municipalityData = Collections.emptyList();
 
         try {
             // Create a URL object with the API endpoint
@@ -428,9 +428,9 @@ public class BucketsModalController {
                 }
                 reader.close();
 
-                // Parse the JSON response to GetAllMunicipalitiesAndBucketsResponseDTO
+                // Parse the JSON response to GetAllMunicipalitiesResponseDTO
                 ObjectMapper objectMapper = new ObjectMapper();
-                GetAllMunicipalitiesAndBucketsResponseDTO responseDTO = objectMapper.readValue(response.toString(), GetAllMunicipalitiesAndBucketsResponseDTO.class);
+                GetAllMunicipalitiesResponseDTO responseDTO = objectMapper.readValue(response.toString(), GetAllMunicipalitiesResponseDTO.class);
 
                 // Get the municipalities list from the response DTO
                 municipalityData = responseDTO.getMunicipalities();
