@@ -79,7 +79,6 @@ public class StatsViewController {
                         .mapToDouble(unloading -> unloading.getUnloadedQuantity() != null ? unloading.getUnloadedQuantity().doubleValue() / 1000 : 0.0)
                         .sum();
             }
-
             return new ReadOnlyObjectWrapper<>(totalUnloaded);
         });
 
